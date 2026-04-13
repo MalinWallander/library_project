@@ -30,6 +30,12 @@
                     <PropertyValueFactory property="categoryId" />
                 </cellValueFactory>
             </TableColumn>
+
+            <TableColumn text="Status" prefWidth="150.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="status" />
+                </cellValueFactory>
+            </TableColumn>
         </columns>
     </TableView>
 </VBox>

@@ -2,7 +2,9 @@ package com.library.view.shared;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,8 @@ public class SearchController {
     @FXML private TableView<Item> resultsTable;
     @FXML private TextField creatorField;   // Sökfält för skapare
     @FXML private ComboBox<String> categoryDropdown; // Dropdown för kategori
+    @FXML private TableColumn<Item, String> titleColumn;
+    @FXML private TableColumn<Item, String> statusColumn; // Denna visar "Available/Loaned"
     
     private SearchService searchService;
 
@@ -33,6 +37,18 @@ public class SearchController {
     @FXML
     public void initialize() {
         resultsTable.setPlaceholder(new javafx.scene.control.Label("Använd sökfältet för att hitta böcker eller filmer."));
+
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
+    
+    // Koppla statusen (sammanfattningen från din SQL CASE-sats) till kolumnen
+    statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        // Här kan du lägga till fler kategorier om du vill
+        categoryDropdown.setItems(FXCollections.observableArrayList(
+            "Book", "Dvd", "CourseLiterature"
+        ));
+
+
     }
 
     /**
