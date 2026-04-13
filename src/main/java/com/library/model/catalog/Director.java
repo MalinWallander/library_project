@@ -10,4 +10,7 @@ public class Director {
         this.directorFName = directorFName;
         this.directorLName = directorLName;
     }
+    public String getFullName() {
+        return directorFName + " " + directorLName;
+    }
 }

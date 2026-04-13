@@ -4,9 +4,14 @@ public class Dvd extends Item {
     private int productionYear;
     private String mainDirectorName;
 
-    public Dvd(String itemId, String itemTitle, String categoryId, int productionYear, String mainDirectorName) {
-        super(itemId, "Dvd", itemTitle, categoryId);
-        this.productionYear = productionYear;
-        this.mainDirectorName = mainDirectorName;
-    }
+    public Dvd(String itemId, String itemType, String itemTitle, String categoryId, String status, 
+               int productionYear, String mainDirectorName) {
+    super(itemId, itemType, itemTitle, categoryId, status); // 5 parametrar till super
+    this.productionYear = productionYear;
+    this.mainDirectorName = mainDirectorName;
+}
+
+    // Getters
+    public int getProductionYear() { return productionYear; }
+    public String getMainDirectorName() { return mainDirectorName; }
 }
