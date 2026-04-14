@@ -1,6 +1,6 @@
 package com.library.service;
 
-import com.library.db.ItemDAO; // Se till att detta matchar filnamnet exakt!
+import com.library.db.ItemDao; // Se till att detta matchar filnamnet exakt!
 import com.library.model.items.Item;
 import java.util.List;
 
@@ -8,9 +8,9 @@ public class SearchService {
 
     // Typen måste vara ItemDAO (stora bokstäver) 
     // Variabeln döper vi till itemDao (litet i)
-    private final ItemDAO itemDao; 
+    private final ItemDao itemDao; 
 
-    public SearchService(ItemDAO itemDao) {
+    public SearchService(ItemDao itemDao) {
         this.itemDao = itemDao;
     }
 

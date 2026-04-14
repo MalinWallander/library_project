@@ -36,6 +36,8 @@ public class SearchController {
      */
     @FXML
     public void initialize() {
+
+        this.searchService = com.library.config.AppContext.getInstance().searchService;
         resultsTable.setPlaceholder(new javafx.scene.control.Label("Använd sökfältet för att hitta böcker eller filmer."));
 
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));

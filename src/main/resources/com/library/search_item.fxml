@@ -4,7 +4,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="view.search.SearchController" prefHeight="600.0" prefWidth="800.0">
+      fx:controller="view.shared.SearchController" prefHeight="600.0" prefWidth="800.0">
     
     <HBox spacing="10" alignment="CENTER">
         <TextField fx:id="searchField" promptText="Sök på titel eller författare..." prefWidth="300.0"/>
