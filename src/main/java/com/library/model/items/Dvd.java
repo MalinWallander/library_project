@@ -14,4 +14,8 @@ public class Dvd extends Item {
     // Getters
     public int getProductionYear() { return productionYear; }
     public String getMainDirectorName() { return mainDirectorName; }
+    @Override
+public String getCreator() {
+    return mainDirectorName;
+}
 }

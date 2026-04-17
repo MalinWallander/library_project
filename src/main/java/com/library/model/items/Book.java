@@ -20,4 +20,9 @@ public class Book extends Item {
     public String getPublisherId() { return publisherId; }
     public String getGenre() { return genre; }
     public String getMainAuthorName() { return mainAuthorName; }
+
+    @Override
+public String getCreator() {
+    return mainAuthorName;
+}
 }

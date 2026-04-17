@@ -19,7 +19,8 @@ public class SearchController {
     // Dessa ID:n måste matcha fx:id i din FXML-fil
     @FXML private TextField searchField;
     @FXML private TableView<Item> resultsTable;
-   // @FXML private TextField creatorField;   // Sökfält för skapare
+    @FXML private TextField creatorField;   // Sökfält för skapare
+    @FXML private TableColumn<Item, String> creatorColumn;
   //  @FXML private ComboBox<String> categoryDropdown; // Dropdown för kategori
    @FXML private TableColumn<Item, String> titleColumn;
    @FXML private TableColumn<Item, String> statusColumn; // Denna visar "Available/Loaned"
@@ -45,6 +46,8 @@ public class SearchController {
     // Koppla statusen (sammanfattningen från din SQL CASE-sats) till kolumnen
     statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+    creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
+
         // Här kan du lägga till fler kategorier om du vill
        // categoryDropdown.setItems(FXCollections.observableArrayList(
        //     "Book", "Dvd", "CourseLiterature"
@@ -58,17 +61,22 @@ public class SearchController {
      */
 @FXML
 private void handleSearch() {
-    String titleQuery = searchField.getText().trim();
 
-    System.out.println("Söker på: " + titleQuery);
+    String titleQuery = searchField.getText().trim();
+    String creatorQuery = creatorField.getText().trim();
+
+    // Gör tomma strängar till null (viktigt för SQL)
+    if (titleQuery.isEmpty()) titleQuery = null;
+    if (creatorQuery.isEmpty()) creatorQuery = null;
+
+    System.out.println("Titel: " + titleQuery);
+    System.out.println("Creator: " + creatorQuery);
 
     List<Item> searchResults = searchService.searchItems(
         titleQuery,
-        null,
+        creatorQuery,
         null
     );
-
-    System.out.println("Resultat från service: " + searchResults.size());
 
     ObservableList<Item> observableData =
         FXCollections.observableArrayList(searchResults);

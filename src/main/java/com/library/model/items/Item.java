@@ -33,4 +33,7 @@ public abstract class Item {
     public String getCategoryId() {
         return categoryId;
     }
+     public String getCreator() {
+        return "";
+    }
 }
