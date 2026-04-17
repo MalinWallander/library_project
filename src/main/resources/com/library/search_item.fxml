@@ -3,23 +3,37 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
+
 <VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="view.shared.SearchController" prefHeight="600.0" prefWidth="800.0">
+
+      fx:controller="com.library.view.shared.SearchController"
+       prefHeight="600.0" prefWidth="800.0">
     
     <HBox spacing="10" alignment="CENTER">
         <TextField fx:id="searchField" promptText="Sök på titel eller författare..." prefWidth="300.0"/>
         <Button text="Sök" onAction="#handleSearch"/>
     </HBox>
 
-    <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn text="Titel" prefWidth="300.0">
-                <cellValueFactory>
-                    <PropertyValueFactory property="itemTitle" />
-                </cellValueFactory>
-            </TableColumn>
+      <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
 
-            <TableColumn text="Typ" prefWidth="150.0">
+        <columns>
+
+            <!-- 🔥 FIX: fx:id måste finnas -->
+            <TableColumn fx:id="titleColumn"
+                         text="Titel"
+                         prefWidth="300.0"/>
+
+            <TableColumn fx:id="statusColumn"
+                         text="Status"
+                         prefWidth="200.0"/>
+
+        </columns>
+
+    </TableView>
+
+</VBox>
+
+           <!--   <TableColumn text="Typ" prefWidth="150.0">
                 <cellValueFactory>
                     <PropertyValueFactory property="itemType" />
                 </cellValueFactory>
@@ -37,5 +51,5 @@
                 </cellValueFactory>
             </TableColumn>
         </columns>
-    </TableView>
-</VBox>
+    </TableView> 
+</VBox>-->

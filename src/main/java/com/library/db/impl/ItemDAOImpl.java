@@ -1,11 +1,8 @@
-
-
 package com.library.db.impl;
 
 import com.library.db.ItemDao;
 import com.library.model.items.Item;
 import com.library.model.items.Book;
-import com.library.model.items.CourseLiterature;
 import com.library.model.items.Dvd;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -24,68 +21,76 @@ public class ItemDAOImpl implements ItemDao {
         this.jdbc = jdbc;
     }
 
-   private final static String ADVANCED_SEARCH_SQL = """
-    SELECT i.*, 
-        CASE 
-            WHEN EXISTS (SELECT 1 FROM Copy c WHERE c.item_id = i.item_id AND c.status = 'Available') THEN 'Available'
-            WHEN EXISTS (SELECT 1 FROM Copy c WHERE c.item_id = i.item_id) THEN 'Loaned'
-            ELSE 'No copies'
-        END as current_status
-    FROM Item i
-    WHERE (:title IS NULL OR i.item_title ILIKE :title)
-    AND (:creator IS NULL OR i.author ILIKE :creator OR i.director ILIKE :creator)
-    AND (:category IS NULL OR i.category_id = :category)
-    """;
-
-       @Override
+  private static final String ADVANCED_SEARCH_SQL = """
+    SELECT i.*,
+           b.isbn,
+           b."mainAuthorName" AS author,
+           b."publisherId" AS publisher_id,
+           b.genre,
+           d."productionYear" AS production_year,
+           d."mainDirectorName" AS director,
+           CASE
+               WHEN EXISTS (SELECT 1 FROM "Copy" c WHERE c."itemId" = i."itemId" AND c.status = 'Available') THEN 'Available'
+               WHEN EXISTS (SELECT 1 FROM "Copy" c WHERE c."itemId" = i."itemId") THEN 'Loaned'
+               ELSE 'No copies'
+           END as current_status
+    FROM "Item" i
+    LEFT JOIN "Book" b ON i."itemId" = b."itemId"
+    LEFT JOIN "Dvd" d ON i."itemId" = d."itemId"
+    WHERE (:title IS NULL OR i."itemTitle" ILIKE :title)
+    AND (:creator IS NULL OR b."mainAuthorName" ILIKE :creator OR d."mainDirectorName" ILIKE :creator)
+    AND (:category IS NULL OR i."categoryId" = :category)
+""";
+    @Override
     public List<Item> search(String title, String creator, String categoryId) {
+
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("title", (title == null || title.isBlank()) ? null : "%" + title + "%");
-        params.addValue("creator", (creator == null || creator.isBlank()) ? null : "%" + creator + "%");
-        params.addValue("category", (categoryId == null || categoryId.isBlank()) ? null : categoryId);
- 
+
+        params.addValue("title",
+                (title == null || title.isBlank()) ? null : "%" + title + "%",
+                java.sql.Types.VARCHAR);
+
+        params.addValue("creator",
+                (creator == null || creator.isBlank()) ? null : "%" + creator + "%",
+                java.sql.Types.VARCHAR);
+
+        params.addValue("category",
+                (categoryId == null || categoryId.isBlank()) ? null : categoryId,
+                java.sql.Types.VARCHAR);
+
         return jdbc.query(ADVANCED_SEARCH_SQL, params, this::mapRow);
     }
 
     private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String type = rs.getString("item_type");
-        String status = rs.getString("current_status"); // Hämtas från vår CASE-sats i SQL
- 
+
+        String type = rs.getString("itemType");
+        String status = rs.getString("current_status");
+
         if ("Book".equalsIgnoreCase(type)) {
             return new Book(
-                rs.getString("item_id"),
-                type,
-                rs.getString("item_title"),
-                rs.getString("category_id"),
-                status, // current_status från SQL
-                rs.getString("isbn"),
-                rs.getString("publisher_id"),
-                rs.getString("genre"),
-                rs.getString("author") 
+                    rs.getString("itemId"),
+                    type,
+                    rs.getString("itemTitle"),
+                    rs.getString("categoryId"),
+                    status,
+                    rs.getString("isbn"),
+                    rs.getString("publisher_id"),
+                    rs.getString("genre"),
+                    rs.getString("author")
             );
+
         } else if ("Dvd".equalsIgnoreCase(type)) {
             return new Dvd(
-                rs.getString("item_id"),
-                type,
-                rs.getString("item_title"),
-                rs.getString("category_id"),
-                status,
-                rs.getInt("production_year"),
-                rs.getString("director")
-            );
-        } else if ("CourseLiterature".equalsIgnoreCase(type)) {
-            return new CourseLiterature(
-                rs.getString("item_id"),
-                type,
-                rs.getString("item_title"),
-                rs.getString("category_id"),
-                status,
-                rs.getString("course_name"),
-                rs.getString("author")
+                    rs.getString("itemId"),
+                    type,
+                    rs.getString("itemTitle"),
+                    rs.getString("categoryId"),
+                    status,
+                    rs.getInt("production_year"),
+                    rs.getString("director")
             );
         }
- 
-        return null; // En säkerhetsåtgärd om inget matchar
-    } // Stänger hela mapRow-metoden
- 
-} // Stänger hela ItemDAOImpl-klassen
+
+        throw new RuntimeException("Unknown item type: " + type);
+    }
+}
