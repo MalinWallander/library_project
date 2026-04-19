@@ -3,104 +3,73 @@ package com.library.view.shared;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Label;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.List;
 
-// Dessa två imports är viktigast för att få bort det röda:
 import com.library.model.items.Item;
 import com.library.service.SearchService;
+import com.library.config.AppContext;
 
 public class SearchController {
 
-    // Dessa ID:n måste matcha fx:id i din FXML-fil
     @FXML private TextField searchField;
+    @FXML private TextField creatorField;
     @FXML private TableView<Item> resultsTable;
-    @FXML private TextField creatorField;   // Sökfält för skapare
+    @FXML private TableColumn<Item, String> titleColumn;
     @FXML private TableColumn<Item, String> creatorColumn;
-  //  @FXML private ComboBox<String> categoryDropdown; // Dropdown för kategori
-   @FXML private TableColumn<Item, String> titleColumn;
-   @FXML private TableColumn<Item, String> statusColumn; // Denna visar "Available/Loaned"
+    @FXML private TableColumn<Item, String> statusColumn;
     
     private SearchService searchService;
 
-    public void setSearchService(SearchService searchService) {
-        this.searchService = searchService;
-    }
-
-    /**
-     * Körs automatiskt när FXML-filen laddas.
-     * Här kan man ställa in t.ex. vad som ska hända om tabellen är tom.
-     */
     @FXML
     public void initialize() {
+        try {
+            // Hämta servicen
+            this.searchService = AppContext.getInstance().searchService;
+            
+            resultsTable.setPlaceholder(new Label("Använd sökfältet för att hitta böcker eller filmer."));
 
-        this.searchService = com.library.config.AppContext.getInstance().searchService;
-       resultsTable.setPlaceholder(new javafx.scene.control.Label("Använd sökfältet för att hitta böcker eller filmer."));
-
-       titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
-    
-    // Koppla statusen (sammanfattningen från din SQL CASE-sats) till kolumnen
-    statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-    creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
-
-        // Här kan du lägga till fler kategorier om du vill
-       // categoryDropdown.setItems(FXCollections.observableArrayList(
-       //     "Book", "Dvd", "CourseLiterature"
-       // ));
-
-
+            // Mappa kolumnerna korrekt mot Item.java getters
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
+            statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+            creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
+            
+        } catch (Exception e) {
+            System.out.println("FEL vid initialize: " + e.getMessage());
+        }
     }
 
-    /**
-     * Kopplad till onAction="#handleSearch" i FXML-filen.
-     */
-@FXML
-private void handleSearch() {
+    @FXML
+    private void handleSearch() {
+        try {
+            String titleQuery = searchField.getText().trim();
+            String creatorQuery = creatorField.getText().trim();
 
-    String titleQuery = searchField.getText().trim();
-    String creatorQuery = creatorField.getText().trim();
+            if (titleQuery.isEmpty()) titleQuery = null;
+            if (creatorQuery.isEmpty()) creatorQuery = null;
 
-    // Gör tomma strängar till null (viktigt för SQL)
-    if (titleQuery.isEmpty()) titleQuery = null;
-    if (creatorQuery.isEmpty()) creatorQuery = null;
+            System.out.println("DEBUG: Startar sökning..."); // Syns denna?
+            
+            if (searchService == null) {
+                System.out.println("ERROR: searchService är NULL!");
+                return;
+            }
 
-    System.out.println("Titel: " + titleQuery);
-    System.out.println("Creator: " + creatorQuery);
+            List<Item> searchResults = searchService.searchItems(titleQuery, creatorQuery, null);
 
-    List<Item> searchResults = searchService.searchItems(
-        titleQuery,
-        creatorQuery,
-        null
-    );
+            System.out.println("Antal träffar hittade: " + (searchResults != null ? searchResults.size() : 0));
 
-    ObservableList<Item> observableData =
-        FXCollections.observableArrayList(searchResults);
+            ObservableList<Item> observableData = FXCollections.observableArrayList(searchResults);
+            resultsTable.setItems(observableData);
 
-    resultsTable.setItems(observableData);
+        } catch (Exception e) {
+            // Detta skriver ut det EXAKTA felet i terminalen (t.ex. om databasen är nere)
+            System.out.println("--- KRASCH I handleSearch ---");
+            e.printStackTrace(); 
+        }
+    }
 }
-}
-
-
-
- //   String creatorQuery = creatorField.getText().trim();
-    
-    // Hämta vald kategori (om ingen är vald skickar vi null)
-    //String selectedCategory = categoryDropdown.getValue();
-
-    // Nu skickar vi ALLA tre parametrar till servicen
- //creatorQuery, selectedCategory);
-
-  //  ObservableList<Item> observableData = FXCollections.observableArrayList(searchResults);
-    //resultsTable.setItems(observableData);
-        
-       // System.out.println("Sökning utförd på: " + titleQuery +". Hittade " + searchResults.size() + " träffar.");
-    
-
-
-
-

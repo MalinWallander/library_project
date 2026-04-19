@@ -38,7 +38,11 @@ public class ItemDAOImpl implements ItemDao {
     LEFT JOIN "Book" b ON i."itemId" = b."itemId"
     LEFT JOIN "Dvd" d ON i."itemId" = d."itemId"
     WHERE (:title IS NULL OR i."itemTitle" ILIKE :title)
-    AND (:creator IS NULL OR b."mainAuthorName" ILIKE :creator OR d."mainDirectorName" ILIKE :creator)
+    AND (
+        :creator IS NULL 
+        OR (i."itemType" = 'Book' AND b."mainAuthorName" ILIKE :creator)
+        OR (i."itemType" = 'Dvd' AND d."mainDirectorName" ILIKE :creator)
+    )
     AND (:category IS NULL OR i."categoryId" = :category)
 """;
     @Override

@@ -9,5 +9,6 @@ module com.library {
     opens com.library.view.librarian to javafx.fxml;
     opens com.library.view.shared to javafx.fxml;
     opens com.library.model.items to javafx.base;
+    opens com.library.db to javafx.base;
     exports com.library;
 }
