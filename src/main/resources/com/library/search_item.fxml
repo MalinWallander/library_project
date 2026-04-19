@@ -3,46 +3,41 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-
 <VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-
       fx:controller="com.library.view.shared.SearchController"
-       prefHeight="600.0" prefWidth="800.0">
+      prefHeight="600.0" prefWidth="800.0">
     
-    <HBox spacing="10" alignment="CENTER">
-          <!-- Titel -->
+    <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
         <TextField fx:id="searchField"
                    promptText="Sök på titel..."
-                   prefWidth="200.0"/>
+                   prefWidth="180.0"/>
 
-        <!-- Creator -->
         <TextField fx:id="creatorField"
                    promptText="Sök på författare / regissör..."
-                   prefWidth="200.0"/>
+                   prefWidth="180.0"/>
 
-        <Button text="Sök" onAction="#handleSearch"/>
+        <ComboBox fx:id="typeDropdown" 
+                  promptText="Välj typ..." 
+                  prefWidth="150.0"/>
 
+        <Button text="Sök" onAction="#handleSearch" style="-fx-base: #87CEEB;"/>
     </HBox>
 
-      <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
-
+    <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
         <columns>
-        
-    <TableColumn fx:id="titleColumn"
-                 text="Titel"
-                 prefWidth="250.0"/>
+            <TableColumn fx:id="titleColumn"
+                         text="Titel"
+                         prefWidth="250.0"/>
 
-    <TableColumn fx:id="creatorColumn"
-                 text="Författare / Regissör"
-                 prefWidth="250.0"/>
+            <TableColumn fx:id="creatorColumn"
+                         text="Författare / Regissör"
+                         prefWidth="250.0"/>
 
-    <TableColumn fx:id="statusColumn"
-                 text="Status"
-                 prefWidth="200.0"/>
-</columns>
-
+            <TableColumn fx:id="statusColumn"
+                         text="Status"
+                         prefWidth="200.0"/>
+        </columns>
     </TableView>
-
 </VBox>
 
            <!--   <TableColumn text="Typ" prefWidth="150.0">
