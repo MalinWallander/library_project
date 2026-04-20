@@ -1,12 +1,23 @@
 package com.library.model.items;
 
 public class Dvd extends Item {
-    private int productionYear;
+    private Integer productionYear;
     private String mainDirectorName;
 
-    public Dvd(String itemId, String itemTitle, String categoryId, int productionYear, String mainDirectorName) {
-        super(itemId, "Dvd", itemTitle, categoryId);
+    // getters/setters
+    public Integer getProductionYear() {
+        return productionYear;
+    }
+
+    public void setProductionYear(Integer productionYear) {
         this.productionYear = productionYear;
+    }
+
+    public String getMainDirectorName() {
+        return mainDirectorName;
+    }
+
+    public void setMainDirectorName(String mainDirectorName) {
         this.mainDirectorName = mainDirectorName;
     }
 }

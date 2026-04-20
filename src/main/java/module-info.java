@@ -7,6 +7,9 @@ module com.library {
 
     opens com.library to javafx.graphics, javafx.fxml;
     opens com.library.view.librarian to javafx.fxml;
+    opens com.library.view.login to javafx.fxml;
+    opens com.library.view.shared to javafx.fxml;
+    opens com.library.view.user to javafx.fxml;
 
     exports com.library;
 }

@@ -1,10 +1,14 @@
 package com.library.config;
 
 import com.library.db.UserDao;
+import com.library.db.ItemDao;
+import com.library.db.impl.ItemDaoImpl;
 import com.library.db.impl.UserDaoImpl;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import com.library.service.ItemService;
 import com.library.service.UserService;
 
 import javax.sql.DataSource;
@@ -16,9 +20,11 @@ public class AppContext {
 
     // DAOs
     public final UserDao userDao = new UserDaoImpl(jdbcTemplate);
+    public final ItemDao itemDao = new ItemDaoImpl(jdbcTemplate);
 
     // Services
     public final UserService userService = new UserService(userDao);
+    public final ItemService itemService = new ItemService(itemDao);
 
     // Singleton instance
     private static AppContext instance;

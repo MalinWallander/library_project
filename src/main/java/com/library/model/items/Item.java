@@ -1,32 +1,45 @@
 package com.library.model.items;
 
-public abstract class Item {
+public class Item {
     private String itemId;
-    private String itemType;
+    private String itemType; // "Book", "DVD", "Magazine"
     private String itemTitle;
     private String categoryId;
 
-    public Item(String itemId, String itemType, String itemTitle, String categoryId) {
-        this.itemId = itemId;
-        this.itemType = itemType;
-        this.itemTitle = itemTitle;
-        this.categoryId = categoryId;
+    public Item() {
     }
 
-    // Getters
-    public String itemId() {
+    // Getters and setters
+    public String getItemId() {
         return itemId;
     }
 
-    public String itemType() {
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getItemType() {
         return itemType;
     }
 
-    public String itemTitle() {
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getItemTitle() {
         return itemTitle;
     }
 
-    public String categoryId() {
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
+    }
+
+    public String getCategoryId() {
         return categoryId;
     }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
 }

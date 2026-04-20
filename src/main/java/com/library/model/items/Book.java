@@ -2,17 +2,40 @@ package com.library.model.items;
 
 public class Book extends Item {
     private String isbn;
-    private String publisherId;
     private String genre;
     private String mainAuthorName;
+    private String publisherId;
+    // getters/setters
 
-    public Book(String itemId, String itemTitle, String categoryId, String isbn, String publisherId, String genre,
-            String mainAuthorName) {
-        super(itemId, "Book", itemTitle, categoryId);
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
-        this.publisherId = publisherId;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getMainAuthorName() {
+        return mainAuthorName;
+    }
+
+    public void setMainAuthorName(String mainAuthorName) {
         this.mainAuthorName = mainAuthorName;
     }
-    // Getters för unika fält...
+
+    public String getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(String publisherId) {
+        this.publisherId = publisherId;
+    }
 }
