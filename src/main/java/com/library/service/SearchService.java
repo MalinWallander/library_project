@@ -1,21 +1,21 @@
 package com.library.service;
 
-import com.library.db.ItemDao; // Se till att detta matchar filnamnet exakt!
+import com.library.db.SearchItemDao; // Se till att detta matchar filnamnet exakt!
 import com.library.model.items.Item;
 import java.util.List;
 
 public class SearchService {
 
-    // Typen måste vara ItemDAO (stora bokstäver) 
+    // Typen måste vara ItemDAO (stora bokstäver)
     // Variabeln döper vi till itemDao (litet i)
-    private final ItemDao itemDao; 
+    private final SearchItemDao searchItemDao;
 
-    public SearchService(ItemDao itemDao) {
-        this.itemDao = itemDao;
+    public SearchService(SearchItemDao searchItemDao) {
+        this.searchItemDao = searchItemDao;
     }
 
     public List<Item> searchItems(String title, String creator, String categoryId) {
-    // Om alla fält är tomma kan vi skicka in tomma strängar eller null
-    return itemDao.search(title, creator, categoryId);
-}
+        // Om alla fält är tomma kan vi skicka in tomma strängar eller null
+        return searchItemDao.search(title, creator, categoryId);
+    }
 }

@@ -7,7 +7,12 @@ public class Item {
     private String categoryId;
     private String status; // Nytt fält!
 
-    public Item() {
+    public Item(String itemId, String itemType, String itemTitle, String categoryId, String status) {
+        this.itemId = itemId;
+        this.itemType = itemType;
+        this.itemTitle = itemTitle;
+        this.categoryId = categoryId;
+        this.status = status;
     }
 
     // Getters and setters
@@ -41,6 +46,14 @@ public class Item {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

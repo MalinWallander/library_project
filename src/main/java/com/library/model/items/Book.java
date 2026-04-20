@@ -7,6 +7,26 @@ public class Book extends Item {
     private String publisherId;
     // getters/setters
 
+    public Book(String itemId,
+            String type,
+            String itemTitle,
+            String categoryId,
+            String status,
+            String isbn,
+            String publisherId,
+            String genre,
+            String mainAuthorName) {
+        super(itemId, type, itemTitle, categoryId, status);
+        this.isbn = isbn;
+        this.publisherId = publisherId;
+        this.genre = genre;
+        this.mainAuthorName = mainAuthorName;
+    }
+
+    public Book() {
+        super(null, null, null, null, null);
+    }
+
     public String getIsbn() {
         return isbn;
     }

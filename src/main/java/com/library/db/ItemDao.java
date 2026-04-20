@@ -7,4 +7,5 @@ public interface ItemDao {
 	void addItem(Item item);
 
 	void addCopy(Copy copy);
+
 }
