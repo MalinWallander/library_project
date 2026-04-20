@@ -19,8 +19,8 @@ public class LibrarianDashboardController {
 			Parent root = loader.load();
 
 			// Inject service from AppContext into the popup controller
-			CreateUserController controller = loader.getController();
-			controller.setUserService(AppContext.getInstance().userService);
+			CreateUserController userController = loader.getController();
+			userController.setUserService(AppContext.getInstance().userService);
 
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Create User");
@@ -28,6 +28,25 @@ public class LibrarianDashboardController {
 			popupStage.setScene(new Scene(root));
 			popupStage.showAndWait();
 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void handleAddItem(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/add_item.fxml"));
+			Parent root = loader.load();
+
+			AddItemController itemController = loader.getController();
+			itemController.setItemService(AppContext.getInstance().itemService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Add item");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

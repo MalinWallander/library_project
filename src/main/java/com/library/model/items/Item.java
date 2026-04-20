@@ -1,39 +1,46 @@
 package com.library.model.items;
 
-public abstract class Item {
+public class Item {
     private String itemId;
-    private String itemType;
+    private String itemType; // "Book", "DVD", "Magazine"
     private String itemTitle;
     private String categoryId;
     private String status; // Nytt fält!
 
-    public Item(String itemId, String itemType, String itemTitle, String categoryId, String status) {
-        this.itemId = itemId;
-        this.itemType = itemType;
-        this.itemTitle = itemTitle;
-        this.categoryId = categoryId;
-        this.status = status;
+    public Item() {
     }
-    // Glöm inte getter för status!
-    public String getStatus() { return status; }
- 
-    // Getters
+
+    // Getters and setters
     public String getItemId() {
         return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public String getItemType() {
         return itemType;
     }
 
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
     public String getItemTitle() {
         return itemTitle;
+    }
+
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
     }
 
     public String getCategoryId() {
         return categoryId;
     }
-     public String getCreator() {
-        return "";
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
+
 }

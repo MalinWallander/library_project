@@ -10,5 +10,8 @@ module com.library {
     opens com.library.view.shared to javafx.fxml;
     opens com.library.model.items to javafx.base;
     opens com.library.db to javafx.base;
+    opens com.library.view.login to javafx.fxml;
+    opens com.library.view.user to javafx.fxml;
+
     exports com.library;
 }

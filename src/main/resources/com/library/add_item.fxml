@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.library.view.librarian.AddItemController">
+
+    <VBox spacing="24" style="-fx-padding: 24;">
+
+        <!-- ── ADD ITEM SECTION ── -->
+        <VBox spacing="12" style="-fx-border-color: #cccccc; -fx-border-radius: 6; -fx-padding: 16; -fx-background-color: #f9f9f9; -fx-background-radius: 6;">
+
+            <Label text="Add Item" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="120" maxWidth="140"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <!-- Title -->
+                <Label text="Title *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="itemTitleField" promptText="Item title"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <!-- Type -->
+                <Label text="Type *" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="itemTypeCombo" promptText="Select type"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"
+                          maxWidth="Infinity"
+                          onAction="#onItemTypeChanged"/>
+                <!-- Category -->
+                <Label text="Category ID *" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="categoryIdField" promptText="e.g. CAT001"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <!-- ── BOOK FIELDS ── -->
+                <VBox fx:id="bookFields" spacing="10" visible="false" managed="false"
+                      GridPane.rowIndex="3" GridPane.columnIndex="0"
+                      GridPane.columnSpan="2">
+                    <GridPane hgap="12" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="120" maxWidth="140"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <Label text="ISBN" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="isbnField" promptText="e.g. 978-3-16-148410-0"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Genre" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="genreField" promptText="e.g. Fiction"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Main Author" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="mainAuthorField" promptText="e.g. Jane Austen"
+                                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Publisher ID" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="publisherIdField" promptText="e.g. PUB001"
+                                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    </GridPane>
+                </VBox>
+
+                <!-- ── DVD FIELDS ── -->
+                <VBox fx:id="dvdFields" spacing="10" visible="false" managed="false"
+                      GridPane.rowIndex="3" GridPane.columnIndex="0"
+                      GridPane.columnSpan="2">
+                    <GridPane hgap="12" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="120" maxWidth="140"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <Label text="Production Year" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="productionYearField" promptText="e.g. 2022"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Main Director" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="mainDirectorField" promptText="e.g. Christopher Nolan"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    </GridPane>
+                </VBox>
+
+                <!-- Magazine has no extra fields — nothing to show -->
+
+            </GridPane>
+
+            <!-- Feedback label -->
+            <Label fx:id="itemFeedbackLabel" text="" wrapText="true"
+                   style="-fx-text-fill: red;"/>
+
+            <Button text="Add Item" onAction="#onAddItem"
+                    style="-fx-pref-width: 120px;"/>
+
+        </VBox>
+
+        <!-- ── ADD COPY SECTION ── -->
+        <VBox spacing="12" style="-fx-border-color: #cccccc; -fx-border-radius: 6; -fx-padding: 16; -fx-background-color: #f9f9f9; -fx-background-radius: 6;">
+
+            <Label text="Add Copy" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="120" maxWidth="140"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Item ID *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="copyItemIdField" promptText="ID of the item to copy"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Item Title" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="copyItemTitleField" promptText="Display title on copy"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Barcode *" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="barcodeField" promptText="e.g. BC000123"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Location" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="locationField" promptText="e.g. Shelf A3"
+                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Purchase Date" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="purchaseDatePicker"
+                            GridPane.rowIndex="4" GridPane.columnIndex="1"
+                            maxWidth="Infinity"/>
+
+                <Label text="Reference Copy" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <CheckBox fx:id="referenceCopyCheck"
+                          GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            </GridPane>
+
+            <Label fx:id="copyFeedbackLabel" text="" wrapText="true"
+                   style="-fx-text-fill: red;"/>
+
+            <Button text="Add Copy" onAction="#onAddCopy"
+                    style="-fx-pref-width: 120px;"/>
+
+        </VBox>
+
+    </VBox>
+</ScrollPane>
