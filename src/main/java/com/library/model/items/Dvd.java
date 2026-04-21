@@ -36,4 +36,9 @@ public class Dvd extends Item {
     public void setMainDirectorName(String mainDirectorName) {
         this.mainDirectorName = mainDirectorName;
     }
+
+    @Override
+    public String getCreator() {
+        return mainDirectorName;
+    }
 }

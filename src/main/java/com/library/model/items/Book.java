@@ -58,4 +58,9 @@ public class Book extends Item {
     public void setPublisherId(String publisherId) {
         this.publisherId = publisherId;
     }
+
+    @Override
+    public String getCreator() {
+        return mainAuthorName;
+    }
 }

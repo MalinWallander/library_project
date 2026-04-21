@@ -5,6 +5,7 @@ public class Item {
     private String itemType; // "Book", "DVD", "Magazine"
     private String itemTitle;
     private String categoryId;
+    private String creator;
     private String status; // Nytt fält!
 
     public Item(String itemId, String itemType, String itemTitle, String categoryId, String status) {
@@ -46,6 +47,14 @@ public class Item {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getStatus() {
