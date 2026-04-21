@@ -94,8 +94,8 @@ public class ItemDaoImpl implements ItemDao {
 	@Override
 	public void addCopy(Copy copy) {
 		String sql = """
-				INSERT INTO Copy (copyId, status, barcode, referenceCopy, purchaseDate,
-				                  location, lastOnLoan, itemTitle, itemId)
+				INSERT INTO \"Copy\" (\"copyId\", \"status\", \"barcode\", \"referenceCopy\", \"purchaseDate\",
+				                  \"location\", \"lastOnLoan\", \"itemTitle\", \"itemId\")
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 				""";
 		jdbc.getJdbcOperations().execute((Connection conn) -> {
@@ -119,4 +119,5 @@ public class ItemDaoImpl implements ItemDao {
 			}
 			return null;
 		});
-	}}
+	}
+}

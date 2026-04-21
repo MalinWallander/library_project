@@ -97,6 +97,30 @@
 
         </VBox>
 
+        <!-- ── INLINE COPY SECTION (appears after item is saved) ── -->
+        <VBox fx:id="inlineCopySection" spacing="12"
+              style="-fx-border-color: #4a90d9; -fx-border-radius: 6; -fx-padding: 16; -fx-background-color: #f0f6ff; -fx-background-radius: 6;">
+
+            <Label fx:id="inlineCopyItemIdLabel" text=""
+                   style="-fx-font-weight: bold; -fx-text-fill: #2a5fa5;"/>
+
+            <Label text="Add copies now (optional):"
+                   style="-fx-font-size: 13px;"/>
+
+            <VBox fx:id="copyRowsContainer" spacing="8"/>
+
+            <HBox spacing="10">
+                <Button text="＋ Add another copy" onAction="#onAddCopyRow"/>
+                <Button text="Save all copies" onAction="#onAddCopiesForItem"
+                        style="-fx-background-color: #4a90d9; -fx-text-fill: white;"/>
+                <Button text="Skip" onAction="#onSkipCopies"/>
+            </HBox>
+
+            <Label fx:id="inlineCopyFeedbackLabel" text="" wrapText="true"
+                   style="-fx-text-fill: red;"/>
+
+        </VBox>
+
         <!-- ── ADD COPY SECTION ── -->
         <VBox spacing="12" style="-fx-border-color: #cccccc; -fx-border-radius: 6; -fx-padding: 16; -fx-background-color: #f9f9f9; -fx-background-radius: 6;">
 
