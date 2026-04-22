@@ -36,6 +36,10 @@
             <TableColumn fx:id="statusColumn"
                          text="Status"
                          prefWidth="200.0"/>
+
+                         <TableColumn fx:id="reserveColumn"
+                 text="Reservera"
+                 prefWidth="120.0"/>
         </columns>
     </TableView>
 </VBox>
