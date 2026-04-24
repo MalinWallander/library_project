@@ -1,8 +1,8 @@
-
 package com.library.view.user;
 
 import com.library.model.items.Item;
-import com.library.db.ReservationDao;
+import com.library.service.ReservationService;
+import com.library.config.AppContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,16 +17,16 @@ public class UserReservationsController {
     @FXML private TableColumn<Item, String> creatorColumn;
     @FXML private TableColumn<Item, String> statusColumn;
 
-    // Här injicerar du din DAO (t.ex. via en Service eller direkt)
-    private ReservationDao reservationDao; 
+    private ReservationService reservationService; 
 
     @FXML
     public void initialize() {
-        // Koppla kolumnerna till fält i Item-klassen
+        // 1. Hämta servicen från din AppContext
+        // Om variabeln i AppContext är public (vilket den verkar vara i din tidigare kod)
+this.reservationService = AppContext.getInstance().reservationService;
+
+        // 2. Koppla kolumnerna (stämmer med getItemTitle() och getCreator() i Item)
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
-        
-        // Observera: Beroende på om det är Book eller Dvd kan dessa heta olika, 
-        // du kan behöva en logik i Item för att hämta "mainCreator"
         creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator")); 
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
@@ -34,13 +34,21 @@ public class UserReservationsController {
     }
 
     private void loadData() {
-        // Just nu använder vi test-ID USR001 som vi såg i din databasbild
-        List<Item> myReservations = reservationDao.findByUser("USR001");
-        reservationsTable.setItems(FXCollections.observableArrayList(myReservations));
+        try {
+            // 3. Använd servicen (som vi hårdkodade till USR001 tidigare)
+            List<Item> myReservations = reservationService.getMyReservations();
+            
+            if (myReservations != null) {
+                reservationsTable.setItems(FXCollections.observableArrayList(myReservations));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleBackToDashboard() {
-        // Logik för att byta scen tillbaka till huvudmenyn
+        // Här lägger du din logik för att gå tillbaka, t.ex:
+        // App.setRoot("user_dashboard");
     }
 }
