@@ -6,24 +6,21 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.library.db.ItemDao;
 import com.library.db.LoanDao;
+import com.library.db.ReservationDao;
 import com.library.db.SearchItemDao;
 import com.library.db.UserDao;
 import com.library.db.impl.ItemDaoImpl;
+import com.library.db.impl.LoanDaoImpl;
 import com.library.db.impl.ReservationDaoImpl;
 import com.library.db.impl.SearchItemDaoImpl;
 import com.library.db.impl.UserDaoImpl;
 import com.library.service.ItemService;
-import com.library.service.ReservationService;
-import com.library.db.impl.LoanDaoImpl;
-import com.library.db.impl.SearchItemDaoImpl;
-import com.library.db.impl.UserDaoImpl;
-import com.library.service.ItemService;
 import com.library.service.LoanService;
+import com.library.service.ReservationService;
 import com.library.service.SearchService;
 import com.library.service.UserService;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import com.library.db.ReservationDao;
 
 public class AppContext {
 
@@ -34,7 +31,7 @@ public class AppContext {
     public final UserDao userDao = new UserDaoImpl(jdbcTemplate);
     public final ItemDao itemDao = new ItemDaoImpl(jdbcTemplate);
     public final SearchItemDao searchItemDao = new SearchItemDaoImpl(jdbcTemplate);
-    public final com.library.db.ReservationDao reservationDao = new ReservationDaoImpl(jdbcTemplate);
+    public final ReservationDao reservationDao = new ReservationDaoImpl(jdbcTemplate);
     public final LoanDao loanDao = new LoanDaoImpl(jdbcTemplate);
 
     // Services
