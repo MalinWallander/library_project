@@ -5,12 +5,15 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.library.db.ItemDao;
+import com.library.db.LoanDao;
 import com.library.db.SearchItemDao;
 import com.library.db.UserDao;
 import com.library.db.impl.ItemDaoImpl;
+import com.library.db.impl.LoanDaoImpl;
 import com.library.db.impl.SearchItemDaoImpl;
 import com.library.db.impl.UserDaoImpl;
 import com.library.service.ItemService;
+import com.library.service.LoanService;
 import com.library.service.SearchService;
 import com.library.service.UserService;
 import com.zaxxer.hikari.HikariConfig;
@@ -25,12 +28,13 @@ public class AppContext {
     public final UserDao userDao = new UserDaoImpl(jdbcTemplate);
     public final ItemDao itemDao = new ItemDaoImpl(jdbcTemplate);
     public final SearchItemDao searchItemDao = new SearchItemDaoImpl(jdbcTemplate);
+    public final LoanDao loanDao = new LoanDaoImpl(jdbcTemplate);
 
     // Services
     public final UserService userService = new UserService(userDao);
     public final SearchService searchService = new SearchService(searchItemDao);
     public final ItemService itemService = new ItemService(itemDao);
-
+    public final LoanService loanService = new LoanService(loanDao);
     // Singleton instance
     private static AppContext instance;
 
