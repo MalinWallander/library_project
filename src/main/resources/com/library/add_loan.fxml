@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.librarian.AddLoanController"
+      spacing="15"
+      prefWidth="400">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Add Loan" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <VBox spacing="5">
+        <Label text="Copy ID"/>
+        <TextField fx:id="copyIdField" promptText="Enter copy ID"/>
+    </VBox>
+
+    <VBox spacing="5">
+        <Label text="User ID"/>
+        <TextField fx:id="userIdField" promptText="Enter user ID"/>
+    </VBox>
+
+    <HBox spacing="10">
+        <Button text="Submit" onAction="#handleSubmit"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Cancel" onAction="#handleCancel"/>
+    </HBox>
+
+</VBox>
