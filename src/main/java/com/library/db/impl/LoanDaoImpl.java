@@ -25,6 +25,10 @@ public class LoanDaoImpl implements LoanDao {
 			VALUES (:loanId, :copyId, :userId, :loanDate, :returnDate)
 			""";
 
+	private final static String UPDATE_STATUS = """
+			UPDATE "Copy" SET \"status\" = 'On loan' WHERE \"copyId\" = :copyId
+			""";
+
 	private final static String FIND_BY_LOANID_SQL = """
 			SELECT * FROM "Loan" WHERE \"loanId\" = :loanId
 			""";
@@ -40,6 +44,7 @@ public class LoanDaoImpl implements LoanDao {
 				.addValue("returnDate", loan.getReturnDate());
 
 		jdbc.update(CREATE_SQL, params);
+		jdbc.update(UPDATE_STATUS, params);
 		return loan;
 	}
 
