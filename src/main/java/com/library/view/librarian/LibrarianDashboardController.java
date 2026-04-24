@@ -51,4 +51,25 @@ public class LibrarianDashboardController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	private void handleCreateLoan(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/add_loan.fxml"));
+			Parent root = loader.load();
+
+			// Inject service from AppContext into the popup controller
+			AddLoanController loanController = loader.getController();
+			loanController.setLoanService(AppContext.getInstance().loanService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Create Loan");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

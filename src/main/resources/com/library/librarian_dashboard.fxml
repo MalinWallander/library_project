@@ -12,5 +12,6 @@
 
     <Button text="Create User" onAction="#handleCreateUser" />
     <Button text="Add Item" onAction="#handleAddItem" />
+    <Button text="Create Loan" onAction="#handleCreateLoan" />
 
 </VBox>
