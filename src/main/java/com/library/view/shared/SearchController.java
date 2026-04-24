@@ -1,45 +1,53 @@
 package com.library.view.shared;
 
+import java.util.List;
+
+import com.library.config.AppContext;
+import com.library.model.items.Item;
+import com.library.service.SearchService;
+import com.library.view.user.ReservationController;
+
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import java.util.List;
-
-import com.library.model.items.Item;
-import com.library.service.SearchService;
-import com.library.view.user.ReservationController;
-import com.library.config.AppContext;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class SearchController {
 
-    @FXML private TextField searchField;
-    @FXML private TextField creatorField;
-    @FXML private ComboBox<String> typeDropdown;
-    @FXML private TableView<Item> resultsTable;
-    @FXML private TableColumn<Item, String> titleColumn;
-    @FXML private TableColumn<Item, String> creatorColumn;
-    @FXML private TableColumn<Item, String> statusColumn;
-    @FXML private TableColumn<Item, Void> reserveColumn;
-    
+    @FXML
+    private TextField searchField;
+    @FXML
+    private TextField creatorField;
+    @FXML
+    private ComboBox<String> typeDropdown;
+    @FXML
+    private TableView<Item> resultsTable;
+    @FXML
+    private TableColumn<Item, String> titleColumn;
+    @FXML
+    private TableColumn<Item, String> creatorColumn;
+    @FXML
+    private TableColumn<Item, String> statusColumn;
+    @FXML
+    private TableColumn<Item, Void> reserveColumn;
+
     private SearchService searchService;
 
     @FXML
     public void initialize() {
         // 1. Hämta servicen från AppContext
         this.searchService = AppContext.getInstance().searchService;
-        
+
         // 2. Standardinställningar för tabellen
         resultsTable.setPlaceholder(new Label("Använd sökfältet för att hitta böcker eller filmer."));
 
@@ -75,29 +83,28 @@ public class SearchController {
         });
     } // Slut på initialize
 
-  private void openReservationWindow(Item item) {
-    try {
-        // ÄNDRAT: Filnamnet matchar nu din bild "Reservations_View.fxml"
-        // Vi använder en relativ sökväg från resources
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Reservations_View.fxml"));
-        
+    private void openReservationWindow(Item item) {
+        try {
+            // ÄNDRAT: Filnamnet matchar nu din bild "Reservations_View.fxml"
+            // Vi använder en relativ sökväg från resources
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Reservations_View.fxml"));
 
-        Parent root = loader.load();
+            Parent root = loader.load();
 
-        // Skicka med objektet till controllern
-        ReservationController controller = loader.getController();
-        controller.setItem(item);
+            // Skicka med objektet till controllern
+            ReservationController controller = loader.getController();
+            controller.setItem(item);
 
-        Stage stage = new Stage();
-        stage.setTitle("Reservera: " + item.getItemTitle());
-        stage.setScene(new Scene(root));
-        stage.show();
+            Stage stage = new Stage();
+            stage.setTitle("Reservera: " + item.getItemTitle());
+            stage.setScene(new Scene(root));
+            stage.show();
 
-    } catch (Exception e) {
-        System.err.println("Kunde inte ladda Reservations_View.fxml. Kontrollera filnamn och sökväg!");
-        e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Kunde inte ladda Reservations_View.fxml. Kontrollera filnamn och sökväg!");
+            e.printStackTrace();
+        }
     }
-}
 
     @FXML
     private void handleSearch() {
@@ -107,9 +114,12 @@ public class SearchController {
             String selectedType = typeDropdown.getValue();
 
             // Rensa söksträngar om de är tomma
-            if (titleQuery.isEmpty()) titleQuery = null;
-            if (creatorQuery.isEmpty()) creatorQuery = null;
-            if ("Alla".equals(selectedType)) selectedType = null;
+            if (titleQuery.isEmpty())
+                titleQuery = null;
+            if (creatorQuery.isEmpty())
+                creatorQuery = null;
+            if ("Alla".equals(selectedType))
+                selectedType = null;
 
             System.out.println("Söker efter: " + titleQuery + " | " + selectedType);
 
@@ -123,7 +133,7 @@ public class SearchController {
             } else {
                 resultsTable.setItems(FXCollections.observableArrayList(searchResults));
             }
-            
+
             resultsTable.refresh();
 
         } catch (Exception e) {

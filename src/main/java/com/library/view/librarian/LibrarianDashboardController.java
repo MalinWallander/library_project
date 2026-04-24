@@ -1,6 +1,9 @@
 package com.library.view.librarian;
 
 import java.io.IOException;
+
+import com.library.config.AppContext;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import com.library.config.AppContext;
 
 public class LibrarianDashboardController {
 

@@ -1,12 +1,12 @@
 package com.library.view.librarian;
 
+import com.library.config.AppContext;
+import com.library.service.LoanService;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import com.library.config.AppContext;
-import com.library.service.LoanService;
 
 public class AddLoanController {
 

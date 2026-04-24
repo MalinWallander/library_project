@@ -1,9 +1,9 @@
 package com.library.service;
 
-import com.library.db.ReservationDao;
-import com.library.model.items.Item;
 import java.util.List;
 
+import com.library.db.ReservationDao;
+import com.library.model.items.Item;
 
 public class ReservationService {
 
@@ -15,18 +15,19 @@ public class ReservationService {
 
     String userId = "1"; // tillfällig testdata, ska hämtas från sessionen när den är implementerad
 
-public void reserveItem(String itemId) {
+    public void reserveItem(String itemId) {
 
-      String userId = "1";
+        String userId = "1";
 
-    if (reservationDao.isAlreadyReserved(itemId)) {
-        throw new RuntimeException("Item is already reserved");
+        if (reservationDao.isAlreadyReserved(itemId)) {
+            throw new RuntimeException("Item is already reserved");
+        }
+
+        reservationDao.createReservation(itemId, userId);
     }
 
-    reservationDao.createReservation(itemId, userId);
-}
-public List<Item> getMyReservations() {
-    return reservationDao.findByUser("USR001"); // Se till att detta matchar din SQL-tabell exakt
-}
+    public List<Item> getMyReservations() {
+        return reservationDao.findByUser("USR001"); // Se till att detta matchar din SQL-tabell exakt
+    }
 
 }

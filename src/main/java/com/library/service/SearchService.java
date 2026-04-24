@@ -1,8 +1,9 @@
 package com.library.service;
 
+import java.util.List;
+
 import com.library.db.SearchItemDao; // Se till att detta matchar filnamnet exakt!
 import com.library.model.items.Item;
-import java.util.List;
 
 public class SearchService {
 
