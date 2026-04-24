@@ -75,10 +75,10 @@ public List<Item> findByUser(String userId) {
 }
 
 private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-
     String type = rs.getString("itemType");
-    String status = rs.getString("status");
+    
+    // ÄNDRA HÄR: Du döpte om kolumnen till "reservationStatus" i SQL-strängen ovan!
+    String status = rs.getString("reservationStatus"); 
 
     if ("Book".equalsIgnoreCase(type)) {
         return new Book(
@@ -86,7 +86,7 @@ private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
             type,
             rs.getString("itemTitle"),
             rs.getString("categoryId"),
-            status,
+            status, // Nu kommer den använda värdet från reservationen
             null, null, null,
             rs.getString("mainAuthorName")
         );

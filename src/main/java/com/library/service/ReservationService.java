@@ -25,5 +25,8 @@ public void reserveItem(String itemId) {
 
     reservationDao.createReservation(itemId, userId);
 }
+public List<Item> getMyReservations() {
+    return reservationDao.findByUser("USR001"); // Se till att detta matchar din SQL-tabell exakt
+}
 
 }
