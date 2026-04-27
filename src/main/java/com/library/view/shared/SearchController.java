@@ -50,6 +50,7 @@ public class SearchController {
 
         // 2. Standardinställningar för tabellen
         resultsTable.setPlaceholder(new Label("Använd sökfältet för att hitta böcker eller filmer."));
+        resultsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // 3. Fyll dropdown-menyn
         typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd"));
