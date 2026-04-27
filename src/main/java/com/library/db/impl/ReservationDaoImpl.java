@@ -4,6 +4,7 @@ import com.library.db.ReservationDao;
 import com.library.model.items.Book;
 import com.library.model.items.Dvd;
 import com.library.model.items.Item;
+import com.library.model.items.Periodical;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -57,16 +58,34 @@ public boolean isAlreadyReserved(String itemId) {
 @Override
 public List<Item> findByUser(String userId) {
     String sql = """
-        SELECT i.*, 
-               b."mainAuthorName", 
-               d."mainDirectorName",
-               r."status" as reservationStatus -- Vi hämtar status från reservationen
-        FROM "Item" i
-        LEFT JOIN "Book" b ON i."itemId" = b."itemId"
-        LEFT JOIN "Dvd" d ON i."itemId" = d."itemId"
-        JOIN "Reservation" r ON i."itemId" = r."itemId" -- Matchar din bild
-        WHERE r."userId" = :userId
-    """;
+    SELECT i.*, 
+
+           -- BOOK
+           b.isbn,
+           b.genre,
+           b."publisherId",
+           b."mainAuthorName",
+           b."isCourseLiterature",
+
+           -- DVD
+           d."productionYear",
+           d."mainDirectorName",
+
+           -- PERIODICAL
+           p."publisher",
+           p."issn",
+
+           -- Reservation status
+           r."status" as reservationStatus
+
+    FROM "Item" i
+    LEFT JOIN "Book" b ON i."itemId" = b."itemId"
+    LEFT JOIN "Dvd" d ON i."itemId" = d."itemId"
+    LEFT JOIN "Periodical" p ON i."itemId" = p."itemId"
+    JOIN "Reservation" r ON i."itemId" = r."itemId"
+
+    WHERE r."userId" = :userId
+""";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
         .addValue("userId", userId);
@@ -75,10 +94,9 @@ public List<Item> findByUser(String userId) {
 }
 
 private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+
     String type = rs.getString("itemType");
-    
-    // ÄNDRA HÄR: Du döpte om kolumnen till "reservationStatus" i SQL-strängen ovan!
-    String status = rs.getString("reservationStatus"); 
+    String status = rs.getString("reservationStatus");
 
     if ("Book".equalsIgnoreCase(type)) {
         return new Book(
@@ -86,10 +104,14 @@ private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
             type,
             rs.getString("itemTitle"),
             rs.getString("categoryId"),
-            status, // Nu kommer den använda värdet från reservationen
-            null, null, null,
-            rs.getString("mainAuthorName")
+            status,
+            rs.getString("isbn"),
+            rs.getString("publisherId"),
+            rs.getString("genre"),
+            rs.getString("mainAuthorName"),
+            rs.getBoolean("isCourseLiterature") // 🔥 NY
         );
+
     } else if ("Dvd".equalsIgnoreCase(type)) {
         return new Dvd(
             rs.getString("itemId"),
@@ -97,13 +119,22 @@ private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
             rs.getString("itemTitle"),
             rs.getString("categoryId"),
             status,
-            0,
+            rs.getInt("productionYear"),
             rs.getString("mainDirectorName")
+        );
+
+    } else if ("Periodical".equalsIgnoreCase(type)) {
+        return new Periodical(
+            rs.getString("itemId"),
+            type,
+            rs.getString("itemTitle"),
+            rs.getString("categoryId"),
+            status,
+            rs.getString("publisher"),
+            rs.getString("issn")
         );
     }
 
     throw new RuntimeException("Unknown type: " + type);
-
 }
-
 }

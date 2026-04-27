@@ -2,6 +2,7 @@ package com.library.db.impl;
 
 import com.library.db.SearchItemDao;
 import com.library.model.items.Item;
+import com.library.model.items.Periodical;
 import com.library.model.items.Book;
 import com.library.model.items.Dvd;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,30 +23,54 @@ public class SearchItemDaoImpl implements SearchItemDao {
 	}
 
 	private static final String ADVANCED_SEARCH_SQL = """
-			    SELECT i.*,
-			           b.isbn,
-			           b."mainAuthorName" AS author,
-			           b."publisherId" AS publisher_id,
-			           b.genre,
-			           d."productionYear" AS production_year,
-			           d."mainDirectorName" AS director,
-			           CASE
-			               WHEN EXISTS (SELECT 1 FROM "Copy" c WHERE c."itemId" = i."itemId" AND c.status = 'Available') THEN 'Available'
-			               WHEN EXISTS (SELECT 1 FROM "Copy" c WHERE c."itemId" = i."itemId") THEN 'Loaned'
-			               ELSE 'No copies'
-			           END as current_status
-			    FROM "Item" i
-			    LEFT JOIN "Book" b ON i."itemId" = b."itemId"
-			    LEFT JOIN "Dvd" d ON i."itemId" = d."itemId"
-			    WHERE (:title IS NULL OR i."itemTitle" ILIKE :title)
-			    AND (
-			        :creator IS NULL
-			        OR (i."itemType" = 'Book' AND b."mainAuthorName" ILIKE :creator)
-			        OR (i."itemType" = 'Dvd' AND d."mainDirectorName" ILIKE :creator)
-			    )
-			    -- FIX: Här ändrade vi till itemType för att matcha din dropdown!
-			    AND (:category IS NULL OR i."itemType" = :category)
-			""";
+    SELECT i.*,
+
+           -- BOOK
+           b.isbn,
+           b.genre,
+           b."publisherId",
+           b."mainAuthorName" AS author,
+           b."isCourseLiterature",
+
+           -- DVD
+           d."productionYear",
+           d."mainDirectorName" AS director,
+
+           -- PERIODICAL
+           p."title" AS periodical_title,
+           p."publisher",
+           p."issn",
+
+           -- STATUS
+           CASE
+               WHEN EXISTS (
+                   SELECT 1 FROM "Copy" c 
+                   WHERE c."itemId" = i."itemId" 
+                   AND c.status = 'Available'
+               ) THEN 'Available'
+               WHEN EXISTS (
+                   SELECT 1 FROM "Copy" c 
+                   WHERE c."itemId" = i."itemId"
+               ) THEN 'Loaned'
+               ELSE 'No copies'
+           END AS current_status
+
+    FROM "Item" i
+    LEFT JOIN "Book" b ON i."itemId" = b."itemId"
+    LEFT JOIN "Dvd" d ON i."itemId" = d."itemId"
+    LEFT JOIN "Periodical" p ON i."itemId" = p."itemId"
+
+    WHERE (:title IS NULL OR i."itemTitle" ILIKE :title)
+
+    AND (
+        :creator IS NULL
+        OR (i."itemType" = 'Book' AND b."mainAuthorName" ILIKE :creator)
+        OR (i."itemType" = 'Dvd' AND d."mainDirectorName" ILIKE :creator)
+        OR (i."itemType" = 'Periodical' AND p."title" ILIKE :creator)
+    )
+
+    AND (:category IS NULL OR i."itemType" = :category)
+""";
 
 	@Override
 	public List<Item> search(String title, String creator, String categoryId) {
@@ -72,33 +97,46 @@ public class SearchItemDaoImpl implements SearchItemDao {
 
 	private Item mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-		String type = rs.getString("itemType");
-		String status = rs.getString("current_status");
+    String type = rs.getString("itemType");
+    String status = rs.getString("current_status");
 
-		// Skapar rätt objekt beroende på vad itemType är i databasen
-		if ("Book".equalsIgnoreCase(type)) {
-			return new Book(
-					rs.getString("itemId"),
-					type,
-					rs.getString("itemTitle"),
-					rs.getString("categoryId"),
-					status,
-					rs.getString("isbn"),
-					rs.getString("publisher_id"),
-					rs.getString("genre"),
-					rs.getString("author"));
+    if ("Book".equalsIgnoreCase(type)) {
+        return new Book(
+            rs.getString("itemId"),
+            type,
+            rs.getString("itemTitle"),
+            rs.getString("categoryId"),
+            status,
+            rs.getString("isbn"),
+            rs.getString("publisherId"),
+            rs.getString("genre"),
+            rs.getString("author"),
+            rs.getBoolean("isCourseLiterature") // NYTT
+        );
 
-		} else if ("Dvd".equalsIgnoreCase(type)) {
-			return new Dvd(
-					rs.getString("itemId"),
-					type,
-					rs.getString("itemTitle"),
-					rs.getString("categoryId"),
-					status,
-					rs.getInt("production_year"),
-					rs.getString("director"));
-		}
+    } else if ("Dvd".equalsIgnoreCase(type)) {
+        return new Dvd(
+            rs.getString("itemId"),
+            type,
+            rs.getString("itemTitle"),
+            rs.getString("categoryId"),
+            status,
+            rs.getInt("productionYear"),
+            rs.getString("director")
+        );
 
-		throw new RuntimeException("Okänd itemType: " + type);
-	}
+    } else if ("Periodical".equalsIgnoreCase(type)) {
+        return new Periodical(
+            rs.getString("itemId"),
+            type,
+            rs.getString("itemTitle"),
+            rs.getString("categoryId"),
+            status,
+            rs.getString("publisher"),
+            rs.getString("issn")
+        );
+    }
+
+    throw new RuntimeException("Okänd itemType: " + type);
+}
 }
