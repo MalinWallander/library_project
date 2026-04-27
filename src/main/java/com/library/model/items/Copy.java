@@ -1,7 +1,5 @@
 package com.library.model.items;
 
-import java.util.Date;
-
 import java.time.LocalDate;
 
 public class Copy {
