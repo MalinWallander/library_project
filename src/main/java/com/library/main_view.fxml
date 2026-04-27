@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.library.view.shared.MainController"
+            prefWidth="900.0" prefHeight="650.0"
+            style="-fx-background-color: #f7f7f7;">
+    <center>
+        <VBox alignment="CENTER" spacing="16" style="-fx-padding: 32;">
+            <Label text="Library System" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1f1f1f;" />
+            <Label text="Select your role to continue"
+                   style="-fx-font-size: 15px; -fx-text-fill: #5f5f5f;" />
+
+            <Region minHeight="8.0" prefHeight="8.0" />
+
+            <Button text="Staff Dashboard"
+                    onAction="#handleStaffAccess"
+                    prefWidth="320.0"
+                    prefHeight="56.0"
+                    style="-fx-background-color: #1f1f1f; -fx-text-fill: white; -fx-font-size: 18px; -fx-background-radius: 0; -fx-border-radius: 0;" />
+
+            <Button text="Borrower Access"
+                    onAction="#handleBorrowerAccess"
+                    prefWidth="320.0"
+                    prefHeight="56.0"
+                    style="-fx-background-color: white; -fx-text-fill: #1f1f1f; -fx-font-size: 18px; -fx-background-radius: 0; -fx-border-color: #d5d5d5; -fx-border-width: 1; -fx-border-radius: 0;" />
+        </VBox>
+    </center>
+</BorderPane>

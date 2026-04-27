@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.library.view.librarian.CreateUserController"
+      spacing="10" style="-fx-padding: 20;" prefWidth="350">
+
+    <Label text="Create New Borrower" />
+    <TextField fx:id="fNameField" promptText="First name"/>
+    <TextField fx:id="lNameField" promptText="Last name" />
+    <TextField fx:id="emailField" promptText="Email address" />
+    <TextField fx:id="phoneField" promptText="Phone number" />
+    <ComboBox fx:id="roleDropdown" promptText="Select borrower category">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Student" />
+                <String fx:value="Researcher" />
+                <String fx:value="Other University Employee" />
+                <String fx:value="Public" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <DatePicker fx:id="dobPicker" promptText="Date of birth" />
+    <PasswordField fx:id="passwordField" promptText="Password" />
+    <Button text="Submit" onAction="#handleSubmit" />
+    <Label fx:id="messageLabel" wrapText="true" />
+</VBox>
