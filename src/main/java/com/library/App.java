@@ -14,12 +14,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("librarian_dashboard"), 640, 480);
+        scene = new Scene(loadFXML("main_view"), 900, 650);
+        stage.setTitle("Library System");
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -31,5 +32,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

@@ -6,13 +6,11 @@ import com.library.model.items.Book;
 import com.library.model.items.Dvd;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-@Repository
 public class SearchItemDaoImpl implements SearchItemDao {
 
 	private final NamedParameterJdbcTemplate jdbc;

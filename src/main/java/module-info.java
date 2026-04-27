@@ -1,7 +1,10 @@
 module com.library {
     requires javafx.controls;
     requires javafx.fxml;
-    requires spring;
+    requires spring.jdbc;
+    requires spring.beans;
+    requires spring.core;
+    requires spring.tx;
     requires java.sql;
     requires com.zaxxer.hikari;
 
