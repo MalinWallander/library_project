@@ -11,4 +11,8 @@ public interface ReservationDao {
     boolean isAlreadyReserved(String itemId);
 
     List<Item> findByUser(String userId);
+
+    String findItemType(String itemId);
+
+    boolean hasAvailableCopy(String itemId);
 }

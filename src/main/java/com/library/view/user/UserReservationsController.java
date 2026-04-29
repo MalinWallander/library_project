@@ -8,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
+
+import java.io.IOException;
 import java.util.List;
 
 public class UserReservationsController {
@@ -47,8 +49,13 @@ this.reservationService = AppContext.getInstance().reservationService;
     }
 
     @FXML
-    private void handleBackToDashboard() {
-        // Här lägger du din logik för att gå tillbaka, t.ex:
-        // App.setRoot("user_dashboard");
+private void handleBackToDashboard() {
+    try {
+        // Förutsatt att din App-klass har en static metod för att byta vy
+        com.library.App.setRoot("user_dashboard"); 
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+
+}
 }

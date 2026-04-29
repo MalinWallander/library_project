@@ -52,7 +52,7 @@ public class SearchController {
         resultsTable.setPlaceholder(new Label("Använd sökfältet för att hitta böcker eller filmer."));
 
         // 3. Fyll dropdown-menyn
-        typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd"));
+        typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd", "Periodical"));
         typeDropdown.getSelectionModel().selectFirst();
 
         // 4. Mappa vanliga text-kolumner
@@ -61,27 +61,44 @@ public class SearchController {
         creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
 
         // 5. Skapa knappen "Reservera" i den sista kolumnen
-        reserveColumn.setCellFactory(col -> new TableCell<Item, Void>() {
-            private final Button btn = new Button("Reservera");
+       reserveColumn.setCellFactory(col -> new TableCell<Item, Void>() {
+    private final Button btn = new Button("Reservera");
 
-            {
-                btn.setOnAction(e -> {
-                    Item item = getTableView().getItems().get(getIndex());
-                    openReservationWindow(item);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
+    {
+        btn.setOnAction(e -> {
+            Item item = getTableView().getItems().get(getIndex());
+            openReservationWindow(item);
         });
-    } // Slut på initialize
+    }
+
+    @Override
+protected void updateItem(Void item, boolean empty) {
+    super.updateItem(item, empty);
+
+    if (empty) {
+        setGraphic(null);
+        return;
+    }
+
+    Item currentItem = getTableView().getItems().get(getIndex());
+
+ 
+    if ("Periodical".equalsIgnoreCase(currentItem.getItemType())) {
+        setGraphic(null);
+        return;
+    }
+
+  
+    if ("Available".equalsIgnoreCase(currentItem.getStatus())) {
+        setGraphic(null);
+    } else {
+        setGraphic(btn);
+    }
+}
+});
+
+}
+// Slut på initialize
 
     private void openReservationWindow(Item item) {
         try {

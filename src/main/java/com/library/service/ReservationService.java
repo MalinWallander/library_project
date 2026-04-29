@@ -9,25 +9,42 @@ public class ReservationService {
 
     private final ReservationDao reservationDao;
 
+    // 🔹 En enda källa för aktuell användare
+    private String currentUserId = "USR001"; // tillfällig
+
     public ReservationService(ReservationDao reservationDao) {
         this.reservationDao = reservationDao;
     }
 
-    String userId = "1"; // tillfällig testdata, ska hämtas från sessionen när den är implementerad
-
     public void reserveItem(String itemId) {
 
-        String userId = "1";
-
+        // 1. Kolla om redan reserverad
         if (reservationDao.isAlreadyReserved(itemId)) {
             throw new RuntimeException("Item is already reserved");
         }
 
-        reservationDao.createReservation(itemId, userId);
+        // 2. Hämta itemType
+        String type = reservationDao.findItemType(itemId);
+
+        // 3. Blockera tidskrifter
+        if ("Periodical".equalsIgnoreCase(type)) {
+            throw new RuntimeException("Tidskrifter kan inte reserveras");
+        }
+
+        if (reservationDao.hasAvailableCopy(itemId)) {
+    throw new IllegalStateException("AVAILABLE");
+}
+
+        // 4. Skapa reservation
+        reservationDao.createReservation(itemId, currentUserId);
     }
 
     public List<Item> getMyReservations() {
-        return reservationDao.findByUser("USR001"); // Se till att detta matchar din SQL-tabell exakt
+        return reservationDao.findByUser(currentUserId);
     }
 
+    // 🔹 används senare vid login
+    public void setCurrentUser(String userId) {
+        this.currentUserId = userId;
+    }
 }
