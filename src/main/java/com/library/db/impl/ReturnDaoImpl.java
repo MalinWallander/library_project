@@ -3,6 +3,8 @@ package com.library.db.impl;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import com.library.model.items.Copy;
+
 public class ReturnDaoImpl {
 	private final NamedParameterJdbcTemplate jdbc;
 
@@ -14,8 +16,7 @@ public class ReturnDaoImpl {
 			UPDATE "Copy" SET \"status\" = 'Available' WHERE \"copyId\" = :copyId
 			""";
 
-	@Override
-	public Copy returnCopy(String copyId) {
+	public String returnCopy(String copyId) {
 		MapSqlParameterSource params = new MapSqlParameterSource("copyId", copyId);
 		jdbc.update(UPDATE_STATUS, params);
 		return copyId;

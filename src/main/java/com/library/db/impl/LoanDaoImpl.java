@@ -38,7 +38,7 @@ public class LoanDaoImpl implements LoanDao {
 
 		MapSqlParameterSource params = new MapSqlParameterSource()
 				.addValue("loanId", loan.getLoanId())
-				.addValue("copyId", loan.getCopyId()) // FK → Copy.copyId
+				.addValue("copyId", loan.getCopyId())
 				.addValue("userId", loan.getUserId())
 				.addValue("loanDate", loan.getLoanDate())
 				.addValue("returnDate", loan.getReturnDate());
