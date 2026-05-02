@@ -13,20 +13,32 @@ public class ReturnDaoImpl implements ReturnDao {
 		this.jdbc = jdbc;
 	}
 
-	// LAST ON LOAN, RETURNED COPY BASED ON COPY ID
-	private static final String UPDATE_STATUS_BY_BARCODE = """
-			UPDATE "Copy" SET "status" = 'Available' WHERE "barcode" = :barcode
+	private static final String FIND_COPY_ID_BY_BARCODE = """
+			SELECT "copyId" FROM "Copy" WHERE "barcode" = :barcode
+			""";
+
+	private static final String UPDATE_STATUS = """
+			UPDATE "Copy" SET "status" = 'Available' WHERE "copyId" = :copyId
+			""";
+
+	private static final String UPDATE_LOAN_RETURNED = """
+			UPDATE "Loan" SET "returnDate" = CURRENT_TIMESTAMP WHERE "copyId" = :copyId AND "returnDate" IS NULL
 			""";
 
 	@Override
 	public String returnCopy(String barcode) {
 		MapSqlParameterSource params = new MapSqlParameterSource("barcode", barcode);
-		int rowsAffected = jdbc.update(UPDATE_STATUS_BY_BARCODE, params);
 
-		if (rowsAffected == 0) {
-			throw new IllegalArgumentException("No copy found with barcode: " + barcode);
-		}
+		// Look up the copyId from the barcode
+		// String copyId = jdbc.queryForObject(FIND_COPY_ID_BY_BARCODE, new Object[] {
+		// params }, String.class);
+		String copyId = (String) jdbc.queryForObject(FIND_COPY_ID_BY_BARCODE, params, String.class);
 
-		return barcode;
+		// Update the status to Available
+		MapSqlParameterSource updateParams = new MapSqlParameterSource("copyId", copyId);
+		jdbc.update(UPDATE_STATUS, updateParams);
+		jdbc.update(UPDATE_LOAN_RETURNED, updateParams);
+
+		return copyId;
 	}
 }
