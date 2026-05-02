@@ -48,7 +48,7 @@ public class AppContext {
     public final EmployeeService employeeService = new EmployeeService(employeeDao, authService);
     public final SearchService searchService = new SearchService(searchItemDao);
     public final ItemService itemService = new ItemService(itemDao);
-    public final ReservationService reservationService = new ReservationService(reservationDao);
+    public final ReservationService reservationService = new ReservationService(userDao, reservationDao, authService);
 
     public final LoanService loanService = new LoanService(loanDao);
     // Singleton instance

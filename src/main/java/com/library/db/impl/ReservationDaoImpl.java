@@ -25,12 +25,14 @@ public class ReservationDaoImpl implements ReservationDao {
     @Override
     public void createReservation(String itemId, String userId) {
 
+
+        
         String resId = "RES" + System.currentTimeMillis();
 
-       String sql = """
-    INSERT INTO Reservation 
-    (reservationId, userId, itemId, status, reservationDate, expiryDate)
-    VALUES (:resId, :userId, :itemId, 'Active', CURRENT_DATE, CURRENT_DATE + INTERVAL '3 days')
+    String sql = """
+    INSERT INTO "Reservation"
+    ("reservationId", "userId", "itemId", "status")
+    VALUES (:resId, :userId, :itemId, 'Active')
 """;
 
         MapSqlParameterSource params = new MapSqlParameterSource()
