@@ -1,6 +1,7 @@
 package com.library.service;
 
 import com.library.model.User;
+import com.library.db.ReservationDao;
 import com.library.db.UserDao;
 
 import java.time.LocalDate;
@@ -27,10 +28,23 @@ public class UserService {
         validateUserInput(fName, lName, email, dateOfBirth, categoryId, phoneNumber, plainPassword);
 
         UUID userId = UUID.randomUUID();
-        User newUser = new User(userId, fName.trim(), lName.trim(), email.trim(), dateOfBirth, categoryId, phoneNumber.trim());
 
+        User newUser = new User(
+                userId,
+                fName.trim(),
+                lName.trim(),
+                email.trim(),
+                dateOfBirth,
+                categoryId,
+                phoneNumber.trim()
+        );
+
+        // 1. Spara user
         dao.createUser(newUser);
+
+        // 2. Skapa login (kopplar user till auth_account)
         authService.createBorrowerLogin(email, plainPassword, userId);
+
         System.out.println("User created: " + newUser.getEmail());
     }
 

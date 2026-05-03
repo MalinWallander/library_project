@@ -3,27 +3,37 @@ package com.library.service;
 import java.util.List;
 
 import com.library.db.ReservationDao;
+import com.library.db.UserDao;
 import com.library.model.items.Item;
+import com.library.service.AuthService;
 
 public class ReservationService {
 
     private final ReservationDao reservationDao;
+    private final AuthService authService;
+    private final UserDao dao;
 
-    // 🔹 En enda källa för aktuell användare
-    private String currentUserId = "USR001"; // tillfällig
-
-    public ReservationService(ReservationDao reservationDao) {
+    public ReservationService(UserDao dao, ReservationDao reservationDao, AuthService authService) {
+        this.dao = dao;
         this.reservationDao = reservationDao;
+        this.authService = authService;
     }
 
     public void reserveItem(String itemId) {
 
-        // 1. Kolla om redan reserverad
+        // 🔐 Kolla login
+        if (!authService.isLoggedIn()) {
+            throw new RuntimeException("Du måste vara inloggad");
+        }
+
+        String userId = authService.getCurrentSession().getUserId().toString();
+
+        // 1. Redan reserverad?
         if (reservationDao.isAlreadyReserved(itemId)) {
             throw new RuntimeException("Item is already reserved");
         }
 
-        // 2. Hämta itemType
+        // 2. Typ
         String type = reservationDao.findItemType(itemId);
 
         // 3. Blockera tidskrifter
@@ -31,20 +41,24 @@ public class ReservationService {
             throw new RuntimeException("Tidskrifter kan inte reserveras");
         }
 
+        // 4. Endast reservera om EJ tillgänglig
         if (reservationDao.hasAvailableCopy(itemId)) {
-    throw new IllegalStateException("AVAILABLE");
-}
+            throw new IllegalStateException("Item is available - no reservation needed");
+        }
 
-        // 4. Skapa reservation
-        reservationDao.createReservation(itemId, currentUserId);
+        // 5. Skapa reservation
+        reservationDao.createReservation(itemId, userId);
     }
-
     public List<Item> getMyReservations() {
-        return reservationDao.findByUser(currentUserId);
-    }
 
-    // 🔹 används senare vid login
-    public void setCurrentUser(String userId) {
-        this.currentUserId = userId;
-    }
+        if (!authService.isLoggedIn()) {
+            throw new RuntimeException("Du måste vara inloggad");
+        }
+
+        String userId = authService.getCurrentSession().getUserId().toString();
+
+        return reservationDao.findByUser(userId);
 }
+}
+
+
