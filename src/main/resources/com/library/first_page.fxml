@@ -58,7 +58,7 @@
 
                 <!-- Search Catalog card (active) -->
                 <VBox fx:id="searchCard"
-                      styleClass="card"
+                      styleClass="card-active"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
