@@ -13,12 +13,9 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.library.view.shared.FirstPageController"
+            fx:id="rootPane"
             prefWidth="1000" prefHeight="650"
             styleClass="root-pane">
-
-    <stylesheets>
-        <String fx:value="@/styles/first_page.css"/>
-    </stylesheets>
 
     <!-- ── Top navigation bar ── -->
     <top>
@@ -59,14 +56,14 @@
 
                 <!-- Search Catalog card (active) -->
                 <VBox fx:id="searchCard"
-                      styleClass="card, card-active"
+                      styleClass="card card-active"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
                       onMouseClicked="#handleSearchCard">
                     <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
 
-                    <StackPane styleClass="card-icon-circle, card-icon-circle-active">
+                    <StackPane styleClass="card-icon-circle card-icon-circle-active">
                         <Label text="🔍" styleClass="card-icon"/>
                     </StackPane>
 
@@ -80,14 +77,14 @@
 
                 <!-- My Loans card (locked) -->
                 <VBox fx:id="loansCard"
-                      styleClass="card, card-locked"
+                      styleClass="card card-locked"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
                       onMouseClicked="#handleLoansCard">
                     <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
 
-                    <StackPane styleClass="card-icon-circle, card-icon-circle-locked">
+                    <StackPane styleClass="card-icon-circle card-icon-circle-locked">
                         <Label text="📖" styleClass="card-icon-locked"/>
                         <!-- Lock badge -->
                         <Label text="🔒" styleClass="card-lock-badge"/>
@@ -101,14 +98,14 @@
 
                 <!-- My Reservations card (locked) -->
                 <VBox fx:id="reservationsCard"
-                      styleClass="card, card-locked"
+                      styleClass="card card-locked"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
                       onMouseClicked="#handleReservationsCard">
                     <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
 
-                    <StackPane styleClass="card-icon-circle, card-icon-circle-locked">
+                    <StackPane styleClass="card-icon-circle card-icon-circle-locked">
                         <Label text="📅" styleClass="card-icon-locked"/>
                         <Label text="🔒" styleClass="card-lock-badge"/>
                     </StackPane>

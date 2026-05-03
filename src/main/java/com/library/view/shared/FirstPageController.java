@@ -29,7 +29,7 @@ public class FirstPageController {
 	@FXML
 	public void initialize() {
 		rootPane.getStylesheets().add(
-				getClass().getResource("/styles/first_page.css").toExternalForm());
+				getClass().getResource("/com/library/styles/first_page.css").toExternalForm());
 	}
 
 	// ── Nav bar ──────────────────────────────────────────
