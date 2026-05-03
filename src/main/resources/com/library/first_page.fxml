@@ -46,8 +46,10 @@
 
             <!-- Hero text -->
             <VBox alignment="CENTER" spacing="12">
-                <Label text="Welcome to City Library" styleClass="hero-title"/>
-                <Label text="Discover books, DVDs, and magazines from our extensive collection"
+                <Label text="Welcome to the City Library" styleClass="hero-title"/>
+                <Label text="Discover books, DVDs, and magazines from our extensive collection."
+                       styleClass="hero-subtitle"/>
+											 <Label text="Log in to manage your loans and reservations."
                        styleClass="hero-subtitle"/>
             </VBox>
 
@@ -56,11 +58,12 @@
 
                 <!-- Search Catalog card (active) -->
                 <VBox fx:id="searchCard"
-                      styleClass="card card-active"
+                      styleClass="card"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
-                      onMouseClicked="#handleSearchCard">
+                      onMouseClicked="#handleSearchCard"
+											>
                     <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
 
                     <StackPane styleClass="card-icon-circle card-icon-circle-active">
@@ -77,7 +80,7 @@
 
                 <!-- My Loans card (locked) -->
                 <VBox fx:id="loansCard"
-                      styleClass="card card-locked"
+                      styleClass="card-locked"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
@@ -98,7 +101,7 @@
 
                 <!-- My Reservations card (locked) -->
                 <VBox fx:id="reservationsCard"
-                      styleClass="card card-locked"
+                      styleClass="card-locked"
                       alignment="CENTER"
                       spacing="16"
                       prefWidth="220" prefHeight="180"
