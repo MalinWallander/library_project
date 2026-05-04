@@ -66,7 +66,7 @@ public class FirstPageController {
 	private void openLoginDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader(
-					getClass().getResource("/com/library/login.fxml"));
+					getClass().getResource("/com/library/main_view.fxml"));
 			Parent root = loader.load();
 
 			Stage dialog = new Stage();
