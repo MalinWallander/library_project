@@ -61,50 +61,46 @@ public class SearchController {
         creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
 
         // 5. Skapa knappen "Reservera" i den sista kolumnen
-       reserveColumn.setCellFactory(col -> new TableCell<Item, Void>() {
-    private final Button btn = new Button("Reservera");
+        reserveColumn.setCellFactory(col -> new TableCell<Item, Void>() {
+            private final Button btn = new Button("Reservera");
 
-    {
-        btn.setOnAction(e -> {
-            Item item = getTableView().getItems().get(getIndex());
-            openReservationWindow(item);
+            {
+                btn.setOnAction(e -> {
+                    Item item = getTableView().getItems().get(getIndex());
+                    openReservationWindow(item);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Item currentItem = getTableView().getItems().get(getIndex());
+
+                if ("Periodical".equalsIgnoreCase(currentItem.getItemType())) {
+                    setGraphic(null);
+                    return;
+                }
+
+                if ("Available".equalsIgnoreCase(currentItem.getStatus())) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
         });
+
     }
-
-    @Override
-protected void updateItem(Void item, boolean empty) {
-    super.updateItem(item, empty);
-
-    if (empty) {
-        setGraphic(null);
-        return;
-    }
-
-    Item currentItem = getTableView().getItems().get(getIndex());
-
- 
-    if ("Periodical".equalsIgnoreCase(currentItem.getItemType())) {
-        setGraphic(null);
-        return;
-    }
-
-  
-    if ("Available".equalsIgnoreCase(currentItem.getStatus())) {
-        setGraphic(null);
-    } else {
-        setGraphic(btn);
-    }
-}
-});
-
-}
-// Slut på initialize
+    // Slut på initialize
 
     private void openReservationWindow(Item item) {
         try {
-            // ÄNDRAT: Filnamnet matchar nu din bild "Reservations_View.fxml"
-            // Vi använder en relativ sökväg från resources
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Reservations_View.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reservations_view.fxml"));
 
             Parent root = loader.load();
 
@@ -118,7 +114,7 @@ protected void updateItem(Void item, boolean empty) {
             stage.show();
 
         } catch (Exception e) {
-            System.err.println("Kunde inte ladda Reservations_View.fxml. Kontrollera filnamn och sökväg!");
+            System.err.println("Kunde inte ladda reservations_view.fxml. Kontrollera filnamn och sökväg!");
             e.printStackTrace();
         }
     }
