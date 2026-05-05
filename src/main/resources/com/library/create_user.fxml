@@ -29,7 +29,8 @@
     </items>
   </ComboBox>
   <DatePicker fx:id="dobPicker" promptText="Date of birth" />
-      <PasswordField fx:id="passwordField" promptText="Password" />
+  <PasswordField fx:id="passwordField" promptText="Password" />
     <Button text="Submit" onAction="#handleSubmit" />
+    <Label fx:id="messageLabel" wrapText="true" />
 
 </VBox>
