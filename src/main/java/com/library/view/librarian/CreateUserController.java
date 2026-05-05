@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,8 +27,8 @@ public class CreateUserController {
     private DatePicker dobPicker;
     @FXML
     private PasswordField passwordField;
-    @FXML
-    private Label messageLabel;
+    // @FXML
+    // private Label messageLabel;
 
     private UserService userService;
 
@@ -53,7 +52,7 @@ public class CreateUserController {
             Stage stage = (Stage) fNameField.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            messageLabel.setText(e.getMessage());
+            System.out.println("Error creating user: " + e.getMessage());
         }
     }
 }

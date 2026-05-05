@@ -7,6 +7,7 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -28,6 +29,7 @@
     </items>
   </ComboBox>
   <DatePicker fx:id="dobPicker" promptText="Date of birth" />
+      <PasswordField fx:id="passwordField" promptText="Password" />
     <Button text="Submit" onAction="#handleSubmit" />
 
 </VBox>

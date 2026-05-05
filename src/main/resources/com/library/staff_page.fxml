@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.library.view.librarian.StaffPageController"
+            prefWidth="1000" prefHeight="650"
+            styleClass="root-pane"
+            >
+
+    <!-- Nav bar -->
+    <top>
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <padding><Insets top="0" right="24" bottom="0" left="24"/></padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="📖" styleClass="nav-logo-icon"/>
+                <Label text="City Library" styleClass="nav-logo-text"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <HBox alignment="CENTER" spacing="16">
+                <Label text="🖥 Staff Portal" styleClass="nav-portal-label"/>
+                <Button fx:id="logoutButton"
+                        text="⇥ Logout"
+                        styleClass="nav-logout-btn"
+                        onAction="#handleLogout"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- Main content -->
+    <center>
+        <VBox styleClass="content-area">
+            <padding><Insets top="48" right="48" bottom="48" left="48"/></padding>
+
+            <!-- Page heading -->
+            <VBox spacing="6">
+                <Label text="Staff Dashboard" styleClass="page-title"/>
+                <Label text="Manage library operations and inventory" styleClass="page-subtitle"/>
+            </VBox>
+
+            <!-- Cards grid -->
+            <FlowPane styleClass="cards-flow" hgap="24" vgap="24">
+                <VBox.margin><Insets top="32"/></VBox.margin>
+
+                <!-- Checkout Books -->
+                <VBox fx:id="checkoutCard" styleClass="staff-card" alignment="CENTER"
+                      spacing="16" prefWidth="240" prefHeight="200"
+                      onMouseClicked="#handleCheckout">
+                    <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
+                    <StackPane styleClass="card-icon-circle">
+                        <Label text="🛒" styleClass="card-icon"/>
+                    </StackPane>
+                    <VBox alignment="CENTER" spacing="6">
+                        <Label text="Checkout Books" styleClass="card-title"/>
+                        <Label text="Create new loans" styleClass="card-subtitle"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Check In Books -->
+                <VBox fx:id="checkinCard" styleClass="staff-card" alignment="CENTER"
+                      spacing="16" prefWidth="240" prefHeight="200"
+                      onMouseClicked="#handleCheckin">
+                    <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
+                    <StackPane styleClass="card-icon-circle">
+                        <Label text="✅" styleClass="card-icon"/>
+                    </StackPane>
+                    <VBox alignment="CENTER" spacing="6">
+                        <Label text="Check In Books" styleClass="card-title"/>
+                        <Label text="Return items" styleClass="card-subtitle"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Search Titles -->
+                <VBox fx:id="searchCard" styleClass="staff-card" alignment="CENTER"
+                      spacing="16" prefWidth="240" prefHeight="200"
+                      onMouseClicked="#handleSearch">
+                    <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
+                    <StackPane styleClass="card-icon-circle">
+                        <Label text="🔍" styleClass="card-icon"/>
+                    </StackPane>
+                    <VBox alignment="CENTER" spacing="6">
+                        <Label text="Search Titles" styleClass="card-title"/>
+                        <Label text="Find library items" styleClass="card-subtitle"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Add User -->
+                <VBox fx:id="addUserCard" styleClass="staff-card" alignment="CENTER"
+                      spacing="16" prefWidth="240" prefHeight="200"
+                      onMouseClicked="#handleCreateUser">
+                    <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
+                    <StackPane styleClass="card-icon-circle">
+                        <Label text="👤" styleClass="card-icon"/>
+                    </StackPane>
+                    <VBox alignment="CENTER" spacing="6">
+                        <Label text="Add User" styleClass="card-title"/>
+                        <Label text="Register new members" styleClass="card-subtitle"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Manage Inventory -->
+                <VBox fx:id="inventoryCard" styleClass="staff-card" alignment="CENTER"
+                      spacing="16" prefWidth="240" prefHeight="200"
+                      onMouseClicked="#handleInventory">
+                    <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
+                    <StackPane styleClass="card-icon-circle">
+                        <Label text="📦" styleClass="card-icon"/>
+                    </StackPane>
+                    <VBox alignment="CENTER" spacing="6">
+                        <Label text="Manage Inventory" styleClass="card-title"/>
+                        <Label text="Add/edit items" styleClass="card-subtitle"/>
+                    </VBox>
+                </VBox>
+
+            </FlowPane>
+        </VBox>
+    </center>
+
+</BorderPane>

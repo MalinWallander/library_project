@@ -1,7 +1,6 @@
 package com.library.service;
 
 import com.library.model.User;
-import com.library.db.ReservationDao;
 import com.library.db.UserDao;
 
 import java.time.LocalDate;
@@ -18,12 +17,12 @@ public class UserService {
     }
 
     public void createUser(String fName,
-                           String lName,
-                           String email,
-                           LocalDate dateOfBirth,
-                           String categoryId,
-                           String phoneNumber,
-                           String plainPassword) {
+            String lName,
+            String email,
+            LocalDate dateOfBirth,
+            String categoryId,
+            String phoneNumber,
+            String plainPassword) {
 
         validateUserInput(fName, lName, email, dateOfBirth, categoryId, phoneNumber, plainPassword);
 
@@ -36,8 +35,7 @@ public class UserService {
                 email.trim(),
                 dateOfBirth,
                 categoryId,
-                phoneNumber.trim()
-        );
+                phoneNumber.trim());
 
         // 1. Spara user
         dao.createUser(newUser);
@@ -49,18 +47,25 @@ public class UserService {
     }
 
     private void validateUserInput(String fName,
-                                   String lName,
-                                   String email,
-                                   LocalDate dateOfBirth,
-                                   String categoryId,
-                                   String phoneNumber,
-                                   String plainPassword) {
-        if (fName == null || fName.isBlank()) throw new IllegalArgumentException("First name is required.");
-        if (lName == null || lName.isBlank()) throw new IllegalArgumentException("Last name is required.");
-        if (email == null || email.isBlank()) throw new IllegalArgumentException("Email is required.");
-        if (dateOfBirth == null) throw new IllegalArgumentException("Date of birth is required.");
-        if (categoryId == null || categoryId.isBlank()) throw new IllegalArgumentException("Borrower category is required.");
-        if (phoneNumber == null || phoneNumber.isBlank()) throw new IllegalArgumentException("Phone number is required.");
-        if (plainPassword == null || plainPassword.isBlank()) throw new IllegalArgumentException("Password is required.");
+            String lName,
+            String email,
+            LocalDate dateOfBirth,
+            String categoryId,
+            String phoneNumber,
+            String plainPassword) {
+        if (fName == null || fName.isBlank())
+            throw new IllegalArgumentException("First name is required.");
+        if (lName == null || lName.isBlank())
+            throw new IllegalArgumentException("Last name is required.");
+        if (email == null || email.isBlank())
+            throw new IllegalArgumentException("Email is required.");
+        if (dateOfBirth == null)
+            throw new IllegalArgumentException("Date of birth is required.");
+        if (categoryId == null || categoryId.isBlank())
+            throw new IllegalArgumentException("Borrower category is required.");
+        if (phoneNumber == null || phoneNumber.isBlank())
+            throw new IllegalArgumentException("Phone number is required.");
+        if (plainPassword == null || plainPassword.isBlank())
+            throw new IllegalArgumentException("Password is required.");
     }
 }
