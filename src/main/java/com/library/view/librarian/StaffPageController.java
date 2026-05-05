@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import com.library.App;
 import com.library.config.AppContext;
+import com.library.view.shared.SearchController;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,18 +38,64 @@ public class StaffPageController {
 	}
 
 	@FXML
-	private void handleCheckout() {
-		App.setRoot("add_loan");
+	private void handleCreateLoan() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/add_loan.fxml"));
+			Parent root = loader.load();
+
+			// Inject service from AppContext into the popup controller
+			AddLoanController loanController = loader.getController();
+			loanController.setLoanService(AppContext.getInstance().loanService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Create Loan");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
-	private void handleCheckin() {
-		App.setRoot("return_copy");
+	private void handleReturnCopy() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/return_copy.fxml"));
+			Parent root = loader.load();
+
+			ReturnCopyController returnController = loader.getController();
+			returnController.setReturnCopyService(AppContext.getInstance().returnCopyService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Return Copy");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	private void handleSearch() {
-		App.setRoot("search_item");
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/search_item.fxml"));
+			Parent root = loader.load();
+
+			SearchController searchController = loader.getController();
+			searchController.setSearchService(AppContext.getInstance().searchService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Search Items");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -75,6 +121,21 @@ public class StaffPageController {
 
 	@FXML
 	private void handleInventory() {
-		App.setRoot("inventory_page");
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/add_item.fxml"));
+			Parent root = loader.load();
+
+			AddItemController addItemController = loader.getController();
+			addItemController.setItemService(AppContext.getInstance().itemService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Inventory Management");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

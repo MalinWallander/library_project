@@ -43,6 +43,10 @@ public class SearchController {
 
     private SearchService searchService;
 
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
     @FXML
     public void initialize() {
         // 1. Hämta servicen från AppContext

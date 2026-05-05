@@ -57,7 +57,7 @@
                 <!-- Checkout Books -->
                 <VBox fx:id="checkoutCard" styleClass="staff-card" alignment="CENTER"
                       spacing="16" prefWidth="240" prefHeight="200"
-                      onMouseClicked="#handleCheckout">
+                      onMouseClicked="#handleCreateLoan">
                     <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
                     <StackPane styleClass="card-icon-circle">
                         <Label text="🛒" styleClass="card-icon"/>
@@ -71,7 +71,7 @@
                 <!-- Check In Books -->
                 <VBox fx:id="checkinCard" styleClass="staff-card" alignment="CENTER"
                       spacing="16" prefWidth="240" prefHeight="200"
-                      onMouseClicked="#handleCheckin">
+                      onMouseClicked="#handleReturnCopy">
                     <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
                     <StackPane styleClass="card-icon-circle">
                         <Label text="✅" styleClass="card-icon"/>
