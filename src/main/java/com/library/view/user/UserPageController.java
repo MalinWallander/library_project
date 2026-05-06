@@ -1,12 +1,22 @@
 package com.library.view.user;
 
+import java.io.IOException;
+
 import com.library.App;
+import com.library.config.AppContext;
+import com.library.view.shared.SearchController;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class UserPageController {
 
@@ -25,75 +35,75 @@ public class UserPageController {
 	@FXML
 	private VBox pendingReservationsContainer;
 
-	@FXML
-	public void initialize() {
-		// TODO: replace with real data from your services
-		populateLoans();
-		populateReservations();
-	}
+	// @FXML
+	// public void initialize() {
+	// // TODO: replace with real data from your services
+	// populateLoans();
+	// populateReservations();
+	// }
 
-	private void populateLoans() {
-		// Example — replace with real loan data
-		String[][] loans = {
-				{ "The Great Gatsby", "Due: May 1" },
-				{ "1984", "Due: May 5" },
-				{ "Inception (DVD)", "Due: Apr 28" }
-		};
+	// private void populateLoans() {
+	// // Example — replace with real loan data
+	// String[][] loans = {
+	// { "The Great Gatsby", "Due: May 1" },
+	// { "1984", "Due: May 5" },
+	// { "Inception (DVD)", "Due: Apr 28" }
+	// };
 
-		activeLoansLabel.setText(loans.length + " active");
+	// activeLoansLabel.setText(loans.length + " active");
 
-		for (String[] loan : loans) {
-			recentLoansContainer.getChildren().add(createLoanRow(loan[0], loan[1]));
-		}
-	}
+	// for (String[] loan : loans) {
+	// recentLoansContainer.getChildren().add(createLoanRow(loan[0], loan[1]));
+	// }
+	// }
 
-	private void populateReservations() {
-		// Example — replace with real reservation data
-		String[][] reservations = {
-				{ "To Kill a Mockingbird", "Ready" }
-		};
+	// private void populateReservations() {
+	// // Example — replace with real reservation data
+	// String[][] reservations = {
+	// { "To Kill a Mockingbird", "Ready" }
+	// };
 
-		pendingReservationsLabel.setText(reservations.length + " pending");
+	// pendingReservationsLabel.setText(reservations.length + " pending");
 
-		for (String[] res : reservations) {
-			pendingReservationsContainer.getChildren().add(
-					createReservationRow(res[0], res[1]));
-		}
-	}
+	// for (String[] res : reservations) {
+	// pendingReservationsContainer.getChildren().add(
+	// createReservationRow(res[0], res[1]));
+	// }
+	// }
 
-	private HBox createLoanRow(String title, String due) {
-		HBox row = new HBox();
-		row.getStyleClass().add("loan-row");
+	// private HBox createLoanRow(String title, String due) {
+	// HBox row = new HBox();
+	// row.getStyleClass().add("loan-row");
 
-		Label titleLabel = new Label(title);
-		titleLabel.getStyleClass().add("loan-row-title");
+	// Label titleLabel = new Label(title);
+	// titleLabel.getStyleClass().add("loan-row-title");
 
-		Region spacer = new Region();
-		HBox.setHgrow(spacer, Priority.ALWAYS);
+	// Region spacer = new Region();
+	// HBox.setHgrow(spacer, Priority.ALWAYS);
 
-		Label dueLabel = new Label(due);
-		dueLabel.getStyleClass().add("loan-row-due");
+	// Label dueLabel = new Label(due);
+	// dueLabel.getStyleClass().add("loan-row-due");
 
-		row.getChildren().addAll(titleLabel, spacer, dueLabel);
-		return row;
-	}
+	// row.getChildren().addAll(titleLabel, spacer, dueLabel);
+	// return row;
+	// }
 
-	private HBox createReservationRow(String title, String status) {
-		HBox row = new HBox();
-		row.getStyleClass().add("loan-row");
+	// private HBox createReservationRow(String title, String status) {
+	// HBox row = new HBox();
+	// row.getStyleClass().add("loan-row");
 
-		Label titleLabel = new Label(title);
-		titleLabel.getStyleClass().add("loan-row-title");
+	// Label titleLabel = new Label(title);
+	// titleLabel.getStyleClass().add("loan-row-title");
 
-		Region spacer = new Region();
-		HBox.setHgrow(spacer, Priority.ALWAYS);
+	// Region spacer = new Region();
+	// HBox.setHgrow(spacer, Priority.ALWAYS);
 
-		Label statusLabel = new Label(status);
-		statusLabel.getStyleClass().add("reservation-status-ready");
+	// Label statusLabel = new Label(status);
+	// statusLabel.getStyleClass().add("reservation-status-ready");
 
-		row.getChildren().addAll(titleLabel, spacer, statusLabel);
-		return row;
-	}
+	// row.getChildren().addAll(titleLabel, spacer, statusLabel);
+	// return row;
+	// }
 
 	@FXML
 	private void handleLogout() {
@@ -102,7 +112,22 @@ public class UserPageController {
 
 	@FXML
 	private void handleSearch() {
-		App.setRoot("search_item");
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/search_item.fxml"));
+			Parent root = loader.load();
+
+			SearchController searchController = loader.getController();
+			searchController.setSearchService(AppContext.getInstance().searchService);
+
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Search Items");
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setScene(new Scene(root));
+			popupStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

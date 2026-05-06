@@ -73,9 +73,9 @@
                         <Label text="My Loans" styleClass="card-title"/>
                         <Label text="View your current loans" styleClass="card-subtitle"/>
                     </VBox>
-                    <HBox alignment="CENTER">
+                    <!-- <HBox alignment="CENTER">
                         <Label fx:id="activeLoansLabel" text="" styleClass="badge"/>
-                    </HBox>
+                    </HBox> -->
                 </VBox>
 
                 <!-- My Reservations -->
@@ -90,9 +90,9 @@
                         <Label text="My Reservations" styleClass="card-title"/>
                         <Label text="Manage reservations" styleClass="card-subtitle"/>
                     </VBox>
-                    <HBox alignment="CENTER">
+                    <!-- <HBox alignment="CENTER">
                         <Label fx:id="pendingReservationsLabel" text="" styleClass="badge"/>
-                    </HBox>
+                    </HBox> -->
                 </VBox>
             </HBox>
 
@@ -101,22 +101,24 @@
                 <VBox.margin><Insets top="24"/></VBox.margin>
 
                 <!-- Recent Loans panel -->
-                <VBox styleClass="staff-card" spacing="12"
+                <!-- <VBox styleClass="staff-card" spacing="12"
                       prefWidth="440" prefHeight="260">
                     <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
                     <Label text="Recent Loans" styleClass="card-title"/>
                     <VBox fx:id="recentLoansContainer" spacing="8"/>
-                </VBox>
+                </VBox> -->
 
                 <!-- Pending Reservations panel -->
-                <VBox styleClass="staff-card" spacing="12"
+                <!-- <VBox styleClass="staff-card" spacing="12"
                       prefWidth="440" prefHeight="260">
                     <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
                     <Label text="Pending Reservations" styleClass="card-title"/>
                     <VBox fx:id="pendingReservationsContainer" spacing="8"/>
-                </VBox>
+                </VBox> -->
 
             </HBox>
+
+            
         </VBox>
     </center>
 
