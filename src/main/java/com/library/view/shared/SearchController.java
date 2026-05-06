@@ -43,6 +43,10 @@ public class SearchController {
 
     private SearchService searchService;
 
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
     @FXML
     public void initialize() {
         // 1. Hämta servicen från AppContext
@@ -52,7 +56,7 @@ public class SearchController {
         resultsTable.setPlaceholder(new Label("Använd sökfältet för att hitta böcker eller filmer."));
 
         // 3. Fyll dropdown-menyn
-        typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd"));
+        typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd", "Periodical"));
         typeDropdown.getSelectionModel().selectFirst();
 
         // 4. Mappa vanliga text-kolumner
@@ -74,20 +78,33 @@ public class SearchController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Item currentItem = getTableView().getItems().get(getIndex());
+
+                if ("Periodical".equalsIgnoreCase(currentItem.getItemType())) {
+                    setGraphic(null);
+                    return;
+                }
+
+                if ("Available".equalsIgnoreCase(currentItem.getStatus())) {
                     setGraphic(null);
                 } else {
                     setGraphic(btn);
                 }
             }
         });
-    } // Slut på initialize
+
+    }
+    // Slut på initialize
 
     private void openReservationWindow(Item item) {
         try {
-            // ÄNDRAT: Filnamnet matchar nu din bild "Reservations_View.fxml"
-            // Vi använder en relativ sökväg från resources
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Reservations_View.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reservations_view.fxml"));
 
             Parent root = loader.load();
 
@@ -101,7 +118,7 @@ public class SearchController {
             stage.show();
 
         } catch (Exception e) {
-            System.err.println("Kunde inte ladda Reservations_View.fxml. Kontrollera filnamn och sökväg!");
+            System.err.println("Kunde inte ladda reservations_view.fxml. Kontrollera filnamn och sökväg!");
             e.printStackTrace();
         }
     }

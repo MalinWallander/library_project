@@ -8,26 +8,32 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
+
 import java.util.List;
 
 public class UserReservationsController {
 
-    @FXML private TableView<Item> reservationsTable;
-    @FXML private TableColumn<Item, String> titleColumn;
-    @FXML private TableColumn<Item, String> creatorColumn;
-    @FXML private TableColumn<Item, String> statusColumn;
+    @FXML
+    private TableView<Item> reservationsTable;
+    @FXML
+    private TableColumn<Item, String> titleColumn;
+    @FXML
+    private TableColumn<Item, String> creatorColumn;
+    @FXML
+    private TableColumn<Item, String> statusColumn;
 
-    private ReservationService reservationService; 
+    private ReservationService reservationService;
 
     @FXML
     public void initialize() {
         // 1. Hämta servicen från din AppContext
-        // Om variabeln i AppContext är public (vilket den verkar vara i din tidigare kod)
-this.reservationService = AppContext.getInstance().reservationService;
+        // Om variabeln i AppContext är public (vilket den verkar vara i din tidigare
+        // kod)
+        this.reservationService = AppContext.getInstance().reservationService;
 
         // 2. Koppla kolumnerna (stämmer med getItemTitle() och getCreator() i Item)
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
-        creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator")); 
+        creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         loadData();
@@ -37,7 +43,7 @@ this.reservationService = AppContext.getInstance().reservationService;
         try {
             // 3. Använd servicen (som vi hårdkodade till USR001 tidigare)
             List<Item> myReservations = reservationService.getMyReservations();
-            
+
             if (myReservations != null) {
                 reservationsTable.setItems(FXCollections.observableArrayList(myReservations));
             }
@@ -48,7 +54,7 @@ this.reservationService = AppContext.getInstance().reservationService;
 
     @FXML
     private void handleBackToDashboard() {
-        // Här lägger du din logik för att gå tillbaka, t.ex:
-        // App.setRoot("user_dashboard");
+        com.library.App.setRoot("user_dashboard");
+
     }
 }

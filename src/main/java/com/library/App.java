@@ -14,19 +14,25 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("main_view"), 900, 650);
+        scene = new Scene(loadFXML("staff_page"), 900, 650);
         stage.setTitle("Library System");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void setRoot(String fxml) {
+        try {
+            scene.setRoot(loadFXML(fxml));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/library/" + fxml + ".fxml"));
-        return fxmlLoader.load();
+        Parent root = fxmlLoader.load();
+        root.getStylesheets().add(App.class.getResource("/com/library/styles/" + fxml + ".css").toExternalForm());
+        return root;
     }
 
     public static void main(String[] args) {
