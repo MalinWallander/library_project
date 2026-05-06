@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.library</groupId>
-    <artifactId>library-project-authentication</artifactId>
+    <artifactId>library-project</artifactId>
     <version>1.0.0</version>
 
     <properties>
