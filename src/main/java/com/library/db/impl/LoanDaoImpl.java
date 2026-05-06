@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,5 +68,18 @@ public class LoanDaoImpl implements LoanDao {
 						? LocalDate.parse(rs.getString("returnDate"))
 						: null // returnDate can be null on active loans
 		);
+	}
+ //TODO verify names in db
+	@Override
+	public List<Loan> findByUserId(String userId) {
+		String sql = "SELECT * FROM loans WHERE user_id = :userId AND return_date IS NULL";
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		return jdbcTemplate.query(sql, params, (rs, rowNum) -> new Loan(
+				UUID.fromString(rs.getString("loan_id")),
+				rs.getString("copy_id"),
+				rs.getString("user_id"),
+				rs.getDate("loan_date").toLocalDate(),
+				rs.getDate("return_date") != null ? rs.getDate("return_date").toLocalDate() : null));
 	}
 }

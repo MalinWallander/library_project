@@ -136,7 +136,19 @@ public class UserPageController {
 
 	@FXML
 	private void handleLoans() {
-		App.setRoot("my_loans");
+		try {
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/library/my_loans.fxml"));
+			Parent root = loader.load();
+
+			Stage stage = new Stage();
+			stage.setTitle("My Loans");
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

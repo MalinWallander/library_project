@@ -1,8 +1,10 @@
 package com.library.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
 
 import com.library.db.LoanDao;
 import com.library.model.administration.Loan;
@@ -27,5 +29,9 @@ public class LoanService {
 
 	public Optional<Loan> getLoanById(String loanId) {
 		return loanDao.findById(loanId);
+	}
+
+	public List<Loan> getLoansForUser(String userId) {
+		return loanDao.findByUserId(userId);
 	}
 }
