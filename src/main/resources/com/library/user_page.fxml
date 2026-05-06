@@ -39,7 +39,7 @@
 
             <!-- Heading -->
             <VBox spacing="6">
-                <Label text="Welcome Back!" styleClass="page-title"/>
+                <Label fx:id="welcomeLabel" text="Welcome Back!" styleClass="page-title"/>
                 <Label text="Manage your loans and reservations" styleClass="page-subtitle"/>
             </VBox>
 

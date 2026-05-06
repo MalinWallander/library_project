@@ -1,9 +1,11 @@
 package com.library.view.user;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.library.App;
 import com.library.config.AppContext;
+import com.library.model.auth.CurrentSession;
 import com.library.view.shared.SearchController;
 
 import javafx.fxml.FXML;
@@ -34,21 +36,23 @@ public class UserPageController {
 	private VBox recentLoansContainer;
 	@FXML
 	private VBox pendingReservationsContainer;
+	@FXML
+	private Label welcomeLabel;
 
-	// @FXML
-	// public void initialize() {
-	// // TODO: replace with real data from your services
-	// populateLoans();
-	// populateReservations();
-	// }
+	@FXML
+	public void initialize() {
+		CurrentSession session = AppContext.getInstance().authService.getCurrentSession();
+		if (session != null) {
+			// Personalize heading
+			welcomeLabel.setText("Welcome Back!"); // you could add name if stored in session
 
-	// private void populateLoans() {
-	// // Example — replace with real loan data
-	// String[][] loans = {
-	// { "The Great Gatsby", "Due: May 1" },
-	// { "1984", "Due: May 5" },
-	// { "Inception (DVD)", "Due: Apr 28" }
-	// };
+			// Load real data using the user's ID
+			UUID userId = session.getUserId();
+			// e.g. loanService.getLoansForUser(userId)
+		}
+		// populateLoans();
+		// populateReservations();
+	}
 
 	// activeLoansLabel.setText(loans.length + " active");
 
