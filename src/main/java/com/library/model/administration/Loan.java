@@ -10,13 +10,15 @@ public class Loan {
     private String userId;
     private LocalDate loanDate;
     private LocalDate returnDate;
+    private LocalDate dueDate;
 
-    public Loan(UUID loanId, String copyId, String userId, LocalDate loanDate, LocalDate returnDate) {
+    public Loan(UUID loanId, String copyId, String userId, LocalDate borrowDate, LocalDate dueDate,LocalDate returnDate) {
         this.loanId = loanId;
         this.copyId = copyId;
         this.userId = userId;
-        this.loanDate = loanDate;
+        this.loanDate = borrowDate;
         this.returnDate = returnDate;
+        this.dueDate = dueDate;
     }
 
     public UUID getLoanId() {
@@ -58,5 +60,13 @@ public class Loan {
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
+
+    public LocalDate getDueDate() {
+    return dueDate;
+}
+
+public void setDueDate(LocalDate dueDate) {
+    this.dueDate = dueDate;
+}
 
 }

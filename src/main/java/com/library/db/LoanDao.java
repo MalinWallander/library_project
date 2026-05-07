@@ -12,4 +12,6 @@ public interface LoanDao {
 	Optional<Loan> findById(String id);
 
 	List<Loan> findByUserId(String userId);
+
+	List<Loan> getOverdueLoans();
 }
