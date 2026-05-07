@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.librarian.EditItemsController"
+      spacing="16" prefWidth="600">
+
+    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+    <Label text="Search Items" styleClass="card-title"/>
+
+    <TextField fx:id="searchField"
+               promptText="Search by title..."
+               onKeyReleased="#handleSearch"
+               styleClass="search-field"/>
+
+    <VBox fx:id="resultsContainer" spacing="8"/>
+
+    <Label fx:id="emptyLabel" text="No items found."
+           styleClass="page-subtitle" visible="false"/>
+
+</VBox>

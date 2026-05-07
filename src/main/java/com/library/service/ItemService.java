@@ -1,5 +1,6 @@
 package com.library.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.library.db.ItemDao;
@@ -70,5 +71,16 @@ public class ItemService {
 		if (copy.getBarcode() == null || copy.getBarcode().isBlank()) {
 			throw new IllegalArgumentException("Barcode is required.");
 		}
+	}
+
+	public List<Item> searchByTitle(String title) {
+		if (title == null || title.isBlank())
+			return List.of();
+		return itemDao.searchByTitle(title);
+	}
+
+	public void updateItem(Item item) {
+		validateItem(item);
+		itemDao.updateItem(item);
 	}
 }

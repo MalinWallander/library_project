@@ -153,6 +153,18 @@ public class UserPageController {
 
 	@FXML
 	private void handleReservations() {
-		App.setRoot("my_reservations");
+		try {
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/library/user_reservation.fxml"));
+			Parent root = loader.load();
+
+			Stage stage = new Stage();
+			stage.setTitle("My Reservations");
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
