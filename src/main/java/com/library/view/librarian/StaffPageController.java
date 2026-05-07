@@ -50,7 +50,7 @@ public class StaffPageController {
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Create Loan");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
-			popupStage.setScene(new Scene(root));
+			popupStage.setScene(App.createStyledScene(root));
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
@@ -70,7 +70,7 @@ public class StaffPageController {
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Return Copy");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
-			popupStage.setScene(new Scene(root));
+			popupStage.setScene(App.createStyledScene(root));
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
@@ -90,7 +90,7 @@ public class StaffPageController {
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Search Items");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
-			popupStage.setScene(new Scene(root));
+			popupStage.setScene(App.createStyledScene(root));
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
@@ -111,7 +111,7 @@ public class StaffPageController {
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Create User");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
-			popupStage.setScene(new Scene(root));
+			popupStage.setScene(App.createStyledScene(root));
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
@@ -128,7 +128,7 @@ public class StaffPageController {
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Manage Inventory");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
-			popupStage.setScene(new Scene(root));
+			popupStage.setScene(App.createStyledScene(root));
 			popupStage.showAndWait();
 
 		} catch (IOException e) {

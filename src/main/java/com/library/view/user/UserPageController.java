@@ -126,7 +126,7 @@ public class UserPageController {
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Search Items");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
-			popupStage.setScene(new Scene(root));
+			popupStage.setScene(App.createStyledScene(root));
 			popupStage.showAndWait();
 
 		} catch (IOException e) {

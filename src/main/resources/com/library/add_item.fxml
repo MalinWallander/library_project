@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 
 <ScrollPane fitToWidth="true"
+styleClass="popup-root"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.library.view.librarian.AddItemController">

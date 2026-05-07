@@ -31,12 +31,6 @@ public class FirstPageController {
 	@FXML
 	private VBox reservationsCard;
 
-	@FXML
-	public void initialize() {
-		rootPane.getStylesheets().add(
-				getClass().getResource("/com/library/styles/first_page.css").toExternalForm());
-	}
-
 	// ── Nav bar ──────────────────────────────────────────
 
 	@FXML

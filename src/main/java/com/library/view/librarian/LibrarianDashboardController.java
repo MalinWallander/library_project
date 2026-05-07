@@ -27,7 +27,7 @@ public class LibrarianDashboardController {
             Stage popupStage = new Stage();
             popupStage.setTitle("Create Borrower");
             popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(root));
+            popupStage.setScene(App.createStyledScene(root));
             popupStage.showAndWait();
 
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class LibrarianDashboardController {
             Stage popupStage = new Stage();
             popupStage.setTitle("Add item");
             popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(root));
+            popupStage.setScene(App.createStyledScene(root));
             popupStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class LibrarianDashboardController {
             Stage popupStage = new Stage();
             popupStage.setTitle("Create Loan");
             popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(root));
+            popupStage.setScene(App.createStyledScene(root));
             popupStage.showAndWait();
 
         } catch (IOException e) {

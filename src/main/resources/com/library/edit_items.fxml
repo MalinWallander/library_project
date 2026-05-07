@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx"
+styleClass="popup-root"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.library.view.librarian.EditItemsController"
       spacing="16" prefWidth="600">
