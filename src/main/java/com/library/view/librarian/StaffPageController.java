@@ -122,14 +122,11 @@ public class StaffPageController {
 	@FXML
 	private void handleInventory() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/add_item.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/inventory.fxml"));
 			Parent root = loader.load();
 
-			AddItemController addItemController = loader.getController();
-			addItemController.setItemService(AppContext.getInstance().itemService);
-
 			Stage popupStage = new Stage();
-			popupStage.setTitle("Inventory Management");
+			popupStage.setTitle("Manage Inventory");
 			popupStage.initModality(Modality.APPLICATION_MODAL);
 			popupStage.setScene(new Scene(root));
 			popupStage.showAndWait();

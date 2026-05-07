@@ -96,3 +96,22 @@
 .nav-logout-btn:hover {
   -fx-background-color: rgba(255, 255, 255, 0.15);
 }
+
+.tab-pane .tab-header-area .tab {
+  -fx-background-color: #e8eeea;
+  -fx-padding: 10 24 10 24;
+  -fx-font-size: 13px;
+  -fx-cursor: hand;
+}
+
+.tab-pane .tab-header-area .tab:selected {
+  -fx-background-color: #2d5a3d;
+}
+
+.tab-pane .tab-header-area .tab:selected .tab-label {
+  -fx-text-fill: white;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+  -fx-background-color: #e8eeea;
+}

@@ -83,4 +83,26 @@ public class ItemService {
 		validateItem(item);
 		itemDao.updateItem(item);
 	}
+
+	public Item findById(String itemId) {
+		return itemDao.findById(itemId);
+	}
+
+	public void withdrawCopy(String copyId) {
+		if (copyId == null || copyId.isBlank()) {
+			throw new IllegalArgumentException("Copy ID is required.");
+		}
+		itemDao.withdrawCopy(copyId);
+	}
+
+	public List<Copy> getCopiesForItem(String itemId) {
+		return itemDao.getCopiesForItem(itemId);
+	}
+
+	public void updateCopy(Copy copy) {
+		if (copy == null || copy.getCopyId() == null) {
+			throw new IllegalArgumentException("Copy ID is required.");
+		}
+		itemDao.updateCopy(copy);
+	}
 }

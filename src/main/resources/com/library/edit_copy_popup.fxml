@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.librarian.EditCopyPopupController"
+      spacing="14" prefWidth="400">
+
+    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+    <Label text="✏ Edit Copy" styleClass="page-title"/>
+
+    <Label fx:id="itemTitleLabel" text="" styleClass="page-subtitle"/>
+
+    <Label text="Barcode" styleClass="card-subtitle"/>
+    <TextField fx:id="barcodeField" promptText="Barcode"/>
+
+    <Label text="Location" styleClass="card-subtitle"/>
+    <TextField fx:id="locationField" promptText="e.g. Shelf A3"/>
+
+    <Label text="Status" styleClass="card-subtitle"/>
+    <ComboBox fx:id="statusCombo" maxWidth="Infinity"/>
+
+    <Label text="Purchase Date" styleClass="card-subtitle"/>
+    <DatePicker fx:id="purchaseDatePicker" maxWidth="Infinity"/>
+
+    <CheckBox fx:id="referenceCopyCheck" text="Reference copy (cannot be loaned)"/>
+
+    <Label fx:id="feedbackLabel" text="" wrapText="true"/>
+
+    <HBox spacing="12">
+        <Button text="Cancel" styleClass="nav-logout-btn"
+                onAction="#handleCancel" prefWidth="160"/>
+        <Button text="Save Changes" styleClass="nav-login-btn"
+                onAction="#handleSave" prefWidth="200"/>
+    </HBox>
+
+</VBox>

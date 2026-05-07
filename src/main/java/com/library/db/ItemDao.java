@@ -14,4 +14,11 @@ public interface ItemDao {
 
     void updateItem(Item item);
 
+    Item findById(String itemId);
+
+    void withdrawCopy(String copyId);
+
+    List<Copy> getCopiesForItem(String itemId);
+
+    void updateCopy(Copy copy);
 }
