@@ -10,15 +10,19 @@
       fx:controller="com.library.view.shared.SearchController"
       prefHeight="600.0"
       prefWidth="900.0"
-      styleClass="root-pane">
+      styleClass="root-pane"
+      stylesheets="@styles/main.css"> <!-- VIKTIGT: Denna rad laddar in din design -->
 
+    <!-- Sökfältet med padding för att det inte ska ligga mot kanten -->
     <HBox spacing="15"
-           alignment="CENTER"
-           styleClass="search-bar">
+          alignment="CENTER"
+          styleClass="search-bar"
+          style="-fx-padding: 30 0 10 0;">
 
         <TextField fx:id="searchField"
                    promptText="Search by title..."
-                   prefWidth="200.0"/>
+                   prefWidth="200.0"
+                   styleClass="text-field"/> <!-- Om du har specifik styling för fält -->
 
         <TextField fx:id="creatorField"
                    promptText="Search by author / director..."
@@ -30,19 +34,20 @@
 
         <Button text="Search"
                 onAction="#handleSearch"
-               styleClass="nav-login-btn"/>
+                styleClass="nav-login-btn"/>
     </HBox>
 
     <VBox alignment="CENTER"
           VBox.vgrow="ALWAYS"
-          style="-fx-padding: 0 20 20 20;">
+          style="-fx-padding: 0 40 40 40;">
 
+        <!-- Använd staff-card klassen för att få den vita bakgrunden med skugga -->
         <TableView fx:id="resultsTable"
                    prefWidth="820"
-                   prefHeight="500">
+                   VBox.vgrow="ALWAYS"
+                   styleClass="staff-card">
 
             <columns>
-
                 <TableColumn fx:id="titleColumn"
                              text="Title"
                              prefWidth="250.0"/>
@@ -58,9 +63,7 @@
                 <TableColumn fx:id="reserveColumn"
                              text="Reserve"
                              prefWidth="120.0"/>
-
             </columns>
-
         </TableView>
 
     </VBox>
