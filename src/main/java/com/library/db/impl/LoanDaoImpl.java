@@ -24,11 +24,11 @@ public class LoanDaoImpl implements LoanDao {
 	}
 
 	private final static String CREATE_SQL = """
-        INSERT INTO "Loan"
-        (\"loanId\", \"copyId\", \"userId\", \"borrowDate\", \"dueDate\", \"returnDate\")
-        VALUES
-        (:loanId, :copyId, :userId, :loanDate, :dueDate, :returnDate)
-        """;
+			INSERT INTO "Loan"
+			(\"loanId\", \"copyId\", \"userId\", \"borrowDate\", \"dueDate\", \"returnDate\")
+			VALUES
+			(:loanId, :copyId, :userId, :loanDate, :dueDate, :returnDate)
+			""";
 
 	private final static String UPDATE_STATUS = """
 			UPDATE "Copy" SET \"status\" = 'On loan' WHERE \"copyId\" = :copyId
@@ -36,6 +36,9 @@ public class LoanDaoImpl implements LoanDao {
 
 	private final static String FIND_BY_LOANID_SQL = """
 			SELECT * FROM "Loan" WHERE \"loanId\" = :loanId
+			""";
+	private final static String UPDATE_LAST_ON_LOAN = """
+			UPDATE "User" SET \"lastOnLoan\" = CURRENT_DATE WHERE user_id = :userId
 			""";
 
 	private final static String RECEIPT_SQL = """
@@ -60,15 +63,16 @@ public class LoanDaoImpl implements LoanDao {
 	public Loan createLoan(Loan loan) {
 
 		MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("loanId", loan.getLoanId())
-        .addValue("copyId", loan.getCopyId())
-        .addValue("userId", loan.getUserId())
-        .addValue("loanDate", loan.getLoanDate())
-        .addValue("dueDate", loan.getDueDate())
-        .addValue("returnDate", loan.getReturnDate());
+				.addValue("loanId", loan.getLoanId())
+				.addValue("copyId", loan.getCopyId())
+				.addValue("userId", loan.getUserId())
+				.addValue("loanDate", loan.getLoanDate())
+				.addValue("dueDate", loan.getDueDate())
+				.addValue("returnDate", loan.getReturnDate());
 
 		jdbc.update(CREATE_SQL, params);
 		jdbc.update(UPDATE_STATUS, params);
+		jdbc.update(UPDATE_LAST_ON_LOAN, params);
 		return loan;
 	}
 
@@ -89,19 +93,18 @@ public class LoanDaoImpl implements LoanDao {
 
 	private Loan mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return new Loan(
-    UUID.fromString(rs.getString("loanId")),
-    rs.getString("copyId"),
-    rs.getString("userId"),
-    rs.getDate("borrowDate").toLocalDate(),
+				UUID.fromString(rs.getString("loanId")),
+				rs.getString("copyId"),
+				rs.getString("userId"),
+				rs.getDate("borrowDate").toLocalDate(),
 
-    rs.getDate("dueDate") != null
-        ? rs.getDate("dueDate").toLocalDate()
-        : null,
+				rs.getDate("dueDate") != null
+						? rs.getDate("dueDate").toLocalDate()
+						: null,
 
-    rs.getDate("returnDate") != null
-        ? rs.getDate("returnDate").toLocalDate()
-        : null
-);
+				rs.getDate("returnDate") != null
+						? rs.getDate("returnDate").toLocalDate()
+						: null);
 	}
 
 	private Receipt mapReceiptRow(ResultSet rs, int rowNum) throws SQLException {
@@ -132,17 +135,16 @@ public class LoanDaoImpl implements LoanDao {
 		return jdbc.query(sql, params, this::mapRow);
 	}
 
+	@Override
+	public List<Loan> getOverdueLoans() {
 
-@Override
-public List<Loan> getOverdueLoans() {
+		String sql = """
+				    SELECT *
+				    FROM "Loan"
+				    WHERE "returnDate" IS NULL
+				    AND "dueDate" < CURRENT_DATE
+				""";
 
-    String sql = """
-        SELECT *
-        FROM "Loan"
-        WHERE "returnDate" IS NULL
-        AND "dueDate" < CURRENT_DATE
-    """;
-
-    return jdbc.query(sql, this::mapRow);
-}
+		return jdbc.query(sql, this::mapRow);
+	}
 }
