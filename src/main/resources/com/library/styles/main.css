@@ -181,3 +181,114 @@
 }
 
 /* ── Loan/reservation rows ── */
+
+/* ── Textfält & Dropdown (Sökfält) ── */
+.text-field, .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #d5d5d5;
+    -fx-border-radius: 4px; /* Kollegan kör mer fyrkantigt, så vi sänker denna */
+    -fx-background-radius: 4px;
+    -fx-padding: 8 12;
+    -fx-font-family: "Calibri";
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #2d5a44;
+    -fx-border-width: 1.5px;
+}
+
+/* ── Tabell-design ── */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8px;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2d5a44; /* Samma gröna som nav-bar */
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e8efe9; /* Ljusgrön färg vid markering */
+}
+
+/* ── Popup & Dialog design ── */
+
+/* En behållare för info-texter i t.ex. en reservation */
+.info-container {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 15;
+}
+
+/* Stil för labels som fungerar som rubriker inuti kort */
+.label-hint {
+    -fx-text-fill: #888888;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-transform: uppercase;
+}
+
+/* ── Knappar för dialoger ── */
+
+/* En primär knapp (Grön) */
+.btn-primary {
+    -fx-background-color: #2d5a44;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+}
+.btn-primary:hover {
+    -fx-background-color: #234635;
+}
+
+/* En sekundär/avbryt-knapp (Grå/Transparent) */
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-border-color: #888888;
+    -fx-text-fill: #555555;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Gör placeholder-texten i tabellen mer diskret */
+.table-view .placeholder .label {
+    -fx-text-fill: #888888;
+    -fx-font-size: 14px;
+    -fx-font-family: "Calibri";
+}
+
+/* Se till att tabellens hörn är snyggt rundade */
+.table-view {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-overflow-hidden: true;
+}

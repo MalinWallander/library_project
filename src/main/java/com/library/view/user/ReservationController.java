@@ -18,7 +18,6 @@ public class ReservationController {
 
     @FXML
     public void initialize() {
-        // Hämta servicen en gång vid start
         this.reservationService = AppContext.getInstance().reservationService;
     }
 
@@ -30,21 +29,21 @@ public class ReservationController {
         }
     }
 
+    // Denna metod saknades och orsakade kraschen!
+    @FXML
+    private void handleCancel() {
+        closeWindow();
+    }
+
     @FXML
     private void handleConfirmReservation() {
         if (item == null) return;
 
         try {
-            // Här sker själva magin mot databasen
             reservationService.reserveItem(item.getItemId());
-
             showAlert("Reservation skapad för " + item.getItemTitle() + "!");
-            
-            // Stäng fönstret automatiskt efter att användaren klickat OK på alerten
             closeWindow();
-
         } catch (Exception e) {
-            // Visar felmeddelandet (t.ex. "Item is already reserved")
             showAlert("Kunde inte reservera: " + e.getMessage());
         }
     }
@@ -58,8 +57,10 @@ public class ReservationController {
     }
 
     private void closeWindow() {
-        Stage stage = (Stage) titleLabel.getScene().getWindow();
-        stage.close();
+        // Kontrollera att scenen faktiskt finns innan vi stänger
+        if (titleLabel.getScene() != null) {
+            Stage stage = (Stage) titleLabel.getScene().getWindow();
+            stage.close();
+        }
     }
 }
-

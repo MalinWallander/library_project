@@ -3,24 +3,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="15" alignment="CENTER"
+<VBox spacing="20" alignment="CENTER"
       xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.library.view.user.ReservationController"
-      prefWidth="300" prefHeight="200">
+      prefWidth="350" prefHeight="300"
+      styleClass="root-pane"
+      stylesheets="@main.css"
+      style="-fx-padding: 25;">
 
-    <Label text="Bekräfta reservation"
-           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label text="Bekräfta reservation" styleClass="page-title" />
 
-    <!-- Visar info om objektet -->
-    <Label text="Titel:"/>
-    <Label fx:id="titleLabel"/>
+    <VBox spacing="12" styleClass="info-container">
+        <VBox>
+            <Label text="TITEL" styleClass="label-hint" />
+            <Label fx:id="titleLabel" styleClass="card-title" />
+        </VBox>
+        
+        <VBox>
+            <Label text="SKAPARE" styleClass="label-hint" />
+            <Label fx:id="creatorLabel" styleClass="card-title" />
+        </VBox>
+    </VBox>
 
-    <Label text="Skapare:"/>
-    <Label fx:id="creatorLabel"/>
-
-    <!-- Knapp -->
-    <Button text="Bekräfta"
-            onAction="#handleConfirmReservation"/>
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Avbryt" onAction="#handleCancel" styleClass="btn-secondary" />
+        <Button text="Bekräfta" onAction="#handleConfirmReservation" styleClass="btn-primary" />
+    </HBox>
 
 </VBox>

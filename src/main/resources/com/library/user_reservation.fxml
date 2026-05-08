@@ -3,18 +3,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="20" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" 
+<VBox spacing="20" alignment="TOP_CENTER" 
+      xmlns="http://javafx.com/javafx/8" 
       xmlns:fx="http://javafx.com/fxml/1" 
-     fx:controller="com.library.view.user.UserReservationsController"
-      prefWidth="800" prefHeight="600">
+      fx:controller="com.library.view.user.UserReservationsController"
+      prefWidth="900" prefHeight="650"
+      styleClass="root-pane"
+      stylesheets="@main.css">
     
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="30" right="40" bottom="30" left="40"/>
     </padding>
 
-    <Label text="Mina Reservationer" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="Mina Reservationer" styleClass="page-title" />
 
-    <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS">
+    <!-- TableView använder staff-card klassen för vit bakgrund och skugga -->
+    <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS" styleClass="staff-card">
         <columns>
             <TableColumn fx:id="titleColumn" text="Titel" prefWidth="250" />
             <TableColumn fx:id="creatorColumn" text="Författare / Regissör" prefWidth="200" />
@@ -23,6 +27,7 @@
         </columns>
     </TableView>
 
-    <Button text="Tillbaka till menyn" onAction="#handleBackToDashboard" 
-            style="-fx-background-color: #f4f4f4; -fx-border-color: #ccc;"/>
+    <Button text="Tillbaka till menyn" 
+            onAction="#handleBackToDashboard" 
+            styleClass="btn-secondary" />
 </VBox>

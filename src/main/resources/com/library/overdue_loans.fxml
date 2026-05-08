@@ -8,24 +8,27 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.library.view.shared.OverdueLoansController">
+            fx:controller="com.library.view.shared.OverdueLoansController"
+            styleClass="page-background">
 
     <top>
-        <VBox alignment="CENTER" spacing="10"
-              style="-fx-padding: 25;">
-            
-            <Label text="Försenade lån"
-                   style="-fx-font-size: 28px;
-                          -fx-font-weight: bold;" />
+        <VBox alignment="CENTER"
+              spacing="10"
+              style="-fx-padding: 30 0 10 0;">
+
+            <Label text="Overdue Loans"
+                   styleClass="page-title"/>
+
         </VBox>
     </top>
 
     <center>
         <VBox alignment="CENTER"
-              style="-fx-padding: 20;">
+              VBox.vgrow="ALWAYS"
+              styleClass="table-wrapper">
 
             <TableView fx:id="loanTable"
-                       prefWidth="700"
+                       prefWidth="720"
                        prefHeight="500">
 
                 <columns>
@@ -39,10 +42,11 @@
                                  prefWidth="220"/>
 
                     <TableColumn fx:id="dueDateColumn"
-                                 text="Due date"
+                                 text="Due Date"
                                  prefWidth="220"/>
 
                 </columns>
+
             </TableView>
 
         </VBox>

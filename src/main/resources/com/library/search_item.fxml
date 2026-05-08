@@ -1,66 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+<VBox spacing="20"
+      alignment="TOP_CENTER"
+      xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.library.view.shared.SearchController"
-      prefHeight="600.0" prefWidth="800.0">
-    
-    <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+      prefHeight="600.0"
+      prefWidth="900.0"
+      styleClass="root-pane">
+
+    <HBox spacing="15"
+           alignment="CENTER"
+           styleClass="search-bar">
+
         <TextField fx:id="searchField"
-                   promptText="Sök på titel..."
-                   prefWidth="180.0"/>
+                   promptText="Search by title..."
+                   prefWidth="200.0"/>
 
         <TextField fx:id="creatorField"
-                   promptText="Sök på författare / regissör..."
-                   prefWidth="180.0"/>
+                   promptText="Search by author / director..."
+                   prefWidth="220.0"/>
 
-        <ComboBox fx:id="typeDropdown" 
-                  promptText="Välj typ..." 
-                  prefWidth="150.0"/>
+        <ComboBox fx:id="typeDropdown"
+                  promptText="Select type..."
+                  prefWidth="160.0"/>
 
-        <Button text="Sök" onAction="#handleSearch" style="-fx-base: #87CEEB;"/>
+        <Button text="Search"
+                onAction="#handleSearch"
+               styleClass="nav-login-btn"/>
     </HBox>
 
-    <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="titleColumn"
-                         text="Titel"
-                         prefWidth="250.0"/>
+    <VBox alignment="CENTER"
+          VBox.vgrow="ALWAYS"
+          style="-fx-padding: 0 20 20 20;">
 
-            <TableColumn fx:id="creatorColumn"
-                         text="Författare / Regissör"
-                         prefWidth="250.0"/>
+        <TableView fx:id="resultsTable"
+                   prefWidth="820"
+                   prefHeight="500">
 
-            <TableColumn fx:id="statusColumn"
-                         text="Status"
-                         prefWidth="200.0"/>
+            <columns>
 
-                         <TableColumn fx:id="reserveColumn"
-                 text="Reservera"
-                 prefWidth="120.0"/>
-        </columns>
-    </TableView>
+                <TableColumn fx:id="titleColumn"
+                             text="Title"
+                             prefWidth="250.0"/>
+
+                <TableColumn fx:id="creatorColumn"
+                             text="Author / Director"
+                             prefWidth="250.0"/>
+
+                <TableColumn fx:id="statusColumn"
+                             text="Status"
+                             prefWidth="180.0"/>
+
+                <TableColumn fx:id="reserveColumn"
+                             text="Reserve"
+                             prefWidth="120.0"/>
+
+            </columns>
+
+        </TableView>
+
+    </VBox>
+
 </VBox>
-
-           <!--   <TableColumn text="Typ" prefWidth="150.0">
-                <cellValueFactory>
-                    <PropertyValueFactory property="itemType" />
-                </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn text="Kategori" prefWidth="150.0">
-                <cellValueFactory>
-                    <PropertyValueFactory property="categoryId" />
-                </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn text="Status" prefWidth="150.0">
-                <cellValueFactory>
-                    <PropertyValueFactory property="status" />
-                </cellValueFactory>
-            </TableColumn>
-        </columns>
-    </TableView> 
-</VBox>-->
