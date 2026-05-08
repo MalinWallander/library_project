@@ -15,4 +15,6 @@ public interface LoanDao {
 	Optional<Receipt> receipt(String loanId);
 
 	List<Loan> findByUserId(String userId);
+
+	List<Loan> getOverdueLoans();
 }

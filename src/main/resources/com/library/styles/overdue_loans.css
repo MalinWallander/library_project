@@ -1,0 +1,13 @@
+.root {
+    -fx-background-color: #f4f6f8;
+}
+
+.table-view {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14px;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}
