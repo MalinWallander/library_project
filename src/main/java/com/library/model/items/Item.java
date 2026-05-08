@@ -2,11 +2,11 @@ package com.library.model.items;
 
 public class Item {
     private String itemId;
-    private String itemType; // "Book", "DVD", "Magazine"
+    private String itemType;
     private String itemTitle;
     private String categoryId;
     private String creator;
-    private String status; // Nytt fält!
+    private String status;
 
     public Item(String itemId, String itemType, String itemTitle, String categoryId, String status) {
         this.itemId = itemId;

@@ -49,7 +49,7 @@
                 <Label text="Welcome to the City Library" styleClass="hero-title"/>
                 <Label text="Discover books, DVDs, and magazines from our extensive collection."
                        styleClass="hero-subtitle"/>
-											 <Label text="Log in to manage your loans and reservations."
+				<Label text="Log in to manage your loans and reservations."
                        styleClass="hero-subtitle"/>
             </VBox>
 

@@ -5,6 +5,7 @@ import com.library.model.items.Book;
 import com.library.model.items.Copy;
 import com.library.model.items.Dvd;
 import com.library.model.items.Item;
+import com.library.model.items.Periodical;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,310 +15,353 @@ import java.util.List;
 
 public class ItemDaoImpl implements ItemDao {
 
-	private final NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
-	public ItemDaoImpl(NamedParameterJdbcTemplate jdbctemplate) {
-		this.jdbc = jdbctemplate;
-	}
+    public ItemDaoImpl(NamedParameterJdbcTemplate jdbctemplate) {
+        this.jdbc = jdbctemplate;
+    }
 
-	@Override
-	public void addItem(Item item) {
-		jdbc.getJdbcOperations().execute((Connection conn) -> {
-			try {
-				conn.setAutoCommit(false);
+    @Override
+    public void addItem(Item item) {
+        jdbc.getJdbcOperations().execute((Connection conn) -> {
+            try {
+                conn.setAutoCommit(false);
 
-				// 1. Always insert into Item first
-				insertIntoItem(item, conn);
+                // 1. Always insert into Item first
+                insertIntoItem(item, conn);
 
-				// 2. Insert into type-specific table
-				switch (item.getItemType()) {
-					case "Book" -> insertIntoBook(item, conn);
-					case "DVD" -> insertIntoDvd(item, conn);
-					default -> throw new IllegalArgumentException(
-							"Unknown item type: " + item.getItemType());
-				}
+                // 2. Insert into type-specific table
+                switch (item.getItemType()) {
+                    case "Book" -> insertIntoBook(item, conn);
+                    case "DVD" -> insertIntoDvd(item, conn);
+                    case "Magazine" -> insertIntoPeriodical(item, conn);
+                    default -> throw new IllegalArgumentException(
+                            "Unknown item type: " + item.getItemType());
+                }
 
-				conn.commit();
+                conn.commit();
 
-			} catch (SQLException e) {
-				try {
-					conn.rollback();
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-				}
-				throw new RuntimeException("Failed to add item: " + e.getMessage(), e);
-			} finally {
-				try {
-					conn.setAutoCommit(true);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			return null;
-		});
-	}
-
-	private void insertIntoItem(Item item, Connection conn) throws SQLException {
-		String sql = "INSERT INTO \"Item\" (\"itemId\", \"itemType\", \"itemTitle\", \"categoryId\") VALUES (?, ?, ?, ?)";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, item.getItemId());
-			stmt.setString(2, item.getItemType());
-			stmt.setString(3, item.getItemTitle());
-			stmt.setString(4, item.getCategoryId());
-			stmt.executeUpdate();
-		}
-	}
-
-	private void insertIntoBook(Item item, Connection conn) throws SQLException {
-		String sql = "INSERT INTO \"Book\" (\"itemId\", \"isbn\", \"genre\", \"mainAuthorName\", \"publisherId\") VALUES (?, ?, ?, ?, ?)";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, item.getItemId());
-			stmt.setString(2, ((Book) item).getIsbn());
-			stmt.setString(3, ((Book) item).getGenre());
-			stmt.setString(4, ((Book) item).getMainAuthorName());
-			stmt.setString(5, ((Book) item).getPublisherId());
-			stmt.executeUpdate();
-		}
-	}
-
-	private void insertIntoDvd(Item item, Connection conn) throws SQLException {
-		String sql = "INSERT INTO \"Dvd\" (\"itemId\", \"productionYear\", \"mainDirectorName\") VALUES (?, ?, ?)";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, item.getItemId());
-			if (((Dvd) item).getProductionYear() != null) {
-				stmt.setInt(2, ((Dvd) item).getProductionYear());
-			} else {
-				stmt.setNull(2, Types.INTEGER);
-			}
-			stmt.setString(3, ((Dvd) item).getMainDirectorName());
-			stmt.executeUpdate();
-		}
-	}
-
-	@Override
-	public void addCopy(Copy copy) {
-		String sql = """
-				INSERT INTO \"Copy\" (\"copyId\", \"status\", \"barcode\", \"referenceCopy\", \"purchaseDate\",
-				                  \"location\", \"lastOnLoan\", \"itemTitle\", \"itemId\")
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-				""";
-		jdbc.getJdbcOperations().execute((Connection conn) -> {
-			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-				stmt.setString(1, copy.getCopyId());
-				stmt.setString(2, copy.getStatus());
-				stmt.setString(3, copy.getBarcode());
-				stmt.setBoolean(4, copy.isReferenceCopy());
-				stmt.setDate(5, copy.getPurchaseDate() != null
-						? Date.valueOf(copy.getPurchaseDate())
-						: null);
-				stmt.setString(6, copy.getLocation());
-				stmt.setDate(7, copy.getLastOnLoan() != null
-						? Date.valueOf(copy.getLastOnLoan())
-						: null);
-				stmt.setString(8, copy.getItemTitle());
-				stmt.setString(9, copy.getItemId());
-				stmt.executeUpdate();
-			} catch (SQLException e) {
-				throw new RuntimeException("Failed to add copy: " + e.getMessage(), e);
-			}
-			return null;
-		});
-	}
-
-	@Override
-public List<Item> searchByTitle(String title) {
-    String sql = """
-            SELECT i.*, 
-                   COUNT(c."copyId") as copy_count
-            FROM "Item" i
-            LEFT JOIN "Copy" c ON c."itemId" = i."itemId"
-            WHERE LOWER(i."itemTitle") LIKE LOWER(:title)
-            GROUP BY i."itemId", i."itemType", i."itemTitle", i."categoryId"
-            """;
-    MapSqlParameterSource params = new MapSqlParameterSource("title", "%" + title + "%");
-    return jdbc.query(sql, params, (rs, rowNum) -> {
-        Item item = new Item(
-            rs.getString("itemId"),
-            rs.getString("itemType"),
-            rs.getString("itemTitle"),
-            rs.getString("categoryId"),
-            null
-        );
-        item.setCreator(rs.getString("copy_count") + " copies");
-        return item;
-    });
-}
-
-@Override
-public void updateItem(Item item) {
-    jdbc.getJdbcOperations().execute((Connection conn) -> {
-        try {
-            conn.setAutoCommit(false);
-            updateItemBase(item, conn);
-            switch (item.getItemType()) {
-                case "Book" -> updateBook(item, conn);
-                case "DVD" -> updateDvd(item, conn);
+            } catch (SQLException e) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                throw new RuntimeException("Failed to add item: " + e.getMessage(), e);
+            } finally {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            conn.commit();
-        } catch (SQLException e) {
-            conn.rollback();
-            throw new RuntimeException("Failed to update item: " + e.getMessage(), e);
-        } finally {
-            conn.setAutoCommit(true);
+            return null;
+        });
+    }
+
+    private void insertIntoItem(Item item, Connection conn) throws SQLException {
+        String sql = "INSERT INTO \"Item\" (\"itemId\", \"itemType\", \"itemTitle\", \"categoryId\") VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, item.getItemId());
+            stmt.setString(2, item.getItemType());
+            stmt.setString(3, item.getItemTitle());
+            stmt.setString(4, item.getCategoryId());
+            stmt.executeUpdate();
         }
-        return null;
-    });
-}
-
-private void updateItemBase(Item item, Connection conn) throws SQLException {
-    String sql = "UPDATE \"Item\" SET \"itemTitle\" = ?, \"categoryId\" = ? WHERE \"itemId\" = ?";
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, item.getItemTitle());
-        stmt.setString(2, item.getCategoryId());
-        stmt.setString(3, item.getItemId());
-        stmt.executeUpdate();
     }
-}
 
-private void updateBook(Item item, Connection conn) throws SQLException {
-    String sql = """
-            UPDATE "Book" SET "isbn" = ?, "genre" = ?, 
-            "mainAuthorName" = ?, "publisherId" = ? 
-            WHERE "itemId" = ?
-            """;
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, ((Book) item).getIsbn());
-        stmt.setString(2, ((Book) item).getGenre());
-        stmt.setString(3, ((Book) item).getMainAuthorName());
-        stmt.setString(4, ((Book) item).getPublisherId());
-        stmt.setString(5, item.getItemId());
-        stmt.executeUpdate();
-    }
-}
-
-private void updateDvd(Item item, Connection conn) throws SQLException {
-    String sql = """
-            UPDATE "Dvd" SET "productionYear" = ?, "mainDirectorName" = ? 
-            WHERE "itemId" = ?
-            """;
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        if (((Dvd) item).getProductionYear() != null) {
-            stmt.setInt(1, ((Dvd) item).getProductionYear());
-        } else {
-            stmt.setNull(1, Types.INTEGER);
+    private void insertIntoBook(Item item, Connection conn) throws SQLException {
+        String sql = "INSERT INTO \"Book\" (\"itemId\", \"isbn\", \"genre\", \"mainAuthorName\", \"publisherId\") VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, item.getItemId());
+            stmt.setString(2, ((Book) item).getIsbn());
+            stmt.setString(3, ((Book) item).getGenre());
+            stmt.setString(4, ((Book) item).getMainAuthorName());
+            stmt.setString(5, ((Book) item).getPublisherId());
+            stmt.executeUpdate();
         }
-        stmt.setString(2, ((Dvd) item).getMainDirectorName());
-        stmt.setString(3, item.getItemId());
-        stmt.executeUpdate();
     }
-}
 
-@Override
-public Item findById(String itemId) {
-    String typeSql = "SELECT \"itemType\" FROM \"Item\" WHERE \"itemId\" = ?";
-    String itemType = jdbc.getJdbcOperations().queryForObject(typeSql, String.class, itemId);
+    private void insertIntoDvd(Item item, Connection conn) throws SQLException {
+        String sql = "INSERT INTO \"Dvd\" (\"itemId\", \"productionYear\", \"mainDirectorName\") VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, item.getItemId());
+            if (((Dvd) item).getProductionYear() != null) {
+                stmt.setInt(2, ((Dvd) item).getProductionYear());
+            } else {
+                stmt.setNull(2, Types.INTEGER);
+            }
+            stmt.setString(3, ((Dvd) item).getMainDirectorName());
+            stmt.executeUpdate();
+        }
+    }
 
-    if ("Book".equals(itemType)) {
+    private void insertIntoPeriodical(Item item, Connection conn) throws SQLException {
         String sql = """
-                SELECT i.*, b."isbn", b."genre", b."mainAuthorName", b."publisherId"
-                FROM "Item" i
-                JOIN "Book" b ON b."itemId" = i."itemId"
-                WHERE i."itemId" = ?
+                INSERT INTO "Periodical" ("itemId", "issueNumber", "publisher", "editorName")
+                VALUES (?, ?, ?, ?)
                 """;
-        return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
-            Book book = new Book();
-            book.setItemId(rs.getString("itemId"));
-            book.setItemType(rs.getString("itemType"));
-            book.setItemTitle(rs.getString("itemTitle"));
-            book.setCategoryId(rs.getString("categoryId"));
-            book.setIsbn(rs.getString("isbn"));
-            book.setGenre(rs.getString("genre"));
-            book.setMainAuthorName(rs.getString("mainAuthorName"));
-            book.setPublisherId(rs.getString("publisherId"));
-            return book;
-        }, itemId);
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, item.getItemId());
+            stmt.setString(2, ((Periodical) item).getIssueNumber());
+            stmt.setString(3, ((Periodical) item).getPublisher());
+            stmt.setString(4, ((Periodical) item).getEditorName());
+            stmt.executeUpdate();
+        }
+    }
 
-    } else if ("DVD".equals(itemType)) {
+    @Override
+    public void addCopy(Copy copy) {
         String sql = """
-                SELECT i.*, d."productionYear", d."mainDirectorName"
-                FROM "Item" i
-                JOIN "Dvd" d ON d."itemId" = i."itemId"
-                WHERE i."itemId" = ?
+                INSERT INTO \"Copy\" (\"copyId\", \"status\", \"barcode\", \"referenceCopy\", \"purchaseDate\",
+                                  \"location\", \"lastOnLoan\", \"itemTitle\", \"itemId\")
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
-        return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
-            Dvd dvd = new Dvd();
-            dvd.setItemId(rs.getString("itemId"));
-            dvd.setItemType(rs.getString("itemType"));
-            dvd.setItemTitle(rs.getString("itemTitle"));
-            dvd.setCategoryId(rs.getString("categoryId"));
-            dvd.setMainDirectorName(rs.getString("mainDirectorName"));
-            int year = rs.getInt("productionYear");
-            if (!rs.wasNull()) dvd.setProductionYear(year);
-            return dvd;
-        }, itemId);
+        jdbc.getJdbcOperations().execute((Connection conn) -> {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, copy.getCopyId());
+                stmt.setString(2, copy.getStatus());
+                stmt.setString(3, copy.getBarcode());
+                stmt.setBoolean(4, copy.isReferenceCopy());
+                stmt.setDate(5, copy.getPurchaseDate() != null
+                        ? Date.valueOf(copy.getPurchaseDate())
+                        : null);
+                stmt.setString(6, copy.getLocation());
+                stmt.setDate(7, copy.getLastOnLoan() != null
+                        ? Date.valueOf(copy.getLastOnLoan())
+                        : null);
+                stmt.setString(8, copy.getItemTitle());
+                stmt.setString(9, copy.getItemId());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Failed to add copy: " + e.getMessage(), e);
+            }
+            return null;
+        });
+    }
 
-    } else {
-        // Magazine or other — return base Item
-        String sql = "SELECT * FROM \"Item\" WHERE \"itemId\" = ?";
-        return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
+    @Override
+    public List<Item> searchByTitle(String title) {
+        String sql = """
+                SELECT i.*,
+                       COUNT(c."copyId") as copy_count
+                FROM "Item" i
+                LEFT JOIN "Copy" c ON c."itemId" = i."itemId"
+                WHERE LOWER(i."itemTitle") LIKE LOWER(:title)
+                GROUP BY i."itemId", i."itemType", i."itemTitle", i."categoryId"
+                """;
+        MapSqlParameterSource params = new MapSqlParameterSource("title", "%" + title + "%");
+        return jdbc.query(sql, params, (rs, rowNum) -> {
             Item item = new Item(
-                rs.getString("itemId"),
-                rs.getString("itemType"),
-                rs.getString("itemTitle"),
-                rs.getString("categoryId"),
-                null
-            );
+                    rs.getString("itemId"),
+                    rs.getString("itemType"),
+                    rs.getString("itemTitle"),
+                    rs.getString("categoryId"),
+                    null);
+            item.setCreator(rs.getString("copy_count") + " copies");
             return item;
+        });
+    }
+
+    @Override
+    public void updateItem(Item item) {
+        jdbc.getJdbcOperations().execute((Connection conn) -> {
+            try {
+                conn.setAutoCommit(false);
+                updateItemBase(item, conn);
+                switch (item.getItemType()) {
+                    case "Book" -> updateBook(item, conn);
+                    case "DVD" -> updateDvd(item, conn);
+                    case "Magazine" -> updatePeriodical(item, conn);
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new RuntimeException("Failed to update item: " + e.getMessage(), e);
+            } finally {
+                conn.setAutoCommit(true);
+            }
+            return null;
+        });
+    }
+
+    private void updateItemBase(Item item, Connection conn) throws SQLException {
+        String sql = "UPDATE \"Item\" SET \"itemTitle\" = ?, \"categoryId\" = ? WHERE \"itemId\" = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, item.getItemTitle());
+            stmt.setString(2, item.getCategoryId());
+            stmt.setString(3, item.getItemId());
+            stmt.executeUpdate();
+        }
+    }
+
+    private void updateBook(Item item, Connection conn) throws SQLException {
+        String sql = """
+                UPDATE "Book" SET "isbn" = ?, "genre" = ?,
+                "mainAuthorName" = ?, "publisherId" = ?
+                WHERE "itemId" = ?
+                """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, ((Book) item).getIsbn());
+            stmt.setString(2, ((Book) item).getGenre());
+            stmt.setString(3, ((Book) item).getMainAuthorName());
+            stmt.setString(4, ((Book) item).getPublisherId());
+            stmt.setString(5, item.getItemId());
+            stmt.executeUpdate();
+        }
+    }
+
+    private void updateDvd(Item item, Connection conn) throws SQLException {
+        String sql = """
+                UPDATE "Dvd" SET "productionYear" = ?, "mainDirectorName" = ?
+                WHERE "itemId" = ?
+                """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if (((Dvd) item).getProductionYear() != null) {
+                stmt.setInt(1, ((Dvd) item).getProductionYear());
+            } else {
+                stmt.setNull(1, Types.INTEGER);
+            }
+            stmt.setString(2, ((Dvd) item).getMainDirectorName());
+            stmt.setString(3, item.getItemId());
+            stmt.executeUpdate();
+        }
+    }
+
+    private void updatePeriodical(Item item, Connection conn) throws SQLException {
+        String sql = """
+                UPDATE "Periodical" SET "issueNumber" = ?, "publisher" = ?, "editorName" = ?
+                WHERE "itemId" = ?
+                """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, ((Periodical) item).getIssueNumber());
+            stmt.setString(2, ((Periodical) item).getPublisher());
+            stmt.setString(3, ((Periodical) item).getEditorName());
+            stmt.setString(4, item.getItemId());
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public Item findById(String itemId) {
+        String typeSql = "SELECT \"itemType\" FROM \"Item\" WHERE \"itemId\" = ?";
+        String itemType = jdbc.getJdbcOperations().queryForObject(typeSql, String.class, itemId);
+
+        if ("Book".equals(itemType)) {
+            String sql = """
+                    SELECT i.*, b."isbn", b."genre", b."mainAuthorName", b."publisherId"
+                    FROM "Item" i
+                    JOIN "Book" b ON b."itemId" = i."itemId"
+                    WHERE i."itemId" = ?
+                    """;
+            return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
+                Book book = new Book();
+                book.setItemId(rs.getString("itemId"));
+                book.setItemType(rs.getString("itemType"));
+                book.setItemTitle(rs.getString("itemTitle"));
+                book.setCategoryId(rs.getString("categoryId"));
+                book.setIsbn(rs.getString("isbn"));
+                book.setGenre(rs.getString("genre"));
+                book.setMainAuthorName(rs.getString("mainAuthorName"));
+                book.setPublisherId(rs.getString("publisherId"));
+                return book;
+            }, itemId);
+
+        } else if ("DVD".equals(itemType)) {
+            String sql = """
+                    SELECT i.*, d."productionYear", d."mainDirectorName"
+                    FROM "Item" i
+                    JOIN "Dvd" d ON d."itemId" = i."itemId"
+                    WHERE i."itemId" = ?
+                    """;
+            return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
+                Dvd dvd = new Dvd();
+                dvd.setItemId(rs.getString("itemId"));
+                dvd.setItemType(rs.getString("itemType"));
+                dvd.setItemTitle(rs.getString("itemTitle"));
+                dvd.setCategoryId(rs.getString("categoryId"));
+                dvd.setMainDirectorName(rs.getString("mainDirectorName"));
+                int year = rs.getInt("productionYear");
+                if (!rs.wasNull())
+                    dvd.setProductionYear(year);
+                return dvd;
+            }, itemId);
+
+        } else if ("Magazine".equals(itemType)) {
+            String sql = """
+                    SELECT i.*, p."issueNumber", p."publisher", p."editorName"
+                    FROM "Item" i
+                    JOIN "Periodical" p ON p."itemId" = i."itemId"
+                    WHERE i."itemId" = ?
+                    """;
+            return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
+                Periodical p = new Periodical();
+                p.setItemId(rs.getString("itemId"));
+                p.setItemType(rs.getString("itemType"));
+                p.setItemTitle(rs.getString("itemTitle"));
+                p.setCategoryId(rs.getString("categoryId"));
+                p.setIssueNumber(rs.getString("issueNumber"));
+                p.setPublisher(rs.getString("publisher"));
+                p.setEditorName(rs.getString("editorName"));
+                return p;
+            }, itemId);
+        } else {
+            // Unknown type fallback
+            String sql = "SELECT * FROM \"Item\" WHERE \"itemId\" = ?";
+            return jdbc.getJdbcOperations().queryForObject(sql,
+                    (rs, rowNum) -> new Item(rs.getString("itemId"), rs.getString("itemType"),
+                            rs.getString("itemTitle"), rs.getString("categoryId"), null),
+                    itemId);
+        }
+    }
+
+    @Override
+    public void withdrawCopy(String copyId) {
+        String sql = "UPDATE \"Copy\" SET \"status\" = 'Withdrawn' WHERE \"copyId\" = ?";
+        jdbc.getJdbcOperations().update(sql, copyId);
+    }
+
+    @Override
+    public List<Copy> getCopiesForItem(String itemId) {
+        String sql = """
+                SELECT * FROM "Copy"
+                WHERE "itemId" = ?
+                AND "status" != 'Withdrawn'
+                ORDER BY "barcode"
+                """;
+        return jdbc.getJdbcOperations().query(sql, (rs, rowNum) -> {
+            Copy copy = new Copy();
+            copy.setCopyId(rs.getString("copyId"));
+            copy.setStatus(rs.getString("status"));
+            copy.setBarcode(rs.getString("barcode"));
+            copy.setLocation(rs.getString("location"));
+            copy.setReferenceCopy(rs.getBoolean("referenceCopy"));
+            copy.setPurchaseDate(rs.getDate("purchaseDate") != null
+                    ? rs.getDate("purchaseDate").toLocalDate()
+                    : null);
+            copy.setItemId(rs.getString("itemId"));
+            copy.setItemTitle(rs.getString("itemTitle"));
+            return copy;
         }, itemId);
     }
-}
 
-@Override
-public void withdrawCopy(String copyId) {
-    String sql = "UPDATE \"Copy\" SET \"status\" = 'Withdrawn' WHERE \"copyId\" = ?";
-    jdbc.getJdbcOperations().update(sql, copyId);
-}
-
-@Override
-public List<Copy> getCopiesForItem(String itemId) {
-    String sql = """
-            SELECT * FROM "Copy" 
-            WHERE "itemId" = ? 
-            AND "status" != 'Withdrawn'
-            ORDER BY "barcode"
-            """;
-    return jdbc.getJdbcOperations().query(sql, (rs, rowNum) -> {
-        Copy copy = new Copy();
-        copy.setCopyId(rs.getString("copyId"));
-        copy.setStatus(rs.getString("status"));
-        copy.setBarcode(rs.getString("barcode"));
-        copy.setLocation(rs.getString("location"));
-        copy.setReferenceCopy(rs.getBoolean("referenceCopy"));
-        copy.setPurchaseDate(rs.getDate("purchaseDate") != null
-                ? rs.getDate("purchaseDate").toLocalDate() : null);
-        copy.setItemId(rs.getString("itemId"));
-        copy.setItemTitle(rs.getString("itemTitle"));
-        return copy;
-    }, itemId);
-}
-
-@Override
-public void updateCopy(Copy copy) {
-    String sql = """
-            UPDATE "Copy" SET 
-                "barcode" = ?,
-                "location" = ?,
-                "status" = ?,
-                "referenceCopy" = ?,
-                "purchaseDate" = ?
-            WHERE "copyId" = ?
-            """;
-    jdbc.getJdbcOperations().update(sql,
-            copy.getBarcode(),
-            copy.getLocation(),
-            copy.getStatus(),
-            copy.isReferenceCopy(),
-            copy.getPurchaseDate() != null ? Date.valueOf(copy.getPurchaseDate()) : null,
-            copy.getCopyId());
-}
+    @Override
+    public void updateCopy(Copy copy) {
+        String sql = """
+                UPDATE "Copy" SET
+                    "barcode" = ?,
+                    "location" = ?,
+                    "status" = ?,
+                    "referenceCopy" = ?,
+                    "purchaseDate" = ?
+                WHERE "copyId" = ?
+                """;
+        jdbc.getJdbcOperations().update(sql,
+                copy.getBarcode(),
+                copy.getLocation(),
+                copy.getStatus(),
+                copy.isReferenceCopy(),
+                copy.getPurchaseDate() != null ? Date.valueOf(copy.getPurchaseDate()) : null,
+                copy.getCopyId());
+    }
 }

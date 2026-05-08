@@ -85,7 +85,26 @@ styleClass="popup-root"
                     </GridPane>
                 </VBox>
 
-                <!-- Magazine has no extra fields — nothing to show -->
+                <!-- ── PERIODICAL FIELDS ── -->
+            <VBox fx:id="periodicalFields" spacing="10" visible="false" managed="false"
+                GridPane.rowIndex="3" GridPane.columnIndex="0"
+                GridPane.columnSpan="2">
+                <GridPane hgap="12" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120" maxWidth="140"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+                    <Label text="Issue Number" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="issueNumberField" promptText="e.g. Vol. 12 No. 3"
+                            GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Publisher" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="publisherField" promptText="e.g. National Geographic"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Editor Name" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="editorNameField" promptText="e.g. John Smith"
+                            GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                </GridPane>
+            </VBox>
 
             </GridPane>
 

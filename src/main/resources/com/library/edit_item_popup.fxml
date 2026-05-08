@@ -47,6 +47,16 @@
         <TextField fx:id="yearField" promptText="Year"/>
     </VBox>
 
+    <!-- Periodical fields -->
+    <VBox fx:id="periodicalFields" spacing="8">
+        <Label text="Issue Number" styleClass="card-subtitle"/>
+        <TextField fx:id="issueNumberField" promptText="Issue Number"/>
+        <Label text="Publisher" styleClass="card-subtitle"/>
+        <TextField fx:id="periodicalPublisherField" promptText="Publisher"/>
+        <Label text="Editor Name" styleClass="card-subtitle"/>
+        <TextField fx:id="editorNameField" promptText="Editor Name"/>
+    </VBox>
+
     <Label fx:id="feedbackLabel" text="" wrapText="true"/>
 
     <HBox spacing="12">

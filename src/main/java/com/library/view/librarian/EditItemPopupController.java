@@ -4,6 +4,7 @@ import com.library.config.AppContext;
 import com.library.model.items.Book;
 import com.library.model.items.Dvd;
 import com.library.model.items.Item;
+import com.library.model.items.Periodical;
 import com.library.service.ItemService;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -37,6 +38,14 @@ public class EditItemPopupController {
 	@FXML
 	private TextField yearField;
 	@FXML
+	private VBox periodicalFields;
+	@FXML
+	private TextField issueNumberField;
+	@FXML
+	private TextField periodicalPublisherField;
+	@FXML
+	private TextField editorNameField;
+	@FXML
 	private Label feedbackLabel;
 
 	private Item item;
@@ -66,6 +75,10 @@ public class EditItemPopupController {
 		} else if (item instanceof Dvd dvd) {
 			directorField.setText(dvd.getMainDirectorName() != null ? dvd.getMainDirectorName() : "");
 			yearField.setText(dvd.getProductionYear() != null ? dvd.getProductionYear().toString() : "");
+		} else if (item instanceof Periodical p) {
+			issueNumberField.setText(p.getIssueNumber() != null ? p.getIssueNumber() : "");
+			periodicalPublisherField.setText(p.getPublisher() != null ? p.getPublisher() : "");
+			editorNameField.setText(p.getEditorName() != null ? p.getEditorName() : "");
 		}
 
 		updateFieldVisibility();
@@ -75,10 +88,13 @@ public class EditItemPopupController {
 		String type = typeCombo.getValue();
 		boolean isBook = "Book".equals(type);
 		boolean isDvd = "DVD".equals(type);
+		boolean isMagazine = "Magazine".equals(type);
 		bookFields.setVisible(isBook);
 		bookFields.setManaged(isBook);
 		dvdFields.setVisible(isDvd);
 		dvdFields.setManaged(isDvd);
+		periodicalFields.setVisible(isMagazine);
+		periodicalFields.setManaged(isMagazine);
 	}
 
 	@FXML
@@ -97,6 +113,10 @@ public class EditItemPopupController {
 				String year = yearField.getText().trim();
 				if (!year.isEmpty())
 					dvd.setProductionYear(Integer.parseInt(year));
+			} else if (item instanceof Periodical p) {
+				p.setIssueNumber(issueNumberField.getText().trim());
+				p.setPublisher(periodicalPublisherField.getText().trim());
+				p.setEditorName(editorNameField.getText().trim());
 			}
 
 			itemService.updateItem(item);

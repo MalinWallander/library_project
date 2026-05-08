@@ -9,6 +9,7 @@ import com.library.model.items.Book;
 import com.library.model.items.Copy;
 import com.library.model.items.Dvd;
 import com.library.model.items.Item;
+import com.library.model.items.Periodical;
 import com.library.service.ItemService;
 
 import javafx.fxml.FXML;
@@ -53,6 +54,15 @@ public class AddItemController implements Initializable {
 	private TextField productionYearField;
 	@FXML
 	private TextField mainDirectorField;
+
+	@FXML
+	private VBox periodicalFields;
+	@FXML
+	private TextField issueNumberField;
+	@FXML
+	private TextField publisherField;
+	@FXML
+	private TextField editorNameField;
 
 	// ── Inline copy section (shown after item is added) ──
 	@FXML
@@ -103,10 +113,13 @@ public class AddItemController implements Initializable {
 		String selected = itemTypeCombo.getValue();
 		boolean isBook = "Book".equals(selected);
 		boolean isDvd = "DVD".equals(selected);
+		boolean isMagazine = "Magazine".equals(selected);
 		bookFields.setVisible(isBook);
 		bookFields.setManaged(isBook);
 		dvdFields.setVisible(isDvd);
 		dvdFields.setManaged(isDvd);
+		periodicalFields.setVisible(isMagazine);
+		periodicalFields.setManaged(isMagazine);
 	}
 
 	@FXML
@@ -124,7 +137,6 @@ public class AddItemController implements Initializable {
 			itemFeedbackLabel.setStyle("-fx-text-fill: green;");
 			itemFeedbackLabel.setText("Item added! ID: " + lastAddedItemId);
 
-			// Show the inline copy section pre-filled with the new item
 			showInlineCopySection(lastAddedItemId, lastAddedItemTitle);
 			clearItemForm();
 
@@ -201,8 +213,6 @@ public class AddItemController implements Initializable {
 		inlineCopySection.setManaged(false);
 	}
 
-	// ── Standalone copy form ──
-
 	@FXML
 	private void onAddCopy() {
 		copyFeedbackLabel.setStyle("-fx-text-fill: red;");
@@ -220,15 +230,13 @@ public class AddItemController implements Initializable {
 		}
 	}
 
-	// ── Builders ──
-
 	private Item buildItem(String type) {
 		if (type == null)
 			throw new IllegalArgumentException("Please select an item type.");
 		return switch (type) {
 			case "Book" -> buildBook();
 			case "DVD" -> buildDvd();
-			// case "Magazine" -> buildMagazine();
+			case "Magazine" -> buildPeriodical();
 			default -> throw new IllegalArgumentException("Unknown type: " + type);
 		};
 	}
@@ -262,13 +270,16 @@ public class AddItemController implements Initializable {
 		return dvd;
 	}
 
-	// private Item buildMagazine() {
-	// Item magazine = new Item();
-	// magazine.setItemTitle(itemTitleField.getText().trim());
-	// magazine.setItemType("Magazine");
-	// magazine.setCategoryId(categoryIdField.getText().trim());
-	// return magazine;
-	// }
+	private Item buildPeriodical() {
+		Periodical periodical = new Periodical();
+		periodical.setItemTitle(itemTitleField.getText().trim());
+		periodical.setItemType("Magazine");
+		periodical.setCategoryId(categoryIdField.getText().trim());
+		periodical.setIssueNumber(issueNumberField.getText().trim());
+		periodical.setPublisher(publisherField.getText().trim());
+		periodical.setEditorName(editorNameField.getText().trim());
+		return periodical;
+	}
 
 	private Copy buildStandaloneCopy() {
 		Copy copy = new Copy();
@@ -299,6 +310,11 @@ public class AddItemController implements Initializable {
 		bookFields.setManaged(false);
 		dvdFields.setVisible(false);
 		dvdFields.setManaged(false);
+		periodicalFields.setVisible(false);
+		periodicalFields.setManaged(false);
+		issueNumberField.clear();
+		publisherField.clear();
+		editorNameField.clear();
 	}
 
 	private void clearStandaloneCopyForm() {
