@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="popup-root"
+      fx:controller="com.library.view.librarian.EditItemPopupController"
+      spacing="16" prefWidth="440">
+
+    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+    <Label text="✏ Edit Item" styleClass="page-title"/>
+
+    <Label text="Item Type" styleClass="card-subtitle"/>
+    <ComboBox fx:id="typeCombo" maxWidth="Infinity"/>
+
+    <Label text="Title" styleClass="card-subtitle"/>
+    <TextField fx:id="titleField" promptText="Title"/>
+
+    <Label text="Category ID" styleClass="card-subtitle"/>
+    <TextField fx:id="categoryField" promptText="Category ID"/>
+
+    <!-- Book fields -->
+    <VBox fx:id="bookFields" spacing="8">
+        <Label text="Author" styleClass="card-subtitle"/>
+        <TextField fx:id="authorField" promptText="Author"/>
+        <Label text="ISBN" styleClass="card-subtitle"/>
+        <TextField fx:id="isbnField" promptText="ISBN"/>
+        <Label text="Genre" styleClass="card-subtitle"/>
+        <TextField fx:id="genreField" promptText="Genre"/>
+        <Label text="Publisher ID" styleClass="card-subtitle"/>
+        <TextField fx:id="publisherField" promptText="Publisher ID"/>
+    </VBox>
+
+    <!-- DVD fields -->
+    <VBox fx:id="dvdFields" spacing="8">
+        <Label text="Director" styleClass="card-subtitle"/>
+        <TextField fx:id="directorField" promptText="Director"/>
+        <Label text="Production Year" styleClass="card-subtitle"/>
+        <TextField fx:id="yearField" promptText="Year"/>
+    </VBox>
+
+    <Label fx:id="feedbackLabel" text="" wrapText="true"/>
+
+    <HBox spacing="12">
+        <Button text="Cancel" styleClass="nav-logout-btn"
+                onAction="#handleCancel" prefWidth="180"/>
+        <Button text="Save Changes" styleClass="nav-login-btn"
+                onAction="#handleSave" prefWidth="220"/>
+    </HBox>
+
+</VBox>

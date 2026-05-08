@@ -1,0 +1,183 @@
+/* ── Background & layout ── */
+.root-pane {
+  -fx-background-color: #ede8e0;
+}
+
+.content-area {
+  -fx-background-color: #ede8e0;
+}
+
+/* ── Nav bar ── */
+.nav-bar {
+  -fx-background-color: #2d5a44;
+  -fx-min-height: 60px;
+  -fx-pref-height: 60px;
+}
+
+.nav-logo-icon {
+  -fx-font-size: 20px;
+}
+
+.nav-logo-text {
+  -fx-text-fill: white;
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+  -fx-font-family: "Calibri";
+}
+
+.nav-portal-label {
+  -fx-text-fill: white;
+  -fx-font-size: 13px;
+}
+
+/* ── Buttons ── */
+.nav-login-btn {
+  -fx-background-color: white;
+  -fx-text-fill: #2d5a44;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-padding: 8 22 8 22;
+  -fx-background-radius: 6;
+  -fx-cursor: hand;
+  -fx-border-color: white;
+  -fx-border-radius: 6;
+}
+
+.nav-login-btn:hover {
+  -fx-background-color: #f0f0f0;
+}
+
+.nav-logout-btn {
+  -fx-background-color: transparent;
+  -fx-border-color: white;
+  -fx-border-width: 1px;
+  -fx-border-radius: 6px;
+  -fx-background-radius: 6px;
+  -fx-text-fill: white;
+  -fx-cursor: hand;
+  -fx-padding: 6 14 6 14;
+}
+
+.nav-logout-btn:hover {
+  -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Page titles ── */
+.page-title {
+  -fx-font-size: 22px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #2d2d2d;
+}
+
+.page-subtitle {
+  -fx-font-size: 13px;
+  -fx-text-fill: #888888;
+}
+
+/* ── Hero text (first page) ── */
+.hero-title {
+  -fx-text-fill: #1a1a1a;
+  -fx-font-size: 26px;
+  -fx-font-weight: bold;
+  -fx-font-family: "Calibri";
+}
+
+.hero-subtitle {
+  -fx-text-fill: #666666;
+  -fx-font-size: 15px;
+  -fx-font-family: "Calibri";
+}
+
+/* ── Cards ── */
+.staff-card {
+  -fx-background-color: white;
+  -fx-border-color: #e0e0e0;
+  -fx-border-width: 1px;
+  -fx-border-radius: 10px;
+  -fx-background-radius: 10px;
+  -fx-cursor: hand;
+}
+
+.staff-card:hover {
+  -fx-background-color: #f5f5f5;
+  -fx-border-color: #bdbdbd;
+}
+
+.card-active {
+  -fx-background-color: white;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-cursor: hand;
+}
+
+.card-active:hover {
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 18, 0, 4, 4);
+}
+
+.card-locked {
+  -fx-background-color: white;
+  -fx-opacity: 0.75;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-cursor: disapprove;
+}
+
+/* ── Card icon circles ── */
+.card-icon-circle {
+  -fx-background-color: #e8eeea;
+  -fx-background-radius: 50px;
+  -fx-min-width: 64px;
+  -fx-min-height: 64px;
+  -fx-max-width: 64px;
+  -fx-max-height: 64px;
+}
+
+.card-icon-circle-active {
+  -fx-background-color: #e8efe9;
+}
+
+.card-icon-circle-locked {
+  -fx-background-color: #e0ddd7;
+}
+
+.card-icon {
+  -fx-font-size: 26px;
+}
+
+.card-icon-locked {
+  -fx-font-size: 24px;
+  -fx-opacity: 0.45;
+}
+
+.card-lock-badge {
+  -fx-font-size: 13px;
+  -fx-translate-x: 22;
+  -fx-translate-y: -22;
+}
+
+/* ── Card text ── */
+.card-title {
+  -fx-text-fill: #1a1a1a;
+  -fx-font-size: 15px;
+  -fx-font-weight: bold;
+  -fx-font-family: "Calibri";
+}
+
+.card-title-locked {
+  -fx-text-fill: #999999;
+  -fx-font-size: 15px;
+  -fx-font-weight: bold;
+  -fx-font-family: "Calibri";
+}
+
+.card-subtitle {
+  -fx-text-fill: #555555;
+  -fx-font-size: 13px;
+}
+
+.card-subtitle-locked {
+  -fx-text-fill: #aaaaaa;
+  -fx-font-size: 13px;
+}
+
+/* ── Loan/reservation rows ── */

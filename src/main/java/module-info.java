@@ -1,7 +1,10 @@
 module com.library {
     requires javafx.controls;
     requires javafx.fxml;
-    requires spring;
+    requires spring.jdbc;
+    requires spring.beans;
+    requires spring.core;
+    requires spring.tx;
     requires java.sql;
     requires com.zaxxer.hikari;
 
@@ -12,6 +15,9 @@ module com.library {
     opens com.library.db to javafx.base;
     opens com.library.view.login to javafx.fxml;
     opens com.library.view.user to javafx.fxml;
+    opens com.library.service to javafx.base;
+  
+
 
     exports com.library;
 }

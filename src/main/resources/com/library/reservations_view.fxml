@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" alignment="CENTER"
+      xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.library.view.user.ReservationController"
+      prefWidth="300" prefHeight="200">
+
+    <Label text="Bekräfta reservation"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <!-- Visar info om objektet -->
+    <Label text="Titel:"/>
+    <Label fx:id="titleLabel"/>
+
+    <Label text="Skapare:"/>
+    <Label fx:id="creatorLabel"/>
+
+    <!-- Knapp -->
+    <Button text="Bekräfta"
+            onAction="#handleConfirmReservation"/>
+
+</VBox>

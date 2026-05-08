@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+     fx:controller="com.library.view.user.UserReservationsController"
+      prefWidth="800" prefHeight="600">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Mina Reservationer" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="titleColumn" text="Titel" prefWidth="250" />
+            <TableColumn fx:id="creatorColumn" text="Författare / Regissör" prefWidth="200" />
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
+            <TableColumn fx:id="cancelColumn" text="Hantera" prefWidth="150" />
+        </columns>
+    </TableView>
+
+    <Button text="Tillbaka till menyn" onAction="#handleBackToDashboard" 
+            style="-fx-background-color: #f4f4f4; -fx-border-color: #ccc;"/>
+</VBox>

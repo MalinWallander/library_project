@@ -1,26 +1,28 @@
 package com.library.view.librarian;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import com.library.model.items.Book;
 import com.library.model.items.Copy;
 import com.library.model.items.Dvd;
 import com.library.model.items.Item;
 import com.library.service.ItemService;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
 import javafx.geometry.Insets;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 public class AddItemController implements Initializable {
 

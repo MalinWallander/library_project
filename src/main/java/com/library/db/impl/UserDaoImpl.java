@@ -20,12 +20,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     private final static String CREATE_SQL = """
-            	INSERT INTO \"User\" (user_id, f_name, l_name, email, date_of_birth, category_id, phone_number)
-            	VALUES (:userId, :fName, :lName, :email, :dateOfBirth, :categoryId, :phoneNumber)
+            INSERT INTO "User" (user_id, f_name, l_name, email, date_of_birth, category_id, phone_number)
+            VALUES (:userId, :fName, :lName, :email, :dateOfBirth, :categoryId, :phoneNumber)
             """;
 
     private final static String FIND_BY_USERID_SQL = """
-            SELECT * FROM \"User\" WHERE user_id = :userId
+            SELECT user_id, f_name, l_name, email, date_of_birth, category_id, phone_number
+            FROM "User"
+            WHERE user_id = :userId
             """;
 
     @Override
@@ -44,8 +46,8 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    public Optional<User> findById(Long id) {
-        MapSqlParameterSource params = new MapSqlParameterSource("id", id);
+    public Optional<User> findById(UUID userId) {
+        MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
         return jdbc.query(FIND_BY_USERID_SQL, params, this::mapRow)
                 .stream()
                 .findFirst();
@@ -53,14 +55,12 @@ public class UserDaoImpl implements UserDao {
 
     private User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new User(
-                UUID.fromString(rs.getString("userId")),
-                rs.getString("fName"),
-                rs.getString("lName"),
+                UUID.fromString(rs.getString("user_id")),
+                rs.getString("f_name"),
+                rs.getString("l_name"),
                 rs.getString("email"),
-                LocalDate.parse(rs.getString("dateOfBirth")), // Se till att typerna blir rätt här, vad står det för typ
-                                                              // i databasen jämfört vad ni vill ha på javasidan
-                rs.getString("categoryId"),
-                rs.getString("phoneNumber"));
+                rs.getObject("date_of_birth", LocalDate.class),
+                rs.getString("category_id"),
+                rs.getString("phone_number"));
     }
-
 }

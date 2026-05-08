@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.library.view.librarian.ReturnCopyController">
+
+    <VBox spacing="24" style="-fx-padding: 24;">
+
+        <!-- ── RETURN COPY SECTION ── -->
+        <VBox spacing="12"
+              style="-fx-border-color: #cccccc; -fx-border-radius: 6; -fx-padding: 16;
+                     -fx-background-color: #f9f9f9; -fx-background-radius: 6;">
+
+            <Label text="Return Copy" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="120" maxWidth="140"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Barcode *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="barcodeField" promptText="e.g. BC000123"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            </GridPane>
+
+            <!-- Feedback label -->
+            <Label fx:id="feedbackLabel" text="" wrapText="true"
+                   style="-fx-text-fill: red;"/>
+
+            <Button text="Return Copy" onAction="#handleReturn"
+                    style="-fx-pref-width: 120px;"/>
+
+        </VBox>
+
+    </VBox>
+</ScrollPane>

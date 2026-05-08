@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.user.MyLoansController"
+      spacing="0" prefWidth="500" prefHeight="400"
+      styleClass="root-pane">
+
+    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="📖 My Loans" styleClass="page-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Close" styleClass="nav-logout-btn" onAction="#handleClose"/>
+    </HBox>
+
+    <Label fx:id="subtitleLabel" text="" styleClass="page-subtitle">
+        <VBox.margin><Insets top="4" bottom="20"/></VBox.margin>
+    </Label>
+
+    <!-- Loans list -->
+    <VBox fx:id="loansContainer" spacing="8"/>
+
+    <!-- Empty state -->
+    <Label fx:id="emptyLabel" text="You have no active loans."
+           styleClass="page-subtitle" visible="false">
+        <VBox.margin><Insets top="16"/></VBox.margin>
+    </Label>
+
+</VBox>

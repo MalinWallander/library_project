@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.shared.ReceiptController"
+      styleClass="receipt-root"
+      prefWidth="420"
+      spacing="0">
+
+    <stylesheets>
+        <URL value="@styles/receipt.css"/>
+    </stylesheets>
+
+    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="receipt-header">
+        <Label text="✓" styleClass="receipt-success-icon"/>
+        <Label text="Loan Created Successfully" styleClass="receipt-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="×" onAction="#handleDone" styleClass="receipt-close-button"/>
+    </HBox>
+
+    <VBox spacing="22" styleClass="receipt-body">
+        <VBox spacing="16" styleClass="receipt-summary-card">
+            <HBox spacing="12" alignment="TOP_LEFT">
+                <Label text="▯" styleClass="receipt-row-icon"/>
+                <VBox spacing="3">
+                    <Label text="Item" styleClass="receipt-field-label"/>
+                    <Label fx:id="itemTitleLabel" styleClass="receipt-primary-value"/>
+                    <Label fx:id="itemTypeLabel" styleClass="receipt-secondary-value"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="12" alignment="TOP_LEFT">
+                <Label text="♙" styleClass="receipt-row-icon"/>
+                <VBox spacing="3">
+                    <Label text="Member" styleClass="receipt-field-label"/>
+                    <Label fx:id="memberNameLabel" styleClass="receipt-primary-value"/>
+                    <Label fx:id="memberIdLabel" styleClass="receipt-secondary-value"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="12" alignment="TOP_LEFT">
+                <Label text="□" styleClass="receipt-row-icon"/>
+                <VBox spacing="3">
+                    <Label text="Loan Date" styleClass="receipt-field-label"/>
+                    <Label fx:id="loanDateLabel" styleClass="receipt-primary-value"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="12" alignment="TOP_LEFT">
+                <Label text="□" styleClass="receipt-row-icon"/>
+                <VBox spacing="3">
+                    <Label text="Due Date" styleClass="receipt-field-label"/>
+                    <Label fx:id="dueDateLabel" styleClass="receipt-primary-value"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="6" styleClass="receipt-loan-id-block">
+            <Label text="Loan ID" styleClass="receipt-field-label"/>
+            <Label fx:id="loanIdLabel" styleClass="receipt-loan-id"/>
+        </VBox>
+
+        <Button text="Done" onAction="#handleDone" maxWidth="Infinity" styleClass="receipt-done-button"/>
+    </VBox>
+
+    <padding>
+        <Insets top="0" right="0" bottom="0" left="0"/>
+    </padding>
+</VBox>

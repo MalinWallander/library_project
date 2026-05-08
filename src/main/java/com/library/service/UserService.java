@@ -8,10 +8,12 @@ import java.util.UUID;
 
 public class UserService {
 
-    UserDao dao;
+    private final UserDao dao;
+    private final AuthService authService;
 
-    public UserService(UserDao dao) {
+    public UserService(UserDao dao, AuthService authService) {
         this.dao = dao;
+        this.authService = authService;
     }
 
     public void createUser(String fName,
@@ -19,12 +21,51 @@ public class UserService {
             String email,
             LocalDate dateOfBirth,
             String categoryId,
-            String phoneNumber) {
+            String phoneNumber,
+            String plainPassword) {
+
+        validateUserInput(fName, lName, email, dateOfBirth, categoryId, phoneNumber, plainPassword);
 
         UUID userId = UUID.randomUUID();
-        User newUser = new User(userId, fName, lName, email, dateOfBirth, categoryId, phoneNumber);
 
+        User newUser = new User(
+                userId,
+                fName.trim(),
+                lName.trim(),
+                email.trim(),
+                dateOfBirth,
+                categoryId,
+                phoneNumber.trim());
+
+        // 1. Spara user
         dao.createUser(newUser);
-        System.out.println("User created: " + newUser);
+
+        // 2. Skapa login (kopplar user till auth_account)
+        authService.createBorrowerLogin(email, plainPassword, userId);
+
+        System.out.println("User created: " + newUser.getEmail());
+    }
+
+    private void validateUserInput(String fName,
+            String lName,
+            String email,
+            LocalDate dateOfBirth,
+            String categoryId,
+            String phoneNumber,
+            String plainPassword) {
+        if (fName == null || fName.isBlank())
+            throw new IllegalArgumentException("First name is required.");
+        if (lName == null || lName.isBlank())
+            throw new IllegalArgumentException("Last name is required.");
+        if (email == null || email.isBlank())
+            throw new IllegalArgumentException("Email is required.");
+        if (dateOfBirth == null)
+            throw new IllegalArgumentException("Date of birth is required.");
+        if (categoryId == null || categoryId.isBlank())
+            throw new IllegalArgumentException("Borrower category is required.");
+        if (phoneNumber == null || phoneNumber.isBlank())
+            throw new IllegalArgumentException("Phone number is required.");
+        if (plainPassword == null || plainPassword.isBlank())
+            throw new IllegalArgumentException("Password is required.");
     }
 }
