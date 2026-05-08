@@ -15,6 +15,11 @@ import javafx.stage.StageStyle;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
+import com.library.App;
+import com.library.config.AppContext;
+import com.library.model.auth.AuthRole;
+import com.library.service.AuthService;
+
 public class FirstPageController {
 
 	@FXML
@@ -25,12 +30,6 @@ public class FirstPageController {
 	private VBox loansCard;
 	@FXML
 	private VBox reservationsCard;
-
-	@FXML
-	public void initialize() {
-		rootPane.getStylesheets().add(
-				getClass().getResource("/com/library/styles/first_page.css").toExternalForm());
-	}
 
 	// ── Nav bar ──────────────────────────────────────────
 
@@ -76,6 +75,16 @@ public class FirstPageController {
 			dialog.setScene(new Scene(root));
 			dialog.setResizable(false);
 			dialog.showAndWait();
+
+			// After dialog closes, check who logged in
+			AuthService authService = AppContext.getInstance().authService;
+			if (authService.isLoggedIn()) {
+				if (authService.getCurrentRole() == AuthRole.EMPLOYEE) {
+					App.setRoot("staff_page");
+				} else {
+					App.setRoot("user_page");
+				}
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -111,5 +112,15 @@ public class LoanDaoImpl implements LoanDao {
 				memberName.isBlank() ? "Unknown member" : memberName,
 				loanDate,
 				loanDate.plusDays(maxLoanTime));
+	}
+
+	// TODO verify names in db
+	@Override
+	public List<Loan> findByUserId(String userId) {
+		String sql = """
+				SELECT * FROM "Loan" WHERE "userId" = :userId AND "returnDate" IS NULL
+				""";
+		MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
+		return jdbc.query(sql, params, this::mapRow);
 	}
 }

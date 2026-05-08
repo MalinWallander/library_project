@@ -1,5 +1,6 @@
 package com.library.db;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.library.model.administration.Loan;
@@ -12,4 +13,6 @@ public interface LoanDao {
 	Optional<Loan> findById(String id);
 
 	Optional<Receipt> receipt(String loanId);
+
+	List<Loan> findByUserId(String userId);
 }

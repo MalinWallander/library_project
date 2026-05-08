@@ -10,6 +10,7 @@
 <?import javafx.scene.control.PasswordField?>
 
 <VBox xmlns="http://javafx.com/javafx"
+styleClass="popup-root"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.library.view.librarian.CreateUserController"
       spacing="10" style="-fx-padding: 20;">

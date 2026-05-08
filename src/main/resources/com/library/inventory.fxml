@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.librarian.InventoryController"
+      prefWidth="660" prefHeight="600">
+
+    <!-- Header -->
+    <HBox styleClass="nav-bar" alignment="CENTER_LEFT" prefHeight="56">
+        <padding><Insets top="0" right="24" bottom="0" left="24"/></padding>
+        <Label text="📦 Manage Inventory" styleClass="nav-logo-text"/>
+    </HBox>
+
+    <!-- Tabs -->
+    <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+        <Tab text="+ Add Item / Copies">
+            <fx:include source="add_item.fxml" fx:id="addItem"/>
+        </Tab>
+
+        <Tab text="✏ Edit Items">
+            <fx:include source="edit_items.fxml" fx:id="editItems"/>
+        </Tab>
+
+    </TabPane>
+
+</VBox>
