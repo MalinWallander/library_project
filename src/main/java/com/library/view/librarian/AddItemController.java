@@ -369,4 +369,9 @@ public class AddItemController implements Initializable {
 			return copy;
 		}
 	}
+
+	public void preSelectItem(String itemId, String itemTitle) {
+		copyItemIdField.setText(itemId);
+		copyItemTitleField.setText(itemTitle);
+	}
 }

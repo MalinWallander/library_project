@@ -1,5 +1,6 @@
 package com.library.view.librarian;
 
+import com.library.App;
 import com.library.config.AppContext;
 import com.library.model.items.Copy;
 import com.library.model.items.Item;
@@ -248,6 +249,26 @@ public class EditItemsController {
 	}
 
 	private void openAddCopyPopup(Item item) {
-		// TODO: open add copy popup pre-filled with this item's ID
-	}
+    try {
+        FXMLLoader loader = new FXMLLoader(
+            getClass().getResource("/com/library/add_item.fxml"));
+        Parent root = loader.load();
+
+        AddItemController controller = loader.getController();
+        controller.setItemService(AppContext.getInstance().itemService);
+        controller.preSelectItem(item.getItemId(), item.getItemTitle());
+
+        Stage stage = new Stage();
+        stage.setTitle("Add Copy – " + item.getItemTitle());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(App.createStyledScene(root, 600, 500));
+        stage.showAndWait();
+
+        // Refresh results after copy is added
+        showResults(itemService.searchByTitle(searchField.getText()));
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }
