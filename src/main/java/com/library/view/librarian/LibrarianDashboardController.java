@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -66,6 +67,7 @@ public class LibrarianDashboardController {
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Create Loan");
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow());
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(root));
             popupStage.showAndWait();

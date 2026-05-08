@@ -49,6 +49,7 @@ public class StaffPageController {
 
 			Stage popupStage = new Stage();
 			popupStage.setTitle("Create Loan");
+			popupStage.initOwner(checkoutCard.getScene().getWindow());
 			popupStage.initModality(Modality.APPLICATION_MODAL);
 			popupStage.setScene(new Scene(root));
 			popupStage.showAndWait();

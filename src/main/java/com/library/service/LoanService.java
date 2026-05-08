@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.library.db.LoanDao;
 import com.library.model.administration.Loan;
+import com.library.model.administration.Receipt;
 
 public class LoanService {
 
@@ -27,5 +28,9 @@ public class LoanService {
 
 	public Optional<Loan> getLoanById(String loanId) {
 		return loanDao.findById(loanId);
+	}
+
+	public Optional<Receipt> receipt(String loanId) {
+		return loanDao.receipt(loanId);
 	}
 }
