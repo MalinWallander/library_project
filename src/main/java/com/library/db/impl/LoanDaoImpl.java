@@ -25,9 +25,9 @@ public class LoanDaoImpl implements LoanDao {
 
 	private final static String CREATE_SQL = """
 			INSERT INTO "Loan"
-			(\"loanId\", \"copyId\", \"userId\", \"borrowDate\", \"dueDate\", \"returnDate\")
+			(\"loanId\", \"barcode\", \"userId\", \"borrowDate\", \"dueDate\", \"returnDate\")
 			VALUES
-			(:loanId, :copyId, :userId, :loanDate, :dueDate, :returnDate)
+			(:loanId, :barcode, :userId, :loanDate, :dueDate, :returnDate)
 			""";
 
 	private final static String UPDATE_STATUS = """
@@ -38,7 +38,8 @@ public class LoanDaoImpl implements LoanDao {
 			SELECT * FROM "Loan" WHERE \"loanId\" = :loanId
 			""";
 	private final static String UPDATE_LAST_ON_LOAN = """
-			UPDATE "User" SET \"lastOnLoan\" = CURRENT_DATE WHERE user_id = :userId
+			UPDATE "Item" SET \"lastOnLoan\" = CURRENT_DATE WHERE item_id = :itemId
+			AND (\"lastOnLoan\" IS NULL OR \"lastOnLoan\" < CURRENT_DATE)
 			""";
 
 	private final static String RECEIPT_SQL = """

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 import com.library.db.LoanDao;
 import com.library.model.administration.Loan;
 import com.library.model.administration.Receipt;
@@ -18,18 +17,17 @@ public class LoanService {
 		this.loanDao = loanDao;
 	}
 
-	public Loan addLoan(String copyId, String userId) {
+	public Loan addLoan(String barcode, String userId) {
 		LocalDate borrowDate = LocalDate.now();
-LocalDate dueDate = calculateDueDate(copyId);
+		LocalDate dueDate = calculateDueDate(barcode);
 
-Loan loan = new Loan(
-    UUID.randomUUID(),
-    copyId,
-    userId,
-    borrowDate,
-    dueDate,
-    null
-);
+		Loan loan = new Loan(
+				UUID.randomUUID(),
+				barcode,
+				userId,
+				borrowDate,
+				dueDate,
+				null);
 		return loanDao.createLoan(loan);
 	}
 
@@ -45,17 +43,15 @@ Loan loan = new Loan(
 		return loanDao.findByUserId(userId);
 	}
 
-
 	private LocalDate calculateDueDate(String copyId) {
 
-    // Tillfällig enkel regel:
-    return LocalDate.now().plusDays(30);
+		// TODO: Tillfällig enkel regel:
+		return LocalDate.now().plusDays(30);
+
+	}
+
+	public List<Loan> getOverdueLoans() {
+		return loanDao.getOverdueLoans();
+	}
 
 }
-
-  public List<Loan> getOverdueLoans() {
-        return loanDao.getOverdueLoans();
-    }
-
-}
-

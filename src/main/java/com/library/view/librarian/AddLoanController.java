@@ -22,7 +22,7 @@ import javafx.stage.Window;
 public class AddLoanController {
 
 	@FXML
-	private TextField copyIdField;
+	private TextField barcodeField;
 
 	@FXML
 	private TextField userIdField;
@@ -36,10 +36,10 @@ public class AddLoanController {
 	@FXML
 	private void handleSubmit(ActionEvent event) {
 		try {
-			String copyId = copyIdField.getText().trim();
+			String barcode = barcodeField.getText().trim();
 			String userId = userIdField.getText().trim();
-			if (copyId.isBlank() || userId.isBlank()) {
-				showError("Both Copy ID and User ID are required.");
+			if (barcode.isBlank() || userId.isBlank()) {
+				showError("Both Barcode and User ID are required.");
 				return;
 			}
 
@@ -47,11 +47,11 @@ public class AddLoanController {
 				setLoanService(AppContext.getInstance().loanService);
 			}
 
-			Loan loan = loanService.addLoan(copyId, userId);
+			Loan loan = loanService.addLoan(barcode, userId);
 			Receipt receipt = loanService.receipt(loan.getLoanId().toString())
 					.orElseThrow(() -> new IllegalStateException("Could not load receipt data."));
 
-			Stage stage = (Stage) copyIdField.getScene().getWindow();
+			Stage stage = (Stage) barcodeField.getScene().getWindow();
 			Window owner = stage.getOwner();
 			stage.close();
 
@@ -63,7 +63,7 @@ public class AddLoanController {
 
 	@FXML
 	private void handleCancel(ActionEvent event) {
-		Stage stage = (Stage) copyIdField.getScene().getWindow();
+		Stage stage = (Stage) barcodeField.getScene().getWindow();
 		stage.close();
 	}
 

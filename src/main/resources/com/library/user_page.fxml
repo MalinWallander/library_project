@@ -90,35 +90,8 @@
                         <Label text="My Reservations" styleClass="card-title"/>
                         <Label text="Manage reservations" styleClass="card-subtitle"/>
                     </VBox>
-                    <!-- <HBox alignment="CENTER">
-                        <Label fx:id="pendingReservationsLabel" text="" styleClass="badge"/>
-                    </HBox> -->
                 </VBox>
             </HBox>
-
-            <!-- Bottom panels row -->
-            <HBox spacing="24">
-                <VBox.margin><Insets top="24"/></VBox.margin>
-
-                <!-- Recent Loans panel -->
-                <!-- <VBox styleClass="staff-card" spacing="12"
-                      prefWidth="440" prefHeight="260">
-                    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
-                    <Label text="Recent Loans" styleClass="card-title"/>
-                    <VBox fx:id="recentLoansContainer" spacing="8"/>
-                </VBox> -->
-
-                <!-- Pending Reservations panel -->
-                <!-- <VBox styleClass="staff-card" spacing="12"
-                      prefWidth="440" prefHeight="260">
-                    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
-                    <Label text="Pending Reservations" styleClass="card-title"/>
-                    <VBox fx:id="pendingReservationsContainer" spacing="8"/>
-                </VBox> -->
-
-            </HBox>
-
-            
         </VBox>
     </center>
 

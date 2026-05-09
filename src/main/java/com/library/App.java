@@ -16,7 +16,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         globalCss = App.class.getResource("/com/library/styles/main.css").toExternalForm();
-        scene = new Scene(loadFXML("first_page"), 900, 650);
+        scene = new Scene(loadFXML("user_page"), 900, 650);
         scene.getStylesheets().add(globalCss);
         stage.setTitle("Library System");
         stage.setScene(scene);

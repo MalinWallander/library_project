@@ -21,8 +21,8 @@ styleClass="popup-root"
     <Label text="Add Loan" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
     <VBox spacing="5">
-        <Label text="Copy ID"/>
-        <TextField fx:id="copyIdField" promptText="Enter copy ID"/>
+        <Label text="Barcode"/>
+        <TextField fx:id="copyIdField" promptText="Enter barcode"/>
     </VBox>
 
     <VBox spacing="5">

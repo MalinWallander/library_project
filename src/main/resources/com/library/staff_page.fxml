@@ -63,7 +63,7 @@
                         <Label text="🛒" styleClass="card-icon"/>
                     </StackPane>
                     <VBox alignment="CENTER" spacing="6">
-                        <Label text="Checkout Books" styleClass="card-title"/>
+                        <Label text="Checkout" styleClass="card-title"/>
                         <Label text="Create new loans" styleClass="card-subtitle"/>
                     </VBox>
                 </VBox>
@@ -77,8 +77,8 @@
                         <Label text="✅" styleClass="card-icon"/>
                     </StackPane>
                     <VBox alignment="CENTER" spacing="6">
-                        <Label text="Check In Books" styleClass="card-title"/>
-                        <Label text="Return items" styleClass="card-subtitle"/>
+                        <Label text="Return" styleClass="card-title"/>
+                        <Label text="Return borrowed items" styleClass="card-subtitle"/>
                     </VBox>
                 </VBox>
 
