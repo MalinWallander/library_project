@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.library.db.LoanDao;
 import com.library.model.administration.Loan;
+import com.library.model.administration.LoanSummary;
 import com.library.model.administration.Receipt;
 
 public class LoanService {
@@ -52,6 +53,10 @@ public class LoanService {
 
 	public List<Loan> getOverdueLoans() {
 		return loanDao.getOverdueLoans();
+	}
+
+	public List<LoanSummary> getLoanSummariesForUser(String userId) {
+		return loanDao.findSummariesByUserId(userId);
 	}
 
 }

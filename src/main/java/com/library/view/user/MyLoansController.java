@@ -1,7 +1,7 @@
 package com.library.view.user;
 
 import com.library.config.AppContext;
-import com.library.model.administration.Loan;
+import com.library.model.administration.LoanSummary;
 import com.library.model.auth.CurrentSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -28,38 +28,41 @@ public class MyLoansController {
 		if (session == null)
 			return;
 
-		List<Loan> loans = AppContext.getInstance().loanService
-				.getLoansForUser(session.getUserId().toString());
+		List<LoanSummary> loans = AppContext.getInstance().loanService
+				.getLoanSummariesForUser(session.getUserId().toString());
 
 		subtitleLabel.setText(loans.size() + " active loan" + (loans.size() == 1 ? "" : "s"));
 
 		if (loans.isEmpty()) {
 			emptyLabel.setVisible(true);
 		} else {
-			for (Loan loan : loans) {
+			for (LoanSummary loan : loans) {
 				loansContainer.getChildren().add(createLoanRow(loan));
 			}
 		}
 	}
 
-	private HBox createLoanRow(Loan loan) {
+	private HBox createLoanRow(LoanSummary loan) {
 		HBox row = new HBox();
 		row.getStyleClass().add("loan-row");
 
-		// copyId is what we have — ideally you'd look up the title
-		Label titleLabel = new Label("Copy: " + loan.getCopyId());
+		VBox info = new VBox(4);
+		Label titleLabel = new Label(loan.getItemTitle() != null ? loan.getItemTitle() : "Unknown title");
 		titleLabel.getStyleClass().add("loan-row-title");
+
+		Label borrowedLabel = new Label("Borrowed: " + loan.getLoanDate());
+		borrowedLabel.getStyleClass().add("loan-row-due");
+		info.getChildren().addAll(titleLabel, borrowedLabel);
 
 		Region spacer = new Region();
 		HBox.setHgrow(spacer, Priority.ALWAYS);
 
-		String dateText = loan.getReturnDate() != null
-				? "Due: " + loan.getReturnDate()
-				: "Loaned: " + loan.getLoanDate();
-		Label dateLabel = new Label(dateText);
-		dateLabel.getStyleClass().add("loan-row-due");
+		Label dueLabel = new Label(loan.getDueDate() != null
+				? "Due: " + loan.getDueDate()
+				: "No due date");
+		dueLabel.getStyleClass().add("loan-row-due");
 
-		row.getChildren().addAll(titleLabel, spacer, dateLabel);
+		row.getChildren().addAll(info, spacer, dueLabel);
 		return row;
 	}
 

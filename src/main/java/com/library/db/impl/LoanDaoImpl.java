@@ -2,6 +2,7 @@ package com.library.db.impl;
 
 import com.library.db.LoanDao;
 import com.library.model.administration.Loan;
+import com.library.model.administration.LoanSummary;
 import com.library.model.administration.Receipt;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -152,5 +153,24 @@ public class LoanDaoImpl implements LoanDao {
 				""";
 
 		return jdbc.query(sql, this::mapRow);
+	}
+
+	@Override
+	public List<LoanSummary> findSummariesByUserId(String userId) {
+		String sql = """
+				SELECT COALESCE(i."itemTitle", c."itemTitle") AS item_title,
+				       l."borrowDate",
+				       l."dueDate"
+				FROM "Loan" l
+				JOIN "Copy" c ON c."copyId" = l."copyId"
+				LEFT JOIN "Item" i ON i."itemId" = c."itemId"
+				WHERE l."userId" = :userId
+				AND l."returnDate" IS NULL
+				""";
+		MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
+		return jdbc.query(sql, params, (rs, rowNum) -> new LoanSummary(
+				rs.getString("item_title"),
+				rs.getDate("borrowDate") != null ? rs.getDate("borrowDate").toLocalDate() : null,
+				rs.getDate("dueDate") != null ? rs.getDate("dueDate").toLocalDate() : null));
 	}
 }
