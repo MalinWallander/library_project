@@ -19,6 +19,7 @@ import com.library.App;
 import com.library.config.AppContext;
 import com.library.model.auth.AuthRole;
 import com.library.service.AuthService;
+import com.library.view.login.LoginController;
 
 public class FirstPageController {
 
@@ -65,14 +66,19 @@ public class FirstPageController {
 	private void openLoginDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader(
-					getClass().getResource("/com/library/main_view.fxml"));
+					getClass().getResource("/com/library/login.fxml"));
 			Parent root = loader.load();
+
+			LoginController loginController = loader.getController();
+			loginController.setAuthService(AppContext.getInstance().authService);
+			loginController.setLoginTitle("Login");
 
 			Stage dialog = new Stage();
 			dialog.initModality(Modality.APPLICATION_MODAL);
 			dialog.initStyle(StageStyle.DECORATED);
 			dialog.setTitle("Login – City Library");
-			dialog.setScene(new Scene(root));
+			dialog.initOwner(rootPane.getScene().getWindow());
+			dialog.setScene(App.createStyledScene(root));
 			dialog.setResizable(false);
 			dialog.showAndWait();
 

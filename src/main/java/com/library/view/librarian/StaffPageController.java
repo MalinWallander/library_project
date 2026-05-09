@@ -34,6 +34,7 @@ public class StaffPageController {
 
 	@FXML
 	private void handleLogout() {
+		AppContext.getInstance().authService.logout();
 		App.setRoot("first_page");
 	}
 

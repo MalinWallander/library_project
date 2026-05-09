@@ -5,8 +5,6 @@ import com.library.config.AppContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import java.io.IOException;
-
 public class UserDashboardController {
 
     @FXML
@@ -20,8 +18,8 @@ public class UserDashboardController {
     }
 
     @FXML
-    private void handleLogout() throws IOException {
+    private void handleLogout() {
         AppContext.getInstance().authService.logout();
-        App.setRoot("main_view");
+        App.setRoot("first_page");
     }
 }

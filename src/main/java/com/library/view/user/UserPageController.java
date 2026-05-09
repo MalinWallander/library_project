@@ -111,6 +111,7 @@ public class UserPageController {
 
 	@FXML
 	private void handleLogout() {
+		AppContext.getInstance().authService.logout();
 		App.setRoot("first_page");
 	}
 
