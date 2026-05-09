@@ -22,7 +22,7 @@ styleClass="popup-root"
 
     <VBox spacing="5">
         <Label text="Barcode"/>
-        <TextField fx:id="copyIdField" promptText="Enter barcode"/>
+        <TextField fx:id="barcodeField" promptText="Enter barcode"/>
     </VBox>
 
     <VBox spacing="5">

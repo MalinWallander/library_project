@@ -25,9 +25,9 @@ public class LoanDaoImpl implements LoanDao {
 
 	private final static String CREATE_SQL = """
 			INSERT INTO "Loan"
-			(\"loanId\", \"barcode\", \"userId\", \"borrowDate\", \"dueDate\", \"returnDate\")
+			(\"loanId\", \"copyId\", \"userId\", \"borrowDate\", \"dueDate\", \"returnDate\")
 			VALUES
-			(:loanId, :barcode, :userId, :loanDate, :dueDate, :returnDate)
+			(:loanId, :copyId, :userId, :loanDate, :dueDate, :returnDate)
 			""";
 
 	private final static String UPDATE_STATUS = """
@@ -37,10 +37,10 @@ public class LoanDaoImpl implements LoanDao {
 	private final static String FIND_BY_LOANID_SQL = """
 			SELECT * FROM "Loan" WHERE \"loanId\" = :loanId
 			""";
-	private final static String UPDATE_LAST_ON_LOAN = """
-			UPDATE "Item" SET \"lastOnLoan\" = CURRENT_DATE WHERE item_id = :itemId
-			AND (\"lastOnLoan\" IS NULL OR \"lastOnLoan\" < CURRENT_DATE)
-			""";
+	// private final static String UPDATE_LAST_ON_LOAN = """
+	// UPDATE "Item" SET \"lastOnLoan\" = CURRENT_DATE WHERE item_id = :itemId
+	// AND (\"lastOnLoan\" IS NULL OR \"lastOnLoan\" < CURRENT_DATE)
+	// """;
 
 	private final static String RECEIPT_SQL = """
 			SELECT l.\"loanId\",
@@ -62,10 +62,15 @@ public class LoanDaoImpl implements LoanDao {
 
 	@Override
 	public Loan createLoan(Loan loan) {
+		// Look up copyId from barcode first
+		String copyIdSql = "SELECT \"copyId\" FROM \"Copy\" WHERE \"barcode\" = :barcode";
+		MapSqlParameterSource barcodeParams = new MapSqlParameterSource("barcode", loan.getCopyId());
+		String copyId = jdbc.queryForObject(copyIdSql, barcodeParams, String.class);
 
+		// Now build params using the real copyId
 		MapSqlParameterSource params = new MapSqlParameterSource()
 				.addValue("loanId", loan.getLoanId())
-				.addValue("copyId", loan.getCopyId())
+				.addValue("copyId", copyId)
 				.addValue("userId", loan.getUserId())
 				.addValue("loanDate", loan.getLoanDate())
 				.addValue("dueDate", loan.getDueDate())
@@ -73,7 +78,7 @@ public class LoanDaoImpl implements LoanDao {
 
 		jdbc.update(CREATE_SQL, params);
 		jdbc.update(UPDATE_STATUS, params);
-		jdbc.update(UPDATE_LAST_ON_LOAN, params);
+
 		return loan;
 	}
 
