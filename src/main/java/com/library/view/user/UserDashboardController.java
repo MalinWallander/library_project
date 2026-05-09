@@ -22,6 +22,6 @@ public class UserDashboardController {
     @FXML
     private void handleLogout() throws IOException {
         AppContext.getInstance().authService.logout();
-        App.setRoot("main_view");
+        App.setRoot("first_page");
     }
 }
