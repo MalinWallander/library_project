@@ -21,4 +21,6 @@ public interface ItemDao {
     List<Copy> getCopiesForItem(String itemId);
 
     void updateCopy(Copy copy);
+
+    Copy findCopyByBarcode(String barcode);
 }

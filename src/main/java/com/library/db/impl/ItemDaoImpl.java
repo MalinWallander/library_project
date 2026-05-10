@@ -364,4 +364,22 @@ public class ItemDaoImpl implements ItemDao {
                 copy.getPurchaseDate() != null ? Date.valueOf(copy.getPurchaseDate()) : null,
                 copy.getCopyId());
     }
+
+    @Override
+    public Copy findCopyByBarcode(String barcode) {
+        String sql = """
+                SELECT * FROM "Copy" WHERE "barcode" = ?
+                """;
+        return jdbc.getJdbcOperations().queryForObject(sql, (rs, rowNum) -> {
+            Copy copy = new Copy();
+            copy.setCopyId(rs.getString("copyId"));
+            copy.setStatus(rs.getString("status"));
+            copy.setBarcode(rs.getString("barcode"));
+            copy.setLocation(rs.getString("location"));
+            copy.setReferenceCopy(rs.getBoolean("referenceCopy"));
+            copy.setItemId(rs.getString("itemId"));
+            copy.setItemTitle(rs.getString("itemTitle"));
+            return copy;
+        }, barcode);
+    }
 }

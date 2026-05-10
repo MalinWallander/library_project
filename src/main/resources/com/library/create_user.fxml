@@ -23,10 +23,11 @@ styleClass="popup-root"
     <ComboBox fx:id="roleDropdown" promptText="Select role">
     <items>
         <FXCollections fx:factory="observableArrayList">
-            <String fx:value="Student" />
-            <String fx:value="Teacher" />
-            <String fx:value="Researcher" />
-        </FXCollections>
+    <String fx:value="Student" />
+    <String fx:value="Teacher" />
+    <String fx:value="Researcher" />
+    <String fx:value="Public" />
+</FXCollections>
     </items>
   </ComboBox>
   <DatePicker fx:id="dobPicker" promptText="Date of birth" />

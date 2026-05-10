@@ -63,4 +63,5 @@ public class UserDaoImpl implements UserDao {
                 rs.getString("category_id"),
                 rs.getString("phone_number"));
     }
+
 }

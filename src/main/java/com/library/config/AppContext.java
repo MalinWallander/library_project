@@ -52,13 +52,11 @@ public class AppContext {
     public final EmployeeService employeeService = new EmployeeService(employeeDao, authService);
     public final SearchService searchService = new SearchService(searchItemDao);
     public final ItemService itemService = new ItemService(itemDao);
-     public final ReservationService reservationService =
-        new ReservationService(userDao, reservationDao, authService);
+    public final ReservationService reservationService = new ReservationService(userDao, reservationDao, authService);
 
-public final ReturnCopyService returnCopyService =
-        new ReturnCopyService(returnDao);
+    public final ReturnCopyService returnCopyService = new ReturnCopyService(returnDao);
 
-public final LoanService loanService = new LoanService(loanDao);
+    public final LoanService loanService = new LoanService(loanDao, itemDao, userDao);
 
     // Singleton instance
     private static AppContext instance;
