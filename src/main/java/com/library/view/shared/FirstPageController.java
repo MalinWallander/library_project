@@ -102,24 +102,38 @@ public class FirstPageController {
 	 * Opens the Search view as a modal popup.
 	 */
 	private void openSearchDialog() {
-		try {
-			FXMLLoader loader = new FXMLLoader(
-					getClass().getResource("/com/library/search_item.fxml"));
-			Parent root = loader.load();
 
-			Stage dialog = new Stage();
-			dialog.initModality(Modality.APPLICATION_MODAL);
-			dialog.initStyle(StageStyle.DECORATED);
-			dialog.setTitle("Search Catalog – City Library");
-			dialog.setScene(new Scene(root, 700, 500));
-			dialog.setResizable(true);
-			dialog.showAndWait();
+    try {
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			showError("Could not open the search screen.", e.getMessage());
-		}
-	}
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/library/search_item.fxml"));
+
+        Parent root = loader.load();
+
+        Stage dialog = new Stage();
+
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.DECORATED);
+
+        dialog.setTitle("Search Catalog – City Library");
+
+        // STÖRRE FÖNSTER + global css
+        dialog.setScene(
+                App.createStyledScene(root, 1150, 780));
+
+        dialog.setResizable(true);
+
+        dialog.showAndWait();
+
+    } catch (IOException e) {
+
+        e.printStackTrace();
+
+        showError(
+                "Could not open the search screen.",
+                e.getMessage());
+    }
+}
 
 	/**
 	 * Informs the user that login is required and offers to open the login dialog.

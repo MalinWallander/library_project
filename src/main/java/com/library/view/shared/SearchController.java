@@ -103,25 +103,42 @@ public class SearchController {
     // Slut på initialize
 
     private void openReservationWindow(Item item) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reservations_view.fxml"));
 
-            Parent root = loader.load();
+    try {
 
-            // Skicka med objektet till controllern
-            ReservationController controller = loader.getController();
-            controller.setItem(item);
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/library/reservations_view.fxml"));
 
-            Stage stage = new Stage();
-            stage.setTitle("Reservera: " + item.getItemTitle());
-            stage.setScene(new Scene(root));
-            stage.show();
+        Parent root = loader.load();
 
-        } catch (Exception e) {
-            System.err.println("Kunde inte ladda reservations_view.fxml. Kontrollera filnamn och sökväg!");
-            e.printStackTrace();
-        }
+        // Skicka item till controllern
+        ReservationController controller = loader.getController();
+        controller.setItem(item);
+
+        // Reservation popup
+        Stage reservationStage = new Stage();
+        reservationStage.setTitle("Reserve: " + item.getItemTitle());
+
+        reservationStage.setScene(
+                com.library.App.createStyledScene(root, 900, 650));
+
+        // Detta är search-fönstret
+        Stage searchStage =
+                (Stage) resultsTable.getScene().getWindow();
+
+        // När reservation popup stängs → stäng även search popup
+        reservationStage.setOnHidden(e -> searchStage.close());
+
+        reservationStage.show();
+
+    } catch (Exception e) {
+
+        System.err.println(
+                "Could not load reservations_view.fxml");
+
+        e.printStackTrace();
     }
+}
 
     @FXML
     private void handleSearch() {

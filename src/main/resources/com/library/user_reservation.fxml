@@ -9,25 +9,25 @@
       fx:controller="com.library.view.user.UserReservationsController"
       prefWidth="900" prefHeight="650"
       styleClass="root-pane"
-      stylesheets="@main.css">
+      stylesheets="@styles/main.css">
     
     <padding>
         <Insets top="30" right="40" bottom="30" left="40"/>
     </padding>
 
-    <Label text="Mina Reservationer" styleClass="page-title" />
+    <Label text="My reservations" styleClass="page-title" />
 
     <!-- TableView använder staff-card klassen för vit bakgrund och skugga -->
     <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS" styleClass="staff-card">
         <columns>
             <TableColumn fx:id="titleColumn" text="Titel" prefWidth="250" />
-            <TableColumn fx:id="creatorColumn" text="Författare / Regissör" prefWidth="200" />
+            <TableColumn fx:id="creatorColumn" text="Writer / Director" prefWidth="200" />
             <TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
-            <TableColumn fx:id="cancelColumn" text="Hantera" prefWidth="150" />
+            <TableColumn fx:id="cancelColumn" text="Handle" prefWidth="150" />
         </columns>
     </TableView>
 
-    <Button text="Tillbaka till menyn" 
+    <Button text="Back to menu" 
             onAction="#handleBackToDashboard" 
             styleClass="btn-secondary" />
 </VBox>

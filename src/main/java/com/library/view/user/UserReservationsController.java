@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.collections.FXCollections;
+
 
 import java.util.List;
 
@@ -53,8 +55,11 @@ public class UserReservationsController {
     }
 
     @FXML
-    private void handleBackToDashboard() {
-        com.library.App.setRoot("user_dashboard");
+private void handleBackToDashboard() {
 
-    }
+    Stage stage =
+            (Stage) reservationsTable.getScene().getWindow();
+
+    stage.close();
+}
 }
