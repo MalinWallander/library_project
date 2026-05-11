@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -192,7 +191,7 @@ public class LoanDaoImpl implements LoanDao {
 				AND l."dueDate" < CURRENT_DATE
 				ORDER BY l."dueDate" ASC
 				""";
-		List<OverdueLoanSummary> results = jdbc.query(sql, (rs, rowNum) -> {
+		return jdbc.query(sql, (rs, rowNum) -> {
 			String firstName = rs.getString("f_name");
 			String lastName = rs.getString("l_name");
 			String memberName = ((firstName == null ? "" : firstName) + " "
@@ -203,7 +202,5 @@ public class LoanDaoImpl implements LoanDao {
 					rs.getString("userId"),
 					rs.getDate("dueDate").toLocalDate());
 		});
-		System.out.println("Overdue loans found: " + results.size());
-		return results;
 	}
 }
