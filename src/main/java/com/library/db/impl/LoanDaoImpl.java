@@ -44,21 +44,20 @@ public class LoanDaoImpl implements LoanDao {
 	// """;
 
 	private final static String RECEIPT_SQL = """
-			SELECT l.\"loanId\",
-			       l.\"copyId\",
-			       l.\"userId\",
-			       l.\"borrowDate\",
-			       COALESCE(i.\"itemTitle\", c.\"itemTitle\") AS item_title,
-			       i.\"itemType\" AS item_type,
+			SELECT l."loanId",
+			       l."copyId",
+			       l."userId",
+			       l."borrowDate",
+			       l."dueDate",
+			       COALESCE(i."itemTitle", c."itemTitle") AS item_title,
+			       i."itemType" AS item_type,
 			       u.f_name,
-			       u.l_name,
-			       ic.\"maxLoanTime\" AS max_loan_time
-			FROM \"Loan\" l
-			JOIN \"Copy\" c ON c.\"copyId\" = l.\"copyId\"
-			LEFT JOIN \"Item\" i ON i.\"itemId\" = c.\"itemId\"
-			LEFT JOIN \"User\" u ON u.user_id = l.\"userId\"
-			LEFT JOIN \"ItemCategory\" ic ON ic.\"categoryId\" = i.\"categoryId\"
-			WHERE l.\"loanId\" = :loanId
+			       u.l_name
+			FROM "Loan" l
+			JOIN "Copy" c ON c."copyId" = l."copyId"
+			LEFT JOIN "Item" i ON i."itemId" = c."itemId"
+			LEFT JOIN "User" u ON u.user_id = l."userId"
+			WHERE l."loanId\" = :loanId
 			""";
 
 	@Override
@@ -116,10 +115,12 @@ public class LoanDaoImpl implements LoanDao {
 
 	private Receipt mapReceiptRow(ResultSet rs, int rowNum) throws SQLException {
 		LocalDate loanDate = rs.getObject("borrowDate", LocalDate.class);
-		int maxLoanTime = Objects.requireNonNullElse((Integer) rs.getObject("max_loan_time"), 30);
+		LocalDate dueDate = rs.getObject("dueDate", LocalDate.class);
+
 		String firstName = rs.getString("f_name");
 		String lastName = rs.getString("l_name");
-		String memberName = ((firstName == null ? "" : firstName) + " " + (lastName == null ? "" : lastName)).trim();
+		String memberName = ((firstName == null ? "" : firstName) + " "
+				+ (lastName == null ? "" : lastName)).trim();
 
 		return new Receipt(
 				rs.getString("loanId"),
@@ -129,7 +130,7 @@ public class LoanDaoImpl implements LoanDao {
 				rs.getString("userId"),
 				memberName.isBlank() ? "Unknown member" : memberName,
 				loanDate,
-				loanDate.plusDays(maxLoanTime));
+				dueDate);
 	}
 
 	// TODO verify names in db
