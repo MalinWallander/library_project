@@ -13,6 +13,7 @@ import com.library.db.UserDao;
 import com.library.model.User;
 import com.library.model.administration.Loan;
 import com.library.model.administration.LoanSummary;
+import com.library.model.administration.OverdueLoanSummary;
 import com.library.model.administration.Receipt;
 import com.library.model.items.Copy;
 import com.library.model.items.Item;
@@ -119,5 +120,9 @@ public class LoanService {
 
 	public List<LoanSummary> getLoanSummariesForUser(String userId) {
 		return loanDao.findSummariesByUserId(userId);
+	}
+
+	public List<OverdueLoanSummary> getOverdueLoanSummaries() {
+		return loanDao.getOverdueLoanSummaries();
 	}
 }

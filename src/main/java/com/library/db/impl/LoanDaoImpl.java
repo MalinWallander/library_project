@@ -3,6 +3,7 @@ package com.library.db.impl;
 import com.library.db.LoanDao;
 import com.library.model.administration.Loan;
 import com.library.model.administration.LoanSummary;
+import com.library.model.administration.OverdueLoanSummary;
 import com.library.model.administration.Receipt;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -173,5 +174,36 @@ public class LoanDaoImpl implements LoanDao {
 				rs.getString("item_title"),
 				rs.getDate("borrowDate") != null ? rs.getDate("borrowDate").toLocalDate() : null,
 				rs.getDate("dueDate") != null ? rs.getDate("dueDate").toLocalDate() : null));
+	}
+
+	@Override
+	public List<OverdueLoanSummary> getOverdueLoanSummaries() {
+		String sql = """
+				SELECT COALESCE(i."itemTitle", c."itemTitle") AS item_title,
+				       u.f_name,
+				       u.l_name,
+				       l."userId",
+				       l."dueDate"
+				FROM "Loan" l
+				JOIN "Copy" c ON c."copyId" = l."copyId"
+				LEFT JOIN "Item" i ON i."itemId" = c."itemId"
+				LEFT JOIN "User" u ON u.user_id = l."userId"
+				WHERE l."returnDate" IS NULL
+				AND l."dueDate" < CURRENT_DATE
+				ORDER BY l."dueDate" ASC
+				""";
+		List<OverdueLoanSummary> results = jdbc.query(sql, (rs, rowNum) -> {
+			String firstName = rs.getString("f_name");
+			String lastName = rs.getString("l_name");
+			String memberName = ((firstName == null ? "" : firstName) + " "
+					+ (lastName == null ? "" : lastName)).trim();
+			return new OverdueLoanSummary(
+					rs.getString("item_title"),
+					memberName.isBlank() ? "Unknown member" : memberName,
+					rs.getString("userId"),
+					rs.getDate("dueDate").toLocalDate());
+		});
+		System.out.println("Overdue loans found: " + results.size());
+		return results;
 	}
 }

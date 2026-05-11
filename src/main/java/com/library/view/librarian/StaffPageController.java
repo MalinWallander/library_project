@@ -137,4 +137,21 @@ public class StaffPageController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	private void handleOverdueLoans() {
+		try {
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/library/overdue_loans.fxml"));
+			Parent root = loader.load();
+
+			Stage stage = new Stage();
+			stage.setTitle("Overdue Loans");
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(App.createStyledScene(root));
+			stage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

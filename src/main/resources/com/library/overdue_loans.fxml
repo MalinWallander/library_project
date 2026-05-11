@@ -1,55 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.library.view.shared.OverdueLoansController"
-            styleClass="page-background">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.library.view.shared.OverdueLoansController"
+      styleClass="popup-root"
+      spacing="16" prefWidth="700" prefHeight="500">
 
-    <top>
-        <VBox alignment="CENTER"
-              spacing="10"
-              style="-fx-padding: 30 0 10 0;">
+    <padding>
+        <Insets top="24" right="24" bottom="24" left="24"/>
+    </padding>
 
-            <Label text="Overdue Loans"
-                   styleClass="page-title"/>
+    <Label text="Overdue Loans" styleClass="page-title"/>
 
-        </VBox>
-    </top>
+    <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="itemTitleColumn" text="Item" prefWidth="220"/>
+            <TableColumn fx:id="memberNameColumn" text="Member" prefWidth="180"/>
+            <TableColumn fx:id="dueDateColumn" text="Due Date" prefWidth="120"/>
+            <TableColumn fx:id="daysOverdueColumn" text="Days Overdue" prefWidth="120"/>
+        </columns>
+    </TableView>
 
-    <center>
-        <VBox alignment="CENTER"
-              VBox.vgrow="ALWAYS"
-              styleClass="table-wrapper">
-
-            <TableView fx:id="loanTable"
-                       prefWidth="720"
-                       prefHeight="500">
-
-                <columns>
-
-                    <TableColumn fx:id="copyIdColumn"
-                                 text="Copy ID"
-                                 prefWidth="220"/>
-
-                    <TableColumn fx:id="userIdColumn"
-                                 text="User ID"
-                                 prefWidth="220"/>
-
-                    <TableColumn fx:id="dueDateColumn"
-                                 text="Due Date"
-                                 prefWidth="220"/>
-
-                </columns>
-
-            </TableView>
-
-        </VBox>
-    </center>
-
-</BorderPane>
+</VBox>

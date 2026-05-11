@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.library.model.administration.Loan;
 import com.library.model.administration.LoanSummary;
+import com.library.model.administration.OverdueLoanSummary;
 import com.library.model.administration.Receipt;
 
 public interface LoanDao {
@@ -20,4 +21,6 @@ public interface LoanDao {
 	List<Loan> getOverdueLoans();
 
 	List<LoanSummary> findSummariesByUserId(String userId);
+
+	List<OverdueLoanSummary> getOverdueLoanSummaries();
 }
