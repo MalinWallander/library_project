@@ -41,7 +41,7 @@ public class UserService {
         dao.createUser(newUser);
 
         // 2. Skapa login (kopplar user till auth_account)
-        authService.createBorrowerLogin(email, plainPassword, userId);
+        authService.createBorrowerLogin(email, plainPassword, userId.toString());
 
         System.out.println("User created: " + newUser.getEmail());
     }

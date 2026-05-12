@@ -16,20 +16,21 @@ public class EmployeeService {
     }
 
     public void createEmployee(String fName,
-                               String lName,
-                               String email,
-                               String phoneNumber,
-                               String plainPassword) {
+            String lName,
+            String email,
+            String phoneNumber,
+            String plainPassword) {
         validateEmployeeInput(fName, lName, email, phoneNumber, plainPassword);
 
         UUID employeeId = UUID.randomUUID();
         Employee employee = new Employee(employeeId, fName.trim(), lName.trim(), email.trim(), phoneNumber.trim());
 
         employeeDao.createEmployee(employee);
-        authService.createEmployeeLogin(email, plainPassword, employeeId);
+        authService.createEmployeeLogin(email, plainPassword, employeeId.toString());
     }
 
-    private void validateEmployeeInput(String fName, String lName, String email, String phoneNumber, String plainPassword) {
+    private void validateEmployeeInput(String fName, String lName, String email, String phoneNumber,
+            String plainPassword) {
         if (fName == null || fName.isBlank()) {
             throw new IllegalArgumentException("First name is required.");
         }

@@ -1,15 +1,13 @@
 package com.library.model.auth;
 
-import java.util.UUID;
-
 public class CurrentSession {
-    private final UUID accountId;
+    private final String accountId;
     private final String email;
     private final AuthRole role;
-    private final UUID userId;
-    private final UUID employeeId;
+    private final String userId;
+    private final String employeeId;
 
-    public CurrentSession(UUID accountId, String email, AuthRole role, UUID userId, UUID employeeId) {
+    public CurrentSession(String accountId, String email, AuthRole role, String userId, String employeeId) {
         this.accountId = accountId;
         this.email = email;
         this.role = role;
@@ -17,9 +15,23 @@ public class CurrentSession {
         this.employeeId = employeeId;
     }
 
-    public UUID getAccountId() { return accountId; }
-    public String getEmail() { return email; }
-    public AuthRole getRole() { return role; }
-    public UUID getUserId() { return userId; }
-    public UUID getEmployeeId() { return employeeId; }
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public AuthRole getRole() {
+        return role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
 }

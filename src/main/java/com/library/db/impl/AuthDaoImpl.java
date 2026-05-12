@@ -64,15 +64,12 @@ public class AuthDaoImpl implements AuthDao {
     }
 
     private AuthAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String userIdString = rs.getString("user_id");
-        String employeeIdString = rs.getString("employee_id");
         return new AuthAccount(
-                UUID.fromString(rs.getString("account_id")),
+                rs.getString("account_id"),
                 rs.getString("email"),
                 rs.getString("password_hash"),
                 AuthRole.valueOf(rs.getString("role")),
-                userIdString == null ? null : UUID.fromString(userIdString),
-                employeeIdString == null ? null : UUID.fromString(employeeIdString)
-        );
+                rs.getString("user_id"),
+                rs.getString("employee_id"));
     }
 }

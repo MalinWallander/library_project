@@ -1,16 +1,15 @@
 package com.library.model.auth;
 
-import java.util.UUID;
-
 public class AuthAccount {
-    private UUID accountId;
+    private String accountId;
     private String email;
     private String passwordHash;
     private AuthRole role;
-    private UUID userId;
-    private UUID employeeId;
+    private String userId;
+    private String employeeId;
 
-    public AuthAccount(UUID accountId, String email, String passwordHash, AuthRole role, UUID userId, UUID employeeId) {
+    public AuthAccount(String accountId, String email, String passwordHash, AuthRole role, String userId,
+            String employeeId) {
         this.accountId = accountId;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -19,10 +18,27 @@ public class AuthAccount {
         this.employeeId = employeeId;
     }
 
-    public UUID getAccountId() { return accountId; }
-    public String getEmail() { return email; }
-    public String getPasswordHash() { return passwordHash; }
-    public AuthRole getRole() { return role; }
-    public UUID getUserId() { return userId; }
-    public UUID getEmployeeId() { return employeeId; }
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public AuthRole getRole() {
+        return role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
 }

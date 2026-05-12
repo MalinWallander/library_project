@@ -46,14 +46,14 @@ public class AuthService {
         return LoginResult.success(currentSession);
     }
 
-    public void createBorrowerLogin(String email, String plainPassword, UUID userId) {
+    public void createBorrowerLogin(String email, String plainPassword, String userId) {
         validateAccountCreation(email, plainPassword);
         if (userId == null) {
             throw new IllegalArgumentException("Borrower account must be linked to a user.");
         }
 
         AuthAccount account = new AuthAccount(
-                UUID.randomUUID(),
+                UUID.randomUUID().toString(),
                 email.trim(),
                 passwordService.hashPassword(plainPassword),
                 AuthRole.BORROWER,
@@ -63,14 +63,14 @@ public class AuthService {
         authDao.createAccount(account);
     }
 
-    public void createEmployeeLogin(String email, String plainPassword, UUID employeeId) {
+    public void createEmployeeLogin(String email, String plainPassword, String employeeId) {
         validateAccountCreation(email, plainPassword);
         if (employeeId == null) {
             throw new IllegalArgumentException("Employee account must be linked to an employee.");
         }
 
         AuthAccount account = new AuthAccount(
-                UUID.randomUUID(),
+                UUID.randomUUID().toString(),
                 email.trim(),
                 passwordService.hashPassword(plainPassword),
                 AuthRole.EMPLOYEE,
