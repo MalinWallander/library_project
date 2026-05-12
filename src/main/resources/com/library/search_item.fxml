@@ -15,27 +15,27 @@
 
     <!-- Sökfältet med padding för att det inte ska ligga mot kanten -->
     <HBox spacing="15"
-          alignment="CENTER"
-          styleClass="search-bar"
-          style="-fx-padding: 30 0 10 0;">
+      alignment="CENTER"
+      styleClass="search-bar"
+      style="-fx-padding: 30 0 10 0;">
 
-        <TextField fx:id="searchField"
-                   promptText="Search by title..."
-                   prefWidth="200.0"
-                   styleClass="text-field"/> <!-- Om du har specifik styling för fält -->
+    <TextField fx:id="searchField"
+               promptText="Search by title..."
+               prefWidth="200.0"
+               styleClass="text-field"
+               onKeyReleased="#handleSearch"/>
 
-        <TextField fx:id="creatorField"
-                   promptText="Search by author / director..."
-                   prefWidth="220.0"/>
+    <TextField fx:id="creatorField"
+               promptText="Search by author / director..."
+               prefWidth="220.0"
+               onKeyReleased="#handleSearch"/>
 
-        <ComboBox fx:id="typeDropdown"
-                  promptText="Select type..."
-                  prefWidth="160.0"/>
+    <ComboBox fx:id="typeDropdown"
+              promptText="Select type..."
+              prefWidth="160.0"
+              onAction="#handleSearch"/>
 
-        <Button text="Search"
-                onAction="#handleSearch"
-                styleClass="nav-login-btn"/>
-    </HBox>
+</HBox>
 
     <VBox alignment="CENTER"
           VBox.vgrow="ALWAYS"

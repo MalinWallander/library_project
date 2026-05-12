@@ -53,7 +53,7 @@ public class SearchController {
         this.searchService = AppContext.getInstance().searchService;
 
         // 2. Standardinställningar för tabellen
-        resultsTable.setPlaceholder(new Label("Använd sökfältet för att hitta böcker eller filmer."));
+        resultsTable.setPlaceholder(new Label("Start typing to search for books or films."));
 
         // 3. Fyll dropdown-menyn
         typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd", "Periodical"));
@@ -154,8 +154,6 @@ public class SearchController {
                 creatorQuery = null;
             if ("Alla".equals(selectedType))
                 selectedType = null;
-
-            System.out.println("Söker efter: " + titleQuery + " | " + selectedType);
 
             // Anropa backend
             List<Item> searchResults = searchService.searchItems(titleQuery, creatorQuery, selectedType);

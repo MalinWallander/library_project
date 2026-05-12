@@ -57,10 +57,15 @@ public class MyLoansController {
 		Region spacer = new Region();
 		HBox.setHgrow(spacer, Priority.ALWAYS);
 
-		Label dueLabel = new Label(loan.getDueDate() != null
-				? "Due: " + loan.getDueDate()
-				: "No due date");
-		dueLabel.getStyleClass().add("loan-row-due");
+		boolean isOverdue = loan.getDueDate() != null
+				&& loan.getDueDate().isBefore(java.time.LocalDate.now());
+
+		String dueText = loan.getDueDate() != null
+				? (isOverdue ? "⚠ Overdue since: " : "Due: ") + loan.getDueDate()
+				: "No due date";
+
+		Label dueLabel = new Label(dueText);
+		dueLabel.getStyleClass().add(isOverdue ? "overdue-label" : "loan-row-due");
 
 		row.getChildren().addAll(info, spacer, dueLabel);
 		return row;
