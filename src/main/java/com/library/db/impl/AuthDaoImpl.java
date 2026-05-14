@@ -63,7 +63,7 @@ public class AuthDaoImpl implements AuthDao {
         return count != null && count > 0;
     }
 
-    private AuthAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private AuthAccount mapRow(ResultSet rs, int rowNum) throws SQLException { // TODO: Dont throw exception where method is called. Add a try / catch where exception can occur.
         return new AuthAccount(
                 rs.getString("account_id"),
                 rs.getString("email"),

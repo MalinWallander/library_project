@@ -7,6 +7,7 @@ import com.library.model.User;
 
 public interface UserDao {
 
+	// TODO namespace "oublic" is redundant in this case, can be removed
 	public User createUser(User user);
 
 	Optional<User> findById(UUID userId);

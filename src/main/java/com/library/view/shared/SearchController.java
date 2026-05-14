@@ -49,6 +49,7 @@ public class SearchController {
 
     @FXML
     public void initialize() {
+        // TODO: Stick to english, even in comments
         // 1. Hämta servicen från AppContext
         this.searchService = AppContext.getInstance().searchService;
 
@@ -100,6 +101,7 @@ public class SearchController {
         });
 
     }
+    // TODO: Unnecessary comment
     // Slut på initialize
 
     private void openReservationWindow(Item item) {
@@ -136,6 +138,7 @@ public class SearchController {
         System.err.println(
                 "Could not load reservations_view.fxml");
 
+        // TODO: Remove print stack trace, stick to relevant logging
         e.printStackTrace();
     }
 }
@@ -170,8 +173,10 @@ public class SearchController {
 
         } catch (Exception e) {
             System.err.println("Fel i handleSearch:");
+            // TODO: Remove print stack trace, stick to relevant logging
             e.printStackTrace();
             resultsTable.setPlaceholder(new Label("Ett tekniskt fel uppstod."));
         }
     }
+    // TODO: Remove unnecessary comment
 } // Slut på hela klassen

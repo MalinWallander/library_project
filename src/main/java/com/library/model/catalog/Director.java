@@ -1,5 +1,6 @@
 package com.library.model.catalog;
 
+// TODO: Class never used
 public class Director {
     private String directorId;
     private String directorFName;

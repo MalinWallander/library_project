@@ -10,6 +10,7 @@ public class ReturnCopyService {
 		this.returnDao = returnDao;
 	}
 
+	// TODO: Comment not necessary for simple function
 	/**
 	 * Returns a borrowed copy by barcode.
 	 * 

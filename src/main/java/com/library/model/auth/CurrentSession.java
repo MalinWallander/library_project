@@ -15,6 +15,7 @@ public class CurrentSession {
         this.employeeId = employeeId;
     }
 
+    // TODO: Never used
     public String getAccountId() {
         return accountId;
     }
@@ -31,6 +32,7 @@ public class CurrentSession {
         return userId;
     }
 
+    // TODO: Never used
     public String getEmployeeId() {
         return employeeId;
     }

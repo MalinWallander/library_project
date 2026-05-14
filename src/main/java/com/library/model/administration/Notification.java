@@ -2,6 +2,7 @@ package com.library.model.administration;
 
 import java.time.LocalDate;
 
+// TODO: Class never used
 public class Notification {
     private String notificationId;
     private String loanId;

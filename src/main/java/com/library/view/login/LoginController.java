@@ -33,6 +33,7 @@ public class LoginController {
         this.authService = authService;
     }
 
+    // TODO: Never used
     public void setRequiredRole(AuthRole requiredRole) {
         this.requiredRole = requiredRole;
         updateRoleCopy();

@@ -1,5 +1,6 @@
 package com.library.model.items;
 
+// TODO: Class never used
 public class ItemCategory {
     private int categoryId;
     private String categoryName;

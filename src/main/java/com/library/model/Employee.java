@@ -3,6 +3,7 @@ package com.library.model;
 import java.util.UUID;
 
 public class Employee {
+    // TODO use "private final" when possible when setting up fields
     private UUID employeeId;
     private String fName;
     private String lName;

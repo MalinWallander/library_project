@@ -1,6 +1,6 @@
 package com.library.model.items;
 
-
+// TODO: Class never used
 public class CourseLiterature extends Item {
     private String courseName;
     private String author;

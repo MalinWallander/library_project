@@ -67,10 +67,12 @@ public class Book extends Item {
     public String getCreator() {
         return mainAuthorName;
     }
+    // TODO: Never used
     public boolean isCourseLiterature() {
     return isCourseLiterature;
 }
 
+    // TODO: Never used
 public void setCourseLiterature(boolean courseLiterature) {
     isCourseLiterature = courseLiterature;
 }

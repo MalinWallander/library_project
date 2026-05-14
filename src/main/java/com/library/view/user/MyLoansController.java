@@ -29,7 +29,7 @@ public class MyLoansController {
 			return;
 
 		List<LoanSummary> loans = AppContext.getInstance().loanService
-				.getLoanSummariesForUser(session.getUserId().toString());
+				.getLoanSummariesForUser(session.getUserId().toString()); // TODO: .toString() method is redundant, remove
 
 		subtitleLabel.setText(loans.size() + " active loan" + (loans.size() == 1 ? "" : "s"));
 

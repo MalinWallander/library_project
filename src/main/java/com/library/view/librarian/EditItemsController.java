@@ -221,6 +221,7 @@ public class EditItemsController {
 			}
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -244,6 +245,7 @@ public class EditItemsController {
 			showResults(itemService.searchByTitle(searchField.getText()));
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -268,6 +270,7 @@ public class EditItemsController {
         showResults(itemService.searchByTitle(searchField.getText()));
 
     } catch (IOException e) {
+		// TODO: Add relevant logging instead of printing stacktrace
         e.printStackTrace();
     }
 }

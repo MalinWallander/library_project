@@ -21,6 +21,7 @@ public class CreateUserController {
     @FXML private ComboBox<String> roleDropdown;
     @FXML private DatePicker dobPicker;
     @FXML private PasswordField passwordField;
+    // TODO: Never used
     @FXML private Label messageLabel;
 
     private UserService userService;
@@ -30,7 +31,7 @@ public class CreateUserController {
     }
 
     @FXML
-    private void handleSubmit(ActionEvent event) {
+    private void handleSubmit(ActionEvent event) { // TODO: event not used, remove?
         try {
             String fName = fNameField.getText();
             String lName = lNameField.getText();

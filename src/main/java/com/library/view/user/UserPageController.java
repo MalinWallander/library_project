@@ -18,18 +18,25 @@ import javafx.stage.Stage;
 public class UserPageController {
 
 	@FXML
+	// TODO: Never used
 	private VBox searchCard;
 	@FXML
+	// TODO: Never used
 	private VBox loansCard;
 	@FXML
+	// TODO: Never used
 	private VBox reservationsCard;
 	@FXML
+	// TODO: Never used
 	private Label activeLoansLabel;
 	@FXML
+	// TODO: Never used
 	private Label pendingReservationsLabel;
 	@FXML
+	// TODO: Never used
 	private VBox recentLoansContainer;
 	@FXML
+	// TODO: Never used
 	private VBox pendingReservationsContainer;
 	@FXML
 	private Label welcomeLabel;
@@ -39,6 +46,7 @@ public class UserPageController {
 		CurrentSession session = AppContext.getInstance().authService.getCurrentSession();
 		if (session != null) {
 			welcomeLabel.setText("Welcome Back!");
+			// TODO: Never used
 			String userId = session.getUserId();
 		}
 	}
@@ -65,6 +73,7 @@ public class UserPageController {
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
+			// TODO: Remove print stack trace, stick to relevant logging
 			e.printStackTrace();
 		}
 	}
@@ -82,6 +91,7 @@ public class UserPageController {
 			stage.setScene(App.createStyledScene(root));
 			stage.showAndWait();
 		} catch (IOException e) {
+			// TODO: Remove print stack trace, stick to relevant logging
 			e.printStackTrace();
 		}
 	}
@@ -99,6 +109,7 @@ public class UserPageController {
 			stage.setScene(App.createStyledScene(root));
 			stage.showAndWait();
 		} catch (IOException e) {
+			// TODO: Remove print stack trace, stick to relevant logging
 			e.printStackTrace();
 		}
 	}

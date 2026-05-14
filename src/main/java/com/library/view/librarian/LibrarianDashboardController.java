@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class LibrarianDashboardController {
 
     @FXML
-    private void handleCreateUser(ActionEvent event) {
+    private void handleCreateUser(ActionEvent event) { // TODO: event never used, remove?
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/create_user.fxml"));
             Parent root = loader.load();
@@ -32,11 +32,13 @@ public class LibrarianDashboardController {
             popupStage.showAndWait();
 
         } catch (IOException e) {
+            // TODO: Add relevant logging instead of printing stacktrace
             e.printStackTrace();
         }
     }
 
     @FXML
+    // TODO: Never used
     private void handleCreateEmployee(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/create_employee.fxml"));
@@ -73,6 +75,7 @@ public class LibrarianDashboardController {
             popupStage.showAndWait();
 
         } catch (IOException e) {
+            // TODO: Add relevant logging instead of printing stacktrace
             e.printStackTrace();
         }
     }

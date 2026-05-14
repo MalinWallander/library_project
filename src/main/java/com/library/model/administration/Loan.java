@@ -41,10 +41,12 @@ public class Loan {
         return returnDate;
     }
 
+    // TODO: Never used
     public void setLoanId(UUID loanId) {
         this.loanId = loanId;
     }
 
+    // TODO: Never used
     public void setCopyId(String copyId) {
         this.copyId = copyId;
     }
@@ -53,10 +55,12 @@ public class Loan {
         this.userId = userId;
     }
 
+    // TODO: Never used
     public void setLoanDate(LocalDate loanDate) {
         this.loanDate = loanDate;
     }
 
+    // TODO: Never used
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
@@ -65,6 +69,7 @@ public class Loan {
     return dueDate;
 }
 
+    // TODO: Never used
 public void setDueDate(LocalDate dueDate) {
     this.dueDate = dueDate;
 }

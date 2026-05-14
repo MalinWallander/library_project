@@ -69,6 +69,7 @@ public class Copy {
         return lastOnLoan;
     }
 
+    // TODO: Never used
     public void setLastOnLoan(LocalDate lastOnLoan) {
         this.lastOnLoan = lastOnLoan;
     }

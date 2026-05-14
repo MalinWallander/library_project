@@ -60,7 +60,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     private void insertIntoItem(Item item, Connection conn) throws SQLException {
-        String sql = "INSERT INTO \"Item\" (\"itemId\", \"itemType\", \"itemTitle\", \"categoryId\") VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO \"Item\" (\"itemId\", \"itemType\", \"itemTitle\", \"categoryId\") VALUES (?, ?, ?, ?)"; // TODO: Better with snake case for db column names
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, item.getItemId());
             stmt.setString(2, item.getItemType());
@@ -71,7 +71,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     private void insertIntoBook(Item item, Connection conn) throws SQLException {
-        String sql = "INSERT INTO \"Book\" (\"itemId\", \"isbn\", \"genre\", \"mainAuthorName\", \"publisherId\") VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO \"Book\" (\"itemId\", \"isbn\", \"genre\", \"mainAuthorName\", \"publisherId\") VALUES (?, ?, ?, ?, ?)"; // TODO: Same here, won't repeat comment again.
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, item.getItemId());
             stmt.setString(2, ((Book) item).getIsbn());

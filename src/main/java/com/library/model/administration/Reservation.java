@@ -2,6 +2,7 @@ package com.library.model.administration;
 
 import java.time.LocalDate;
 
+// TODO: Class never used
 public class Reservation {
     private String reservationId;
     private String userId;

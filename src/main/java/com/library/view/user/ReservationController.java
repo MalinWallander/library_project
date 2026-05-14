@@ -29,6 +29,7 @@ public class ReservationController {
         }
     }
 
+    // TODO: Remove unnecessary comment
     // Denna metod saknades och orsakade kraschen!
     @FXML
     private void handleCancel() {
@@ -57,6 +58,7 @@ public class ReservationController {
     }
 
     private void closeWindow() {
+        // TODO: Remove unnecessary comment
         // Kontrollera att scenen faktiskt finns innan vi stänger
         if (titleLabel.getScene() != null) {
             Stage stage = (Stage) titleLabel.getScene().getWindow();

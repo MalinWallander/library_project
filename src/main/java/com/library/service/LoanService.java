@@ -102,6 +102,7 @@ public class LoanService {
 		return loanDao.createLoan(loan);
 	}
 
+	// TODO: Never used
 	public Optional<Loan> getLoanById(String loanId) {
 		return loanDao.findById(loanId);
 	}
@@ -110,10 +111,12 @@ public class LoanService {
 		return loanDao.receipt(loanId);
 	}
 
+	// TODO: Never used
 	public List<Loan> getLoansForUser(String userId) {
 		return loanDao.findByUserId(userId);
 	}
 
+	// TODO: Never used
 	public List<Loan> getOverdueLoans() {
 		return loanDao.getOverdueLoans();
 	}

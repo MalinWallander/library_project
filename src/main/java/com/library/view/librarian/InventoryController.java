@@ -9,6 +9,7 @@ public class InventoryController {
 	@FXML
 	private AddItemController addItemController;
 	@FXML
+	// TODO: Never used
 	private EditItemsController editItemsController;
 
 	@FXML

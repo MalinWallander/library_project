@@ -19,12 +19,16 @@ public class StaffPageController {
 	@FXML
 	private VBox checkoutCard;
 	@FXML
+	// TODO: Never used
 	private VBox checkinCard;
 	@FXML
+	// TODO: Never used
 	private VBox searchCard;
 	@FXML
+	// TODO: Never used
 	private VBox addUserCard;
 	@FXML
+	// TODO: Never used
 	private VBox inventoryCard;
 
 	@FXML
@@ -56,6 +60,7 @@ public class StaffPageController {
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -76,6 +81,7 @@ public class StaffPageController {
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -96,6 +102,7 @@ public class StaffPageController {
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -117,6 +124,7 @@ public class StaffPageController {
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -134,6 +142,7 @@ public class StaffPageController {
 			popupStage.showAndWait();
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}
@@ -151,6 +160,7 @@ public class StaffPageController {
 			stage.setScene(App.createStyledScene(root));
 			stage.showAndWait();
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 		}
 	}

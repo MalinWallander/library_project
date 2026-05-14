@@ -11,9 +11,12 @@ public class ReservationService {
 
     private final ReservationDao reservationDao;
     private final AuthService authService;
+    // TODO: Never used
     private final UserDao dao;
 
+    // TODO: UserDao not used, remove as input
     public ReservationService(UserDao dao, ReservationDao reservationDao, AuthService authService) {
+        // TODO: dao not used
         this.dao = dao;
         this.reservationDao = reservationDao;
         this.authService = authService;
@@ -23,6 +26,7 @@ public class ReservationService {
 
         // 🔐 Kolla login
         if (!authService.isLoggedIn()) {
+            // TODO: Use either english or swedish, not both.
             throw new RuntimeException("Du måste vara inloggad");
         }
 
@@ -38,6 +42,7 @@ public class ReservationService {
 
         // 3. Blockera tidskrifter
         if ("Periodical".equalsIgnoreCase(type)) {
+            // TODO: Use either english or swedish, not both.
             throw new RuntimeException("Tidskrifter kan inte reserveras");
         }
 
@@ -52,9 +57,11 @@ public class ReservationService {
     public List<Item> getMyReservations() {
 
         if (!authService.isLoggedIn()) {
+            // TODO: Use either english or swedish, not both.
             throw new RuntimeException("Du måste vara inloggad");
         }
 
+        // TODO: .toString() is redundant, can be removed.
         String userId = authService.getCurrentSession().getUserId().toString();
 
         return reservationDao.findByUser(userId);

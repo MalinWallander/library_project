@@ -1,15 +1,14 @@
 package com.library.view.user;
 
+import com.library.config.AppContext;
 import com.library.model.items.Item;
 import com.library.service.ReservationService;
-import com.library.config.AppContext;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
-
 
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class UserReservationsController {
 
     @FXML
     public void initialize() {
+        // TODO: Remove unnecessary comments, if kept stick to english
         // 1. Hämta servicen från din AppContext
         // Om variabeln i AppContext är public (vilket den verkar vara i din tidigare
         // kod)
@@ -50,16 +50,14 @@ public class UserReservationsController {
                 reservationsTable.setItems(FXCollections.observableArrayList(myReservations));
             }
         } catch (Exception e) {
+            // TODO: Remove print stack trace, stick to relevant logging
             e.printStackTrace();
         }
     }
 
     @FXML
-private void handleBackToDashboard() {
-
-    Stage stage =
-            (Stage) reservationsTable.getScene().getWindow();
-
-    stage.close();
-}
+    private void handleBackToDashboard() {
+        Stage stage = (Stage) reservationsTable.getScene().getWindow();
+        stage.close();
+    }
 }

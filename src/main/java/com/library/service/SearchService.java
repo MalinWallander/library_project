@@ -7,6 +7,7 @@ import com.library.model.items.Item;
 
 public class SearchService {
 
+    // TODO: Remove unnecessary comments
     // Typen måste vara ItemDAO (stora bokstäver)
     // Variabeln döper vi till itemDao (litet i)
     private final SearchItemDao searchItemDao;

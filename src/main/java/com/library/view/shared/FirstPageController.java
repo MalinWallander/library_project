@@ -26,10 +26,13 @@ public class FirstPageController {
 	@FXML
 	private BorderPane rootPane;
 	@FXML
+	// TODO: Never used
 	private VBox searchCard;
 	@FXML
+	// TODO: Never used
 	private VBox loansCard;
 	@FXML
+	// TODO: Never used
 	private VBox reservationsCard;
 
 	// ── Nav bar ──────────────────────────────────────────
@@ -37,23 +40,23 @@ public class FirstPageController {
 	@FXML
 	private void handleLoginButton(ActionEvent event) {
 		openLoginDialog();
-	}
+	} // TODO: event never used, remove?
 
 	// ── Card handlers ────────────────────────────────────
 
 	@FXML
-	private void handleSearchCard(javafx.scene.input.MouseEvent event) {
+	private void handleSearchCard(javafx.scene.input.MouseEvent event) { // TODO: event never used, remove?
 		openSearchDialog();
 	}
 
 	@FXML
-	private void handleLoansCard(javafx.scene.input.MouseEvent event) {
+	private void handleLoansCard(javafx.scene.input.MouseEvent event) { // TODO: event never used, remove?
 		// Locked – prompt user to log in
 		showLoginRequiredPopup("My Loans");
 	}
 
 	@FXML
-	private void handleReservationsCard(javafx.scene.input.MouseEvent event) {
+	private void handleReservationsCard(javafx.scene.input.MouseEvent event) { // TODO: event never used, remove?
 		// Locked – prompt user to log in
 		showLoginRequiredPopup("My Reservations");
 	}
@@ -93,6 +96,7 @@ public class FirstPageController {
 			}
 
 		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
 			e.printStackTrace();
 			showError("Could not open the login screen.", e.getMessage());
 		}
@@ -117,6 +121,7 @@ public class FirstPageController {
 
         dialog.setTitle("Search Catalog – City Library");
 
+		//TODO: Remove unnecessary comment
         // STÖRRE FÖNSTER + global css
         dialog.setScene(
                 App.createStyledScene(root, 1150, 780));
@@ -127,8 +132,9 @@ public class FirstPageController {
 
     } catch (IOException e) {
 
+		// TODO: Remove print stack trace, stick to relevant logging
         e.printStackTrace();
-
+		// TODO: no need to split up showError(...) in different lines
         showError(
                 "Could not open the search screen.",
                 e.getMessage());

@@ -1,5 +1,6 @@
 package com.library.model.catalog;
 
+// TODO: Class never used
 public class Author {
     private String authorId;
     private String authorFName;

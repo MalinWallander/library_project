@@ -37,9 +37,11 @@ public class UserService {
                 categoryId,
                 phoneNumber.trim());
 
+        // TODO: Stick to english?
         // 1. Spara user
         dao.createUser(newUser);
 
+        // TODO: Stick to english?
         // 2. Skapa login (kopplar user till auth_account)
         authService.createBorrowerLogin(email, plainPassword, userId.toString());
 
@@ -53,6 +55,8 @@ public class UserService {
             String categoryId,
             String phoneNumber,
             String plainPassword) {
+        // TODO: Do you want to throw exceptions if user does not fill in correctly?
+        // TODO: Setup validation class instead and validate input more thoroughly
         if (fName == null || fName.isBlank())
             throw new IllegalArgumentException("First name is required.");
         if (lName == null || lName.isBlank())

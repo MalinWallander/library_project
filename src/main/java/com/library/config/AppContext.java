@@ -70,6 +70,7 @@ public class AppContext {
 
     private static DataSource buildDataSource() {
         HikariConfig config = new HikariConfig();
+        // TODO: I rapport: lagra på ett säkrare sätt, fråga AI om best practice, annars i någon typ av properties fil
         config.setJdbcUrl("jdbc:postgresql://aws-1-eu-west-1.pooler.supabase.com:6543/postgres");
         config.setUsername("postgres.urozmzhqlitadoryylfv");
         config.setPassword("Reapprove-Stamp-Scariness3");
