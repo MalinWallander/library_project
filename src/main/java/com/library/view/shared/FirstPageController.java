@@ -3,16 +3,13 @@ package com.library.view.shared;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.event.ActionEvent;
 import java.io.IOException;
 
 import com.library.App;
@@ -25,47 +22,30 @@ public class FirstPageController {
 
 	@FXML
 	private BorderPane rootPane;
-	@FXML
-	// TODO: Never used
-	private VBox searchCard;
-	@FXML
-	// TODO: Never used
-	private VBox loansCard;
-	@FXML
-	// TODO: Never used
-	private VBox reservationsCard;
-
-	// ── Nav bar ──────────────────────────────────────────
 
 	@FXML
-	private void handleLoginButton(ActionEvent event) {
+	private void handleLoginButton() {
 		openLoginDialog();
-	} // TODO: event never used, remove?
-
-	// ── Card handlers ────────────────────────────────────
+	}
 
 	@FXML
-	private void handleSearchCard(javafx.scene.input.MouseEvent event) { // TODO: event never used, remove?
+	private void handleSearchCard() {
 		openSearchDialog();
 	}
 
 	@FXML
-	private void handleLoansCard(javafx.scene.input.MouseEvent event) { // TODO: event never used, remove?
+	private void handleLoansCard() {
 		// Locked – prompt user to log in
 		showLoginRequiredPopup("My Loans");
 	}
 
 	@FXML
-	private void handleReservationsCard(javafx.scene.input.MouseEvent event) { // TODO: event never used, remove?
+	private void handleReservationsCard() {
 		// Locked – prompt user to log in
 		showLoginRequiredPopup("My Reservations");
 	}
 
-	// ── Private helpers ───────────────────────────────────
 
-	/**
-	 * Opens the Login view as a modal popup.
-	 */
 	private void openLoginDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader(
@@ -85,7 +65,6 @@ public class FirstPageController {
 			dialog.setResizable(false);
 			dialog.showAndWait();
 
-			// After dialog closes, check who logged in
 			AuthService authService = AppContext.getInstance().authService;
 			if (authService.isLoggedIn()) {
 				if (authService.getCurrentRole() == AuthRole.EMPLOYEE) {
@@ -102,9 +81,6 @@ public class FirstPageController {
 		}
 	}
 
-	/**
-	 * Opens the Search view as a modal popup.
-	 */
 	private void openSearchDialog() {
 
     try {
@@ -121,8 +97,6 @@ public class FirstPageController {
 
         dialog.setTitle("Search Catalog – City Library");
 
-		//TODO: Remove unnecessary comment
-        // STÖRRE FÖNSTER + global css
         dialog.setScene(
                 App.createStyledScene(root, 1150, 780));
 
@@ -134,16 +108,10 @@ public class FirstPageController {
 
 		// TODO: Remove print stack trace, stick to relevant logging
         e.printStackTrace();
-		// TODO: no need to split up showError(...) in different lines
-        showError(
-                "Could not open the search screen.",
-                e.getMessage());
+        showError("Could not open the search screen.", e.getMessage());
     }
 }
 
-	/**
-	 * Informs the user that login is required and offers to open the login dialog.
-	 */
 	private void showLoginRequiredPopup(String featureName) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Login Required");
@@ -159,9 +127,6 @@ public class FirstPageController {
 		});
 	}
 
-	/**
-	 * Shows a simple error alert.
-	 */
 	private void showError(String header, String detail) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");

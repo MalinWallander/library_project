@@ -45,30 +45,25 @@ public class LoanService {
 
 	public Loan addLoan(String barcode, String userId) {
 
-		// 1. Fetch and validate the copy
 		Copy copy = itemDao.findCopyByBarcode(barcode);
 		if (copy == null) {
 			throw new IllegalArgumentException("No copy found with barcode: " + barcode);
 		}
 
-		// 2. Check copy is available
 		if (!"Available".equals(copy.getStatus())) {
 			throw new IllegalArgumentException("This copy is not available for loan.");
 		}
 
-		// 3. Check not a reference copy
 		if (copy.isReferenceCopy()) {
 			throw new IllegalArgumentException("Reference copies cannot be loaned out.");
 		}
 
-		// 4. Check item type is loanable
 		Item item = itemDao.findById(copy.getItemId());
 		if (NON_LOANABLE_TYPES.contains(item.getItemType())) {
 			throw new IllegalArgumentException("Periodicals and magazines cannot be loaned out.");
 		}
 
-		// 5. Fetch user and check loan limit
-		User user = userDao.findById(UUID.fromString(userId))
+		User user = userDao.findById(userId)
 				.orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 		List<Loan> currentLoans = loanDao.findByUserId(userId);
 		int maxLoans = MAX_LOANS.getOrDefault(user.getCategoryId(), 3);
@@ -77,7 +72,6 @@ public class LoanService {
 					"Loan limit reached. Your category allows a maximum of " + maxLoans + " simultaneous loans.");
 		}
 
-		// 6. Check for overdue loans
 		boolean hasOverdue = currentLoans.stream()
 				.anyMatch(l -> l.getDueDate() != null
 						&& l.getDueDate().isBefore(LocalDate.now())
@@ -87,12 +81,11 @@ public class LoanService {
 					"You have overdue loans. Please return them before borrowing again.");
 		}
 
-		// 7. Calculate due date based on item type
 		int days = LOAN_DAYS.getOrDefault(item.getItemType(), 30);
 		LocalDate dueDate = LocalDate.now().plusDays(days);
 
 		Loan loan = new Loan(
-				UUID.randomUUID(),
+				UUID.randomUUID().toString(),
 				barcode,
 				userId,
 				LocalDate.now(),
@@ -102,23 +95,8 @@ public class LoanService {
 		return loanDao.createLoan(loan);
 	}
 
-	// TODO: Never used
-	public Optional<Loan> getLoanById(String loanId) {
-		return loanDao.findById(loanId);
-	}
-
 	public Optional<Receipt> receipt(String loanId) {
 		return loanDao.receipt(loanId);
-	}
-
-	// TODO: Never used
-	public List<Loan> getLoansForUser(String userId) {
-		return loanDao.findByUserId(userId);
-	}
-
-	// TODO: Never used
-	public List<Loan> getOverdueLoans() {
-		return loanDao.getOverdueLoans();
 	}
 
 	public List<LoanSummary> getLoanSummariesForUser(String userId) {

@@ -13,8 +13,10 @@ public class ReservationController {
     private Item item;
     private ReservationService reservationService;
 
-    @FXML private Label titleLabel;
-    @FXML private Label creatorLabel;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label creatorLabel;
 
     @FXML
     public void initialize() {
@@ -29,8 +31,6 @@ public class ReservationController {
         }
     }
 
-    // TODO: Remove unnecessary comment
-    // Denna metod saknades och orsakade kraschen!
     @FXML
     private void handleCancel() {
         closeWindow();
@@ -38,7 +38,8 @@ public class ReservationController {
 
     @FXML
     private void handleConfirmReservation() {
-        if (item == null) return;
+        if (item == null)
+            return;
 
         try {
             reservationService.reserveItem(item.getItemId());
@@ -58,8 +59,7 @@ public class ReservationController {
     }
 
     private void closeWindow() {
-        // TODO: Remove unnecessary comment
-        // Kontrollera att scenen faktiskt finns innan vi stänger
+
         if (titleLabel.getScene() != null) {
             Stage stage = (Stage) titleLabel.getScene().getWindow();
             stage.close();

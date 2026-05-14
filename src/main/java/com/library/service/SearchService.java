@@ -2,14 +2,11 @@ package com.library.service;
 
 import java.util.List;
 
-import com.library.db.SearchItemDao; // Se till att detta matchar filnamnet exakt!
+import com.library.db.SearchItemDao;
 import com.library.model.items.Item;
 
 public class SearchService {
 
-    // TODO: Remove unnecessary comments
-    // Typen måste vara ItemDAO (stora bokstäver)
-    // Variabeln döper vi till itemDao (litet i)
     private final SearchItemDao searchItemDao;
 
     public SearchService(SearchItemDao searchItemDao) {

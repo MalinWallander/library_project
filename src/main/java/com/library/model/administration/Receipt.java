@@ -35,11 +35,6 @@ public class Receipt {
         return loanId;
     }
 
-    // TODO: Never used
-    public String getCopyId() {
-        return copyId;
-    }
-
     public String getItemTitle() {
         return itemTitle;
     }

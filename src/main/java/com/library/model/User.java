@@ -1,10 +1,9 @@
 package com.library.model;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class User {
-    private UUID userId;
+    private String userId;
     private String fName;
     private String lName;
     private String email;
@@ -12,14 +11,8 @@ public class User {
     private String categoryId;
     private String phoneNumber;
 
-    public User(
-            UUID userId,
-            String fName,
-            String lName,
-            String email,
-            LocalDate dateOfBirth,
-            String categoryId,
-            String phoneNumber) {
+    public User(String userId, String fName, String lName, String email,
+            LocalDate dateOfBirth, String categoryId, String phoneNumber) {
         this.userId = userId;
         this.fName = fName;
         this.lName = lName;
@@ -29,7 +22,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public UUID getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -57,4 +50,7 @@ public class User {
         return phoneNumber;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

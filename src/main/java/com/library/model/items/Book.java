@@ -8,7 +8,7 @@ public class Book extends Item {
     private boolean isCourseLiterature;
     // getters/setters
 
-   public Book(String itemId,
+    public Book(String itemId,
             String type,
             String itemTitle,
             String categoryId,
@@ -19,13 +19,13 @@ public class Book extends Item {
             String mainAuthorName,
             boolean isCourseLiterature) {
 
-    super(itemId, type, itemTitle, categoryId, status);
-    this.isbn = isbn;
-    this.publisherId = publisherId;
-    this.genre = genre;
-    this.mainAuthorName = mainAuthorName;
-    this.isCourseLiterature = isCourseLiterature;
-}
+        super(itemId, type, itemTitle, categoryId, status);
+        this.isbn = isbn;
+        this.publisherId = publisherId;
+        this.genre = genre;
+        this.mainAuthorName = mainAuthorName;
+        this.isCourseLiterature = isCourseLiterature;
+    }
 
     public Book() {
         super(null, null, null, null, null);
@@ -67,13 +67,4 @@ public class Book extends Item {
     public String getCreator() {
         return mainAuthorName;
     }
-    // TODO: Never used
-    public boolean isCourseLiterature() {
-    return isCourseLiterature;
-}
-
-    // TODO: Never used
-public void setCourseLiterature(boolean courseLiterature) {
-    isCourseLiterature = courseLiterature;
-}
 }

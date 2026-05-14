@@ -48,7 +48,7 @@ public class AddLoanController {
 			}
 
 			Loan loan = loanService.addLoan(barcode, userId);
-			Receipt receipt = loanService.receipt(loan.getLoanId().toString())
+			Receipt receipt = loanService.receipt(loan.getLoanId())
 					.orElseThrow(() -> new IllegalStateException("Could not load receipt data."));
 
 			Stage stage = (Stage) barcodeField.getScene().getWindow();

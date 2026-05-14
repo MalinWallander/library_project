@@ -1,18 +1,18 @@
 package com.library.model.administration;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class Loan {
 
-    private UUID loanId;
+    private String loanId;
     private String copyId;
     private String userId;
     private LocalDate loanDate;
     private LocalDate returnDate;
     private LocalDate dueDate;
 
-    public Loan(UUID loanId, String copyId, String userId, LocalDate borrowDate, LocalDate dueDate,LocalDate returnDate) {
+    public Loan(String loanId, String copyId, String userId, LocalDate borrowDate, LocalDate dueDate,
+            LocalDate returnDate) {
         this.loanId = loanId;
         this.copyId = copyId;
         this.userId = userId;
@@ -21,7 +21,7 @@ public class Loan {
         this.dueDate = dueDate;
     }
 
-    public UUID getLoanId() {
+    public String getLoanId() {
         return loanId;
     }
 
@@ -41,37 +41,11 @@ public class Loan {
         return returnDate;
     }
 
-    // TODO: Never used
-    public void setLoanId(UUID loanId) {
-        this.loanId = loanId;
-    }
-
-    // TODO: Never used
-    public void setCopyId(String copyId) {
-        this.copyId = copyId;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
-    // TODO: Never used
-    public void setLoanDate(LocalDate loanDate) {
-        this.loanDate = loanDate;
-    }
-
-    // TODO: Never used
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public LocalDate getDueDate() {
-    return dueDate;
-}
-
-    // TODO: Never used
-public void setDueDate(LocalDate dueDate) {
-    this.dueDate = dueDate;
-}
-
 }

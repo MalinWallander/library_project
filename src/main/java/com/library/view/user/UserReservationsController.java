@@ -27,13 +27,9 @@ public class UserReservationsController {
 
     @FXML
     public void initialize() {
-        // TODO: Remove unnecessary comments, if kept stick to english
-        // 1. Hämta servicen från din AppContext
-        // Om variabeln i AppContext är public (vilket den verkar vara i din tidigare
-        // kod)
+
         this.reservationService = AppContext.getInstance().reservationService;
 
-        // 2. Koppla kolumnerna (stämmer med getItemTitle() och getCreator() i Item)
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
         creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -43,7 +39,6 @@ public class UserReservationsController {
 
     private void loadData() {
         try {
-            // 3. Använd servicen (som vi hårdkodade till USR001 tidigare)
             List<Item> myReservations = reservationService.getMyReservations();
 
             if (myReservations != null) {

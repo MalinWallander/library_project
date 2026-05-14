@@ -97,21 +97,15 @@ public class LoanDaoImpl implements LoanDao {
 				.findFirst();
 	}
 
-	private Loan mapRow(ResultSet rs, int rowNum) throws SQLException {
-		return new Loan(
-				UUID.fromString(rs.getString("loanId")),
-				rs.getString("copyId"),
-				rs.getString("userId"),
-				rs.getDate("borrowDate").toLocalDate(),
-
-				rs.getDate("dueDate") != null
-						? rs.getDate("dueDate").toLocalDate()
-						: null,
-
-				rs.getDate("returnDate") != null
-						? rs.getDate("returnDate").toLocalDate()
-						: null);
-	}
+private Loan mapRow(ResultSet rs, int rowNum) throws SQLException {
+    return new Loan(
+            rs.getString("loanId"),
+            rs.getString("copyId"),
+            rs.getString("userId"),
+            rs.getDate("borrowDate").toLocalDate(),
+            rs.getDate("dueDate") != null ? rs.getDate("dueDate").toLocalDate() : null,
+            rs.getDate("returnDate") != null ? rs.getDate("returnDate").toLocalDate() : null);
+}
 
 	private Receipt mapReceiptRow(ResultSet rs, int rowNum) throws SQLException {
 		LocalDate loanDate = rs.getObject("borrowDate", LocalDate.class);
@@ -133,7 +127,6 @@ public class LoanDaoImpl implements LoanDao {
 				dueDate);
 	}
 
-	// TODO verify names in db
 	@Override
 	public List<Loan> findByUserId(String userId) {
 		String sql = """

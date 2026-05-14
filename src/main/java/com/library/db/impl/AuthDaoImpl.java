@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.UUID;
 
 public class AuthDaoImpl implements AuthDao {
 
@@ -63,13 +62,17 @@ public class AuthDaoImpl implements AuthDao {
         return count != null && count > 0;
     }
 
-    private AuthAccount mapRow(ResultSet rs, int rowNum) throws SQLException { // TODO: Dont throw exception where method is called. Add a try / catch where exception can occur.
-        return new AuthAccount(
-                rs.getString("account_id"),
-                rs.getString("email"),
-                rs.getString("password_hash"),
-                AuthRole.valueOf(rs.getString("role")),
-                rs.getString("user_id"),
-                rs.getString("employee_id"));
+    private AuthAccount mapRow(ResultSet rs, int rowNum) {
+        try {
+            return new AuthAccount(
+                    rs.getString("account_id"),
+                    rs.getString("email"),
+                    rs.getString("password_hash"),
+                    AuthRole.valueOf(rs.getString("role")),
+                    rs.getString("user_id"),
+                    rs.getString("employee_id"));
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to map row to AuthAccount", e);
+        }
     }
 }

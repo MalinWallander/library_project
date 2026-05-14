@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.library.service.UserService;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -14,15 +13,22 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class CreateUserController {
-    @FXML private TextField fNameField;
-    @FXML private TextField lNameField;
-    @FXML private TextField emailField;
-    @FXML private TextField phoneField;
-    @FXML private ComboBox<String> roleDropdown;
-    @FXML private DatePicker dobPicker;
-    @FXML private PasswordField passwordField;
-    // TODO: Never used
-    @FXML private Label messageLabel;
+    @FXML
+    private TextField fNameField;
+    @FXML
+    private TextField lNameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private ComboBox<String> roleDropdown;
+    @FXML
+    private DatePicker dobPicker;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Label messageLabel;
 
     private UserService userService;
 
@@ -31,7 +37,7 @@ public class CreateUserController {
     }
 
     @FXML
-    private void handleSubmit(ActionEvent event) { // TODO: event not used, remove?
+    private void handleSubmit() {
         try {
             String fName = fNameField.getText();
             String lName = lNameField.getText();
@@ -46,7 +52,7 @@ public class CreateUserController {
             Stage stage = (Stage) fNameField.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            System.out.println("Error creating user: " + e.getMessage());
+            messageLabel.setText(e.getMessage());
         }
     }
 }

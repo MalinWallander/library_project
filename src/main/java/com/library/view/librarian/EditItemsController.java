@@ -251,27 +251,26 @@ public class EditItemsController {
 	}
 
 	private void openAddCopyPopup(Item item) {
-    try {
-        FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/com/library/add_item.fxml"));
-        Parent root = loader.load();
+		try {
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/library/add_item.fxml"));
+			Parent root = loader.load();
 
-        AddItemController controller = loader.getController();
-        controller.setItemService(AppContext.getInstance().itemService);
-        controller.preSelectItem(item.getItemId(), item.getItemTitle());
+			AddItemController controller = loader.getController();
+			controller.setItemService(AppContext.getInstance().itemService);
+			controller.preSelectItem(item.getItemId(), item.getItemTitle());
 
-        Stage stage = new Stage();
-        stage.setTitle("Add Copy – " + item.getItemTitle());
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(App.createStyledScene(root, 600, 500));
-        stage.showAndWait();
+			Stage stage = new Stage();
+			stage.setTitle("Add Copy – " + item.getItemTitle());
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(App.createStyledScene(root, 600, 500));
+			stage.showAndWait();
 
-        // Refresh results after copy is added
-        showResults(itemService.searchByTitle(searchField.getText()));
+			showResults(itemService.searchByTitle(searchField.getText()));
 
-    } catch (IOException e) {
-		// TODO: Add relevant logging instead of printing stacktrace
-        e.printStackTrace();
-    }
-}
+		} catch (IOException e) {
+			// TODO: Add relevant logging instead of printing stacktrace
+			e.printStackTrace();
+		}
+	}
 }

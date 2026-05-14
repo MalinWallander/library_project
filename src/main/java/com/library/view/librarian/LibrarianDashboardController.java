@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,7 +16,7 @@ import javafx.stage.Stage;
 public class LibrarianDashboardController {
 
     @FXML
-    private void handleCreateUser(ActionEvent event) { // TODO: event never used, remove?
+    private void handleCreateUser() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/create_user.fxml"));
             Parent root = loader.load();
@@ -63,7 +62,6 @@ public class LibrarianDashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/add_loan.fxml"));
             Parent root = loader.load();
 
-            // Inject service from AppContext into the popup controller
             AddLoanController loanController = loader.getController();
             loanController.setLoanService(AppContext.getInstance().loanService);
 

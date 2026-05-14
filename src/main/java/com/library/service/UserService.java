@@ -29,7 +29,7 @@ public class UserService {
         UUID userId = UUID.randomUUID();
 
         User newUser = new User(
-                userId,
+                userId.toString(),
                 fName.trim(),
                 lName.trim(),
                 email.trim(),
@@ -37,12 +37,8 @@ public class UserService {
                 categoryId,
                 phoneNumber.trim());
 
-        // TODO: Stick to english?
-        // 1. Spara user
         dao.createUser(newUser);
 
-        // TODO: Stick to english?
-        // 2. Skapa login (kopplar user till auth_account)
         authService.createBorrowerLogin(email, plainPassword, userId.toString());
 
         System.out.println("User created: " + newUser.getEmail());

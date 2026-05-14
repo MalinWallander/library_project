@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    public Optional<User> findById(UUID userId) {
+    public Optional<User> findById(String userId) {
         MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
         return jdbc.query(FIND_BY_USERID_SQL, params, this::mapRow)
                 .stream()
@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
 
     private User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new User(
-                UUID.fromString(rs.getString("user_id")),
+                rs.getString("user_id"),
                 rs.getString("f_name"),
                 rs.getString("l_name"),
                 rs.getString("email"),
@@ -63,5 +63,4 @@ public class UserDaoImpl implements UserDao {
                 rs.getString("category_id"),
                 rs.getString("phone_number"));
     }
-
 }

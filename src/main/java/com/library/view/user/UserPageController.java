@@ -11,33 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UserPageController {
 
-	@FXML
-	// TODO: Never used
-	private VBox searchCard;
-	@FXML
-	// TODO: Never used
-	private VBox loansCard;
-	@FXML
-	// TODO: Never used
-	private VBox reservationsCard;
-	@FXML
-	// TODO: Never used
-	private Label activeLoansLabel;
-	@FXML
-	// TODO: Never used
-	private Label pendingReservationsLabel;
-	@FXML
-	// TODO: Never used
-	private VBox recentLoansContainer;
-	@FXML
-	// TODO: Never used
-	private VBox pendingReservationsContainer;
 	@FXML
 	private Label welcomeLabel;
 

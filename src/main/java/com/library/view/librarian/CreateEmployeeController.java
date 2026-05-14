@@ -30,15 +30,14 @@ public class CreateEmployeeController {
     }
 
     @FXML
-    private void handleSubmit(ActionEvent event) { // TODO: Event unused, remove?
+    private void handleSubmit() {
         try {
             employeeService.createEmployee(
                     fNameField.getText(),
                     lNameField.getText(),
                     emailField.getText(),
                     phoneField.getText(),
-                    passwordField.getText()
-            );
+                    passwordField.getText());
 
             Stage stage = (Stage) fNameField.getScene().getWindow();
             stage.close();

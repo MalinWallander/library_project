@@ -28,7 +28,8 @@ public class App extends Application {
             Parent root = loadFXML(fxml);
             scene.setRoot(root);
         } catch (IOException e) {
-            // TODO: Replace print stacktrace with relevant log (ex failed to set root scene)
+            // TODO: Replace print stacktrace with relevant log (ex failed to set root
+            // scene)
             e.printStackTrace();
         }
     }

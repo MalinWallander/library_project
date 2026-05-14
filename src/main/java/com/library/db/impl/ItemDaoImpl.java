@@ -27,10 +27,8 @@ public class ItemDaoImpl implements ItemDao {
             try {
                 conn.setAutoCommit(false);
 
-                // 1. Always insert into Item first
                 insertIntoItem(item, conn);
 
-                // 2. Insert into type-specific table
                 switch (item.getItemType()) {
                     case "Book" -> insertIntoBook(item, conn);
                     case "DVD" -> insertIntoDvd(item, conn);
@@ -60,7 +58,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     private void insertIntoItem(Item item, Connection conn) throws SQLException {
-        String sql = "INSERT INTO \"Item\" (\"itemId\", \"itemType\", \"itemTitle\", \"categoryId\") VALUES (?, ?, ?, ?)"; // TODO: Better with snake case for db column names
+        String sql = "INSERT INTO \"Item\" (\"itemId\", \"itemType\", \"itemTitle\", \"categoryId\") VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, item.getItemId());
             stmt.setString(2, item.getItemType());
@@ -71,7 +69,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     private void insertIntoBook(Item item, Connection conn) throws SQLException {
-        String sql = "INSERT INTO \"Book\" (\"itemId\", \"isbn\", \"genre\", \"mainAuthorName\", \"publisherId\") VALUES (?, ?, ?, ?, ?)"; // TODO: Same here, won't repeat comment again.
+        String sql = "INSERT INTO \"Book\" (\"itemId\", \"isbn\", \"genre\", \"mainAuthorName\", \"publisherId\") VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, item.getItemId());
             stmt.setString(2, ((Book) item).getIsbn());

@@ -16,7 +16,6 @@ public class Copy {
     public Copy() {
     }
 
-    // Getters and setters
     public String getCopyId() {
         return copyId;
     }
@@ -67,11 +66,6 @@ public class Copy {
 
     public LocalDate getLastOnLoan() {
         return lastOnLoan;
-    }
-
-    // TODO: Never used
-    public void setLastOnLoan(LocalDate lastOnLoan) {
-        this.lastOnLoan = lastOnLoan;
     }
 
     public String getItemTitle() {

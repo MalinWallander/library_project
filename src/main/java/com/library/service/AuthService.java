@@ -21,7 +21,6 @@ public class AuthService {
     }
 
     public LoginResult login(String email, String plainPassword) {
-        // TODO: Setup helper validation class?
         if (email == null || email.isBlank() || plainPassword == null || plainPassword.isBlank()) {
             return LoginResult.failure("Please enter both email and password.");
         }

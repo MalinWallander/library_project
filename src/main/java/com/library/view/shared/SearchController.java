@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -49,23 +48,18 @@ public class SearchController {
 
     @FXML
     public void initialize() {
-        // TODO: Stick to english, even in comments
-        // 1. Hämta servicen från AppContext
+
         this.searchService = AppContext.getInstance().searchService;
 
-        // 2. Standardinställningar för tabellen
         resultsTable.setPlaceholder(new Label("Start typing to search for books or films."));
 
-        // 3. Fyll dropdown-menyn
         typeDropdown.setItems(FXCollections.observableArrayList("Alla", "Book", "Dvd", "Periodical"));
         typeDropdown.getSelectionModel().selectFirst();
 
-        // 4. Mappa vanliga text-kolumner
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
 
-        // 5. Skapa knappen "Reservera" i den sista kolumnen
         reserveColumn.setCellFactory(col -> new TableCell<Item, Void>() {
             private final Button btn = new Button("Reservera");
 
@@ -101,47 +95,40 @@ public class SearchController {
         });
 
     }
-    // TODO: Unnecessary comment
-    // Slut på initialize
 
     private void openReservationWindow(Item item) {
 
-    try {
+        try {
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/library/reservations_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/library/reservations_view.fxml"));
 
-        Parent root = loader.load();
+            Parent root = loader.load();
 
-        // Skicka item till controllern
-        ReservationController controller = loader.getController();
-        controller.setItem(item);
+            ReservationController controller = loader.getController();
+            controller.setItem(item);
 
-        // Reservation popup
-        Stage reservationStage = new Stage();
-        reservationStage.setTitle("Reserve: " + item.getItemTitle());
+            Stage reservationStage = new Stage();
+            reservationStage.setTitle("Reserve: " + item.getItemTitle());
 
-        reservationStage.setScene(
-                com.library.App.createStyledScene(root, 900, 650));
+            reservationStage.setScene(
+                    com.library.App.createStyledScene(root, 900, 650));
 
-        // Detta är search-fönstret
-        Stage searchStage =
-                (Stage) resultsTable.getScene().getWindow();
+            Stage searchStage = (Stage) resultsTable.getScene().getWindow();
 
-        // När reservation popup stängs → stäng även search popup
-        reservationStage.setOnHidden(e -> searchStage.close());
+            reservationStage.setOnHidden(e -> searchStage.close());
 
-        reservationStage.show();
+            reservationStage.show();
 
-    } catch (Exception e) {
+        } catch (Exception e) {
 
-        System.err.println(
-                "Could not load reservations_view.fxml");
+            System.err.println(
+                    "Could not load reservations_view.fxml");
 
-        // TODO: Remove print stack trace, stick to relevant logging
-        e.printStackTrace();
+            // TODO: Remove print stack trace, stick to relevant logging
+            e.printStackTrace();
+        }
     }
-}
 
     @FXML
     private void handleSearch() {
@@ -150,7 +137,6 @@ public class SearchController {
             String creatorQuery = creatorField.getText().trim();
             String selectedType = typeDropdown.getValue();
 
-            // Rensa söksträngar om de är tomma
             if (titleQuery.isEmpty())
                 titleQuery = null;
             if (creatorQuery.isEmpty())
@@ -158,10 +144,8 @@ public class SearchController {
             if ("Alla".equals(selectedType))
                 selectedType = null;
 
-            // Anropa backend
             List<Item> searchResults = searchService.searchItems(titleQuery, creatorQuery, selectedType);
 
-            // Uppdatera UI
             if (searchResults == null || searchResults.isEmpty()) {
                 resultsTable.setPlaceholder(new Label("0 träffar hittade."));
                 resultsTable.setItems(FXCollections.observableArrayList());
@@ -178,5 +162,4 @@ public class SearchController {
             resultsTable.setPlaceholder(new Label("Ett tekniskt fel uppstod."));
         }
     }
-    // TODO: Remove unnecessary comment
-} // Slut på hela klassen
+}

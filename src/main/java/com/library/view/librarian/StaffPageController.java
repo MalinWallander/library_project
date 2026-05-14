@@ -18,22 +18,9 @@ public class StaffPageController {
 
 	@FXML
 	private VBox checkoutCard;
-	@FXML
-	// TODO: Never used
-	private VBox checkinCard;
-	@FXML
-	// TODO: Never used
-	private VBox searchCard;
-	@FXML
-	// TODO: Never used
-	private VBox addUserCard;
-	@FXML
-	// TODO: Never used
-	private VBox inventoryCard;
 
 	@FXML
 	public void initialize() {
-		// Any setup logic when the page loads
 	}
 
 	@FXML
