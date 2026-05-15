@@ -12,23 +12,23 @@
       stylesheets="@main.css"
       style="-fx-padding: 25;">
 
-    <Label text="Bekräfta reservation" styleClass="page-title" />
+    <Label text="Confirm reservation" styleClass="page-title" />
 
     <VBox spacing="12" styleClass="info-container">
         <VBox>
-            <Label text="TITEL" styleClass="label-hint" />
+            <Label text="TITLE" styleClass="label-hint" />
             <Label fx:id="titleLabel" styleClass="card-title" />
         </VBox>
         
         <VBox>
-            <Label text="SKAPARE" styleClass="label-hint" />
+            <Label text="CREATOR" styleClass="label-hint" />
             <Label fx:id="creatorLabel" styleClass="card-title" />
         </VBox>
     </VBox>
 
     <HBox spacing="15" alignment="CENTER">
-        <Button text="Avbryt" onAction="#handleCancel" styleClass="btn-secondary" />
-        <Button text="Bekräfta" onAction="#handleConfirmReservation" styleClass="btn-primary" />
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-secondary" />
+        <Button text="Confirm" onAction="#handleConfirmReservation" styleClass="btn-primary" />
     </HBox>
 
 </VBox>

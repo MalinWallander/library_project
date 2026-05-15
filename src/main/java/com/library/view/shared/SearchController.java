@@ -61,7 +61,7 @@ public class SearchController {
         creatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
 
         reserveColumn.setCellFactory(col -> new TableCell<Item, Void>() {
-            private final Button btn = new Button("Reservera");
+            private final Button btn = new Button("Reserve");
 
             {
                 btn.setOnAction(e -> {
